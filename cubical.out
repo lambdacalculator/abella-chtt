@@ -1,0 +1,5566 @@
+Welcome to Abella 2.0.4-b1
+Abella < Specification "cubical".
+Reading specification "/home/twilson/proj/abella/cctt/./cubical" (from "/home/twilson/proj/abella/cctt/.")
+
+Abella < Define is_name/dim : dim -> prop by 
+nabla x, is_name/dim x.
+
+Abella < Define is_name/tm : tm -> prop by 
+nabla a, is_name/tm a.
+
+Abella < Define dimctx : olist -> prop by 
+dimctx nil;
+nabla x, dimctx (dim x :: P) := dimctx P.
+
+Abella < Theorem dimctx_inv : 
+forall P E, dimctx P -> member E P -> (exists x, E = dim x /\ is_name/dim x).
+
+
+============================
+ forall P E, dimctx P -> member E P -> (exists x, E = dim x /\ is_name/dim x)
+
+dimctx_inv < induction on 1.
+
+IH : forall P E, dimctx P * -> member E P ->
+       (exists x, E = dim x /\ is_name/dim x)
+============================
+ forall P E, dimctx P @ -> member E P ->
+   (exists x, E = dim x /\ is_name/dim x)
+
+dimctx_inv < intros.
+
+Variables: P E
+IH : forall P E, dimctx P * -> member E P ->
+       (exists x, E = dim x /\ is_name/dim x)
+H1 : dimctx P @
+H2 : member E P
+============================
+ exists x, E = dim x /\ is_name/dim x
+
+dimctx_inv < case H1.
+Subgoal 1:
+
+Variables: E
+IH : forall P E, dimctx P * -> member E P ->
+       (exists x, E = dim x /\ is_name/dim x)
+H2 : member E nil
+============================
+ exists x, E = dim x /\ is_name/dim x
+
+1 other subgoal.
+
+dimctx_inv < case H2.
+Subgoal 2:
+
+Variables: E P1
+IH : forall P E, dimctx P * -> member E P ->
+       (exists x, E = dim x /\ is_name/dim x)
+H2 : member (E n1) (dim n1 :: P1)
+H3 : dimctx P1 *
+============================
+ exists x, E n1 = dim x /\ is_name/dim x
+
+dimctx_inv < case H2.
+Subgoal 2.1:
+
+Variables: P1
+IH : forall P E, dimctx P * -> member E P ->
+       (exists x, E = dim x /\ is_name/dim x)
+H3 : dimctx P1 *
+============================
+ exists x, dim n1 = dim x /\ is_name/dim x
+
+1 other subgoal.
+
+dimctx_inv < search.
+Subgoal 2.2:
+
+Variables: E P1
+IH : forall P E, dimctx P * -> member E P ->
+       (exists x, E = dim x /\ is_name/dim x)
+H3 : dimctx P1 *
+H4 : member (E n1) P1
+============================
+ exists x, E n1 = dim x /\ is_name/dim x
+
+dimctx_inv < apply IH to H3 H4.
+Subgoal 2.2:
+
+Variables: P1 x
+IH : forall P E, dimctx P * -> member E P ->
+       (exists x, E = dim x /\ is_name/dim x)
+H3 : dimctx P1 *
+H4 : member (dim (x n1)) P1
+H5 : is_name/dim (x n1)
+============================
+ exists x1, dim (x n1) = dim x1 /\ is_name/dim x1
+
+dimctx_inv < search.
+Proof completed.
+Abella < Define tmctx : olist -> prop by 
+tmctx nil;
+nabla x, tmctx (dim x :: G) := tmctx G;
+nabla a, tmctx (tm a :: G) := tmctx G.
+
+Abella < Theorem tmctx_inv : 
+forall G E, tmctx G -> member E G ->
+  (exists x, E = dim x /\ is_name/dim x) \/
+  (exists a, E = tm a /\ is_name/tm a).
+
+
+============================
+ forall G E, tmctx G -> member E G ->
+   (exists x, E = dim x /\ is_name/dim x) \/
+   (exists a, E = tm a /\ is_name/tm a)
+
+tmctx_inv < induction on 1.
+
+IH : forall G E, tmctx G * -> member E G ->
+       (exists x, E = dim x /\ is_name/dim x) \/
+       (exists a, E = tm a /\ is_name/tm a)
+============================
+ forall G E, tmctx G @ -> member E G ->
+   (exists x, E = dim x /\ is_name/dim x) \/
+   (exists a, E = tm a /\ is_name/tm a)
+
+tmctx_inv < intros.
+
+Variables: G E
+IH : forall G E, tmctx G * -> member E G ->
+       (exists x, E = dim x /\ is_name/dim x) \/
+       (exists a, E = tm a /\ is_name/tm a)
+H1 : tmctx G @
+H2 : member E G
+============================
+ (exists x, E = dim x /\ is_name/dim x) \/
+   (exists a, E = tm a /\ is_name/tm a)
+
+tmctx_inv < case H1.
+Subgoal 1:
+
+Variables: E
+IH : forall G E, tmctx G * -> member E G ->
+       (exists x, E = dim x /\ is_name/dim x) \/
+       (exists a, E = tm a /\ is_name/tm a)
+H2 : member E nil
+============================
+ (exists x, E = dim x /\ is_name/dim x) \/
+   (exists a, E = tm a /\ is_name/tm a)
+
+2 other subgoals.
+
+tmctx_inv < case H2.
+Subgoal 2:
+
+Variables: E G1
+IH : forall G E, tmctx G * -> member E G ->
+       (exists x, E = dim x /\ is_name/dim x) \/
+       (exists a, E = tm a /\ is_name/tm a)
+H2 : member (E n1) (dim n1 :: G1)
+H3 : tmctx G1 *
+============================
+ (exists x, E n1 = dim x /\ is_name/dim x) \/
+   (exists a, E n1 = tm a /\ is_name/tm a)
+
+1 other subgoal.
+
+tmctx_inv < case H2.
+Subgoal 2.1:
+
+Variables: G1
+IH : forall G E, tmctx G * -> member E G ->
+       (exists x, E = dim x /\ is_name/dim x) \/
+       (exists a, E = tm a /\ is_name/tm a)
+H3 : tmctx G1 *
+============================
+ (exists x, dim n1 = dim x /\ is_name/dim x) \/
+   (exists a, dim n1 = tm a /\ is_name/tm a)
+
+2 other subgoals.
+
+tmctx_inv < search.
+Subgoal 2.2:
+
+Variables: E G1
+IH : forall G E, tmctx G * -> member E G ->
+       (exists x, E = dim x /\ is_name/dim x) \/
+       (exists a, E = tm a /\ is_name/tm a)
+H3 : tmctx G1 *
+H4 : member (E n1) G1
+============================
+ (exists x, E n1 = dim x /\ is_name/dim x) \/
+   (exists a, E n1 = tm a /\ is_name/tm a)
+
+1 other subgoal.
+
+tmctx_inv < apply IH to H3 H4.
+Subgoal 2.2:
+
+Variables: E G1
+IH : forall G E, tmctx G * -> member E G ->
+       (exists x, E = dim x /\ is_name/dim x) \/
+       (exists a, E = tm a /\ is_name/tm a)
+H3 : tmctx G1 *
+H4 : member (E n1) G1
+H5 : (exists x, E n1 = dim x /\ is_name/dim x) \/
+       (exists a, E n1 = tm a /\ is_name/tm a)
+============================
+ (exists x, E n1 = dim x /\ is_name/dim x) \/
+   (exists a, E n1 = tm a /\ is_name/tm a)
+
+1 other subgoal.
+
+tmctx_inv < search.
+Subgoal 3:
+
+Variables: E G1
+IH : forall G E, tmctx G * -> member E G ->
+       (exists x, E = dim x /\ is_name/dim x) \/
+       (exists a, E = tm a /\ is_name/tm a)
+H2 : member (E n1) (tm n1 :: G1)
+H3 : tmctx G1 *
+============================
+ (exists x, E n1 = dim x /\ is_name/dim x) \/
+   (exists a, E n1 = tm a /\ is_name/tm a)
+
+tmctx_inv < case H2.
+Subgoal 3.1:
+
+Variables: G1
+IH : forall G E, tmctx G * -> member E G ->
+       (exists x, E = dim x /\ is_name/dim x) \/
+       (exists a, E = tm a /\ is_name/tm a)
+H3 : tmctx G1 *
+============================
+ (exists x, tm n1 = dim x /\ is_name/dim x) \/
+   (exists a, tm n1 = tm a /\ is_name/tm a)
+
+1 other subgoal.
+
+tmctx_inv < search.
+Subgoal 3.2:
+
+Variables: E G1
+IH : forall G E, tmctx G * -> member E G ->
+       (exists x, E = dim x /\ is_name/dim x) \/
+       (exists a, E = tm a /\ is_name/tm a)
+H3 : tmctx G1 *
+H4 : member (E n1) G1
+============================
+ (exists x, E n1 = dim x /\ is_name/dim x) \/
+   (exists a, E n1 = tm a /\ is_name/tm a)
+
+tmctx_inv < apply IH to H3 H4.
+Subgoal 3.2:
+
+Variables: E G1
+IH : forall G E, tmctx G * -> member E G ->
+       (exists x, E = dim x /\ is_name/dim x) \/
+       (exists a, E = tm a /\ is_name/tm a)
+H3 : tmctx G1 *
+H4 : member (E n1) G1
+H5 : (exists x, E n1 = dim x /\ is_name/dim x) \/
+       (exists a, E n1 = tm a /\ is_name/tm a)
+============================
+ (exists x, E n1 = dim x /\ is_name/dim x) \/
+   (exists a, E n1 = tm a /\ is_name/tm a)
+
+tmctx_inv < search.
+Proof completed.
+Abella < Theorem dimctx_tmctx : 
+forall P, dimctx P -> tmctx P.
+
+
+============================
+ forall P, dimctx P -> tmctx P
+
+dimctx_tmctx < induction on 1.
+
+IH : forall P, dimctx P * -> tmctx P
+============================
+ forall P, dimctx P @ -> tmctx P
+
+dimctx_tmctx < intros.
+
+Variables: P
+IH : forall P, dimctx P * -> tmctx P
+H1 : dimctx P @
+============================
+ tmctx P
+
+dimctx_tmctx < case H1.
+Subgoal 1:
+
+IH : forall P, dimctx P * -> tmctx P
+============================
+ tmctx nil
+
+1 other subgoal.
+
+dimctx_tmctx < search.
+Subgoal 2:
+
+Variables: P1
+IH : forall P, dimctx P * -> tmctx P
+H2 : dimctx P1 *
+============================
+ tmctx (dim n1 :: P1)
+
+dimctx_tmctx < apply IH to H2.
+Subgoal 2:
+
+Variables: P1
+IH : forall P, dimctx P * -> tmctx P
+H2 : dimctx P1 *
+H3 : tmctx P1
+============================
+ tmctx (dim n1 :: P1)
+
+dimctx_tmctx < search.
+Proof completed.
+Abella < Theorem presrv/map : 
+forall G Ns K F Ns', nabla t, tmctx G -> {G |- tlist Ns K} ->
+  {G, tm t |- tm (F t)} -> {map F Ns Ns'} -> {G |- tlist Ns' K}.
+
+
+============================
+ forall G Ns K F Ns', nabla t, tmctx G -> {G |- tlist Ns K} ->
+   {G, tm t |- tm (F t)} -> {map F Ns Ns'} -> {G |- tlist Ns' K}
+
+presrv/map < induction on 4.
+
+IH : forall G Ns K F Ns', nabla t, tmctx G -> {G |- tlist Ns K} ->
+       {G, tm t |- tm (F t)} -> {map F Ns Ns'}* -> {G |- tlist Ns' K}
+============================
+ forall G Ns K F Ns', nabla t, tmctx G -> {G |- tlist Ns K} ->
+   {G, tm t |- tm (F t)} -> {map F Ns Ns'}@ -> {G |- tlist Ns' K}
+
+presrv/map < intros.
+
+Variables: G Ns K F Ns'
+IH : forall G Ns K F Ns', nabla t, tmctx G -> {G |- tlist Ns K} ->
+       {G, tm t |- tm (F t)} -> {map F Ns Ns'}* -> {G |- tlist Ns' K}
+H1 : tmctx G
+H2 : {G |- tlist Ns K}
+H3 : {G, tm n1 |- tm (F n1)}
+H4 : {map F Ns Ns'}@
+============================
+ {G |- tlist Ns' K}
+
+presrv/map < case H4.
+Subgoal 1:
+
+Variables: G K F
+IH : forall G Ns K F Ns', nabla t, tmctx G -> {G |- tlist Ns K} ->
+       {G, tm t |- tm (F t)} -> {map F Ns Ns'}* -> {G |- tlist Ns' K}
+H1 : tmctx G
+H2 : {G |- tlist t$ K}
+H3 : {G, tm n1 |- tm (F n1)}
+============================
+ {G |- tlist t$ K}
+
+1 other subgoal.
+
+presrv/map < search.
+Subgoal 2:
+
+Variables: G K F Ns'1 Ns1 N1 N0
+IH : forall G Ns K F Ns', nabla t, tmctx G -> {G |- tlist Ns K} ->
+       {G, tm t |- tm (F t)} -> {map F Ns Ns'}* -> {G |- tlist Ns' K}
+H1 : tmctx G
+H2 : {G |- tlist (t+ N0 N1 Ns1) K}
+H3 : {G, tm n1 |- tm (F n1)}
+H5 : {map F Ns1 Ns'1}*
+============================
+ {G |- tlist (t+ (F N0) (F N1) Ns'1) K}
+
+presrv/map < case H2.
+Subgoal 2.1:
+
+Variables: G F Ns'1 Ns1 N1 N0 K1
+IH : forall G Ns K F Ns', nabla t, tmctx G -> {G |- tlist Ns K} ->
+       {G, tm t |- tm (F t)} -> {map F Ns Ns'}* -> {G |- tlist Ns' K}
+H1 : tmctx G
+H3 : {G, tm n1 |- tm (F n1)}
+H5 : {map F Ns1 Ns'1}*
+H6 : {G |- tm N0}
+H7 : {G |- tm N1}
+H8 : {G |- tlist Ns1 K1}
+============================
+ {G |- tlist (t+ (F N0) (F N1) Ns'1) (s K1)}
+
+1 other subgoal.
+
+presrv/map <  inst H3 with n1 = N0.
+Subgoal 2.1:
+
+Variables: G F Ns'1 Ns1 N1 N0 K1
+IH : forall G Ns K F Ns', nabla t, tmctx G -> {G |- tlist Ns K} ->
+       {G, tm t |- tm (F t)} -> {map F Ns Ns'}* -> {G |- tlist Ns' K}
+H1 : tmctx G
+H3 : {G, tm n1 |- tm (F n1)}
+H5 : {map F Ns1 Ns'1}*
+H6 : {G |- tm N0}
+H7 : {G |- tm N1}
+H8 : {G |- tlist Ns1 K1}
+H9 : {G, tm N0 |- tm (F N0)}
+============================
+ {G |- tlist (t+ (F N0) (F N1) Ns'1) (s K1)}
+
+1 other subgoal.
+
+presrv/map < cut H9 with H6.
+Subgoal 2.1:
+
+Variables: G F Ns'1 Ns1 N1 N0 K1
+IH : forall G Ns K F Ns', nabla t, tmctx G -> {G |- tlist Ns K} ->
+       {G, tm t |- tm (F t)} -> {map F Ns Ns'}* -> {G |- tlist Ns' K}
+H1 : tmctx G
+H3 : {G, tm n1 |- tm (F n1)}
+H5 : {map F Ns1 Ns'1}*
+H6 : {G |- tm N0}
+H7 : {G |- tm N1}
+H8 : {G |- tlist Ns1 K1}
+H9 : {G, tm N0 |- tm (F N0)}
+H10 : {G |- tm (F N0)}
+============================
+ {G |- tlist (t+ (F N0) (F N1) Ns'1) (s K1)}
+
+1 other subgoal.
+
+presrv/map <  inst H3 with n1 = N1.
+Subgoal 2.1:
+
+Variables: G F Ns'1 Ns1 N1 N0 K1
+IH : forall G Ns K F Ns', nabla t, tmctx G -> {G |- tlist Ns K} ->
+       {G, tm t |- tm (F t)} -> {map F Ns Ns'}* -> {G |- tlist Ns' K}
+H1 : tmctx G
+H3 : {G, tm n1 |- tm (F n1)}
+H5 : {map F Ns1 Ns'1}*
+H6 : {G |- tm N0}
+H7 : {G |- tm N1}
+H8 : {G |- tlist Ns1 K1}
+H9 : {G, tm N0 |- tm (F N0)}
+H10 : {G |- tm (F N0)}
+H11 : {G, tm N1 |- tm (F N1)}
+============================
+ {G |- tlist (t+ (F N0) (F N1) Ns'1) (s K1)}
+
+1 other subgoal.
+
+presrv/map < cut H11 with H7.
+Subgoal 2.1:
+
+Variables: G F Ns'1 Ns1 N1 N0 K1
+IH : forall G Ns K F Ns', nabla t, tmctx G -> {G |- tlist Ns K} ->
+       {G, tm t |- tm (F t)} -> {map F Ns Ns'}* -> {G |- tlist Ns' K}
+H1 : tmctx G
+H3 : {G, tm n1 |- tm (F n1)}
+H5 : {map F Ns1 Ns'1}*
+H6 : {G |- tm N0}
+H7 : {G |- tm N1}
+H8 : {G |- tlist Ns1 K1}
+H9 : {G, tm N0 |- tm (F N0)}
+H10 : {G |- tm (F N0)}
+H11 : {G, tm N1 |- tm (F N1)}
+H12 : {G |- tm (F N1)}
+============================
+ {G |- tlist (t+ (F N0) (F N1) Ns'1) (s K1)}
+
+1 other subgoal.
+
+presrv/map < apply IH to H1 H8 H3 H5.
+Subgoal 2.1:
+
+Variables: G F Ns'1 Ns1 N1 N0 K1
+IH : forall G Ns K F Ns', nabla t, tmctx G -> {G |- tlist Ns K} ->
+       {G, tm t |- tm (F t)} -> {map F Ns Ns'}* -> {G |- tlist Ns' K}
+H1 : tmctx G
+H3 : {G, tm n1 |- tm (F n1)}
+H5 : {map F Ns1 Ns'1}*
+H6 : {G |- tm N0}
+H7 : {G |- tm N1}
+H8 : {G |- tlist Ns1 K1}
+H9 : {G, tm N0 |- tm (F N0)}
+H10 : {G |- tm (F N0)}
+H11 : {G, tm N1 |- tm (F N1)}
+H12 : {G |- tm (F N1)}
+H13 : {G |- tlist Ns'1 K1}
+============================
+ {G |- tlist (t+ (F N0) (F N1) Ns'1) (s K1)}
+
+1 other subgoal.
+
+presrv/map < search.
+Subgoal 2.2:
+
+Variables: G K F Ns'1 Ns1 N1 N0 F1
+IH : forall G Ns K F Ns', nabla t, tmctx G -> {G |- tlist Ns K} ->
+       {G, tm t |- tm (F t)} -> {map F Ns Ns'}* -> {G |- tlist Ns' K}
+H1 : tmctx G
+H3 : {G, tm n1 |- tm (F n1)}
+H5 : {map F Ns1 Ns'1}*
+H6 : {G, [F1] |- tlist (t+ N0 N1 Ns1) K}
+H7 : member F1 G
+============================
+ {G |- tlist (t+ (F N0) (F N1) Ns'1) K}
+
+presrv/map < apply tmctx_inv to H1 H7.
+Subgoal 2.2:
+
+Variables: G K F Ns'1 Ns1 N1 N0 F1
+IH : forall G Ns K F Ns', nabla t, tmctx G -> {G |- tlist Ns K} ->
+       {G, tm t |- tm (F t)} -> {map F Ns Ns'}* -> {G |- tlist Ns' K}
+H1 : tmctx G
+H3 : {G, tm n1 |- tm (F n1)}
+H5 : {map F Ns1 Ns'1}*
+H6 : {G, [F1] |- tlist (t+ N0 N1 Ns1) K}
+H7 : member F1 G
+H8 : (exists x, F1 = dim x /\ is_name/dim x) \/
+       (exists a, F1 = tm a /\ is_name/tm a)
+============================
+ {G |- tlist (t+ (F N0) (F N1) Ns'1) K}
+
+presrv/map < case H8.
+Subgoal 2.2.1:
+
+Variables: G K F Ns'1 Ns1 N1 N0 x
+IH : forall G Ns K F Ns', nabla t, tmctx G -> {G |- tlist Ns K} ->
+       {G, tm t |- tm (F t)} -> {map F Ns Ns'}* -> {G |- tlist Ns' K}
+H1 : tmctx G
+H3 : {G, tm n1 |- tm (F n1)}
+H5 : {map F Ns1 Ns'1}*
+H6 : {G, [dim x] |- tlist (t+ N0 N1 Ns1) K}
+H7 : member (dim x) G
+H9 : is_name/dim x
+============================
+ {G |- tlist (t+ (F N0) (F N1) Ns'1) K}
+
+1 other subgoal.
+
+presrv/map < case H6.
+Subgoal 2.2.2:
+
+Variables: G K F Ns'1 Ns1 N1 N0 a
+IH : forall G Ns K F Ns', nabla t, tmctx G -> {G |- tlist Ns K} ->
+       {G, tm t |- tm (F t)} -> {map F Ns Ns'}* -> {G |- tlist Ns' K}
+H1 : tmctx G
+H3 : {G, tm n1 |- tm (F n1)}
+H5 : {map F Ns1 Ns'1}*
+H6 : {G, [tm a] |- tlist (t+ N0 N1 Ns1) K}
+H7 : member (tm a) G
+H9 : is_name/tm a
+============================
+ {G |- tlist (t+ (F N0) (F N1) Ns'1) K}
+
+presrv/map < case H6.
+Proof completed.
+Abella < Theorem presrv/dlsnoc : 
+forall P Rs K R Rs+, dimctx P -> {P |- dlist Rs K} -> {P |- dim R} ->
+  {dlsnoc Rs R Rs+} -> {P |- dlist Rs+ (s K)}.
+
+
+============================
+ forall P Rs K R Rs+, dimctx P -> {P |- dlist Rs K} -> {P |- dim R} ->
+   {dlsnoc Rs R Rs+} -> {P |- dlist Rs+ (s K)}
+
+presrv/dlsnoc < induction on 4.
+
+IH : forall P Rs K R Rs+, dimctx P -> {P |- dlist Rs K} -> {P |- dim R} ->
+       {dlsnoc Rs R Rs+}* -> {P |- dlist Rs+ (s K)}
+============================
+ forall P Rs K R Rs+, dimctx P -> {P |- dlist Rs K} -> {P |- dim R} ->
+   {dlsnoc Rs R Rs+}@ -> {P |- dlist Rs+ (s K)}
+
+presrv/dlsnoc < intros.
+
+Variables: P Rs K R Rs+
+IH : forall P Rs K R Rs+, dimctx P -> {P |- dlist Rs K} -> {P |- dim R} ->
+       {dlsnoc Rs R Rs+}* -> {P |- dlist Rs+ (s K)}
+H1 : dimctx P
+H2 : {P |- dlist Rs K}
+H3 : {P |- dim R}
+H4 : {dlsnoc Rs R Rs+}@
+============================
+ {P |- dlist Rs+ (s K)}
+
+presrv/dlsnoc < case H4.
+Subgoal 1:
+
+Variables: P K R
+IH : forall P Rs K R Rs+, dimctx P -> {P |- dlist Rs K} -> {P |- dim R} ->
+       {dlsnoc Rs R Rs+}* -> {P |- dlist Rs+ (s K)}
+H1 : dimctx P
+H2 : {P |- dlist d$ K}
+H3 : {P |- dim R}
+============================
+ {P |- dlist (d+ R d$) (s K)}
+
+1 other subgoal.
+
+presrv/dlsnoc < search.
+Subgoal 2:
+
+Variables: P K R Rs+1 Rs1 R'
+IH : forall P Rs K R Rs+, dimctx P -> {P |- dlist Rs K} -> {P |- dim R} ->
+       {dlsnoc Rs R Rs+}* -> {P |- dlist Rs+ (s K)}
+H1 : dimctx P
+H2 : {P |- dlist (d+ R' Rs1) K}
+H3 : {P |- dim R}
+H5 : {dlsnoc Rs1 R Rs+1}*
+============================
+ {P |- dlist (d+ R' Rs+1) (s K)}
+
+presrv/dlsnoc < case H2.
+Subgoal 2.1:
+
+Variables: P R Rs+1 Rs1 R' K1
+IH : forall P Rs K R Rs+, dimctx P -> {P |- dlist Rs K} -> {P |- dim R} ->
+       {dlsnoc Rs R Rs+}* -> {P |- dlist Rs+ (s K)}
+H1 : dimctx P
+H3 : {P |- dim R}
+H5 : {dlsnoc Rs1 R Rs+1}*
+H6 : {P |- dim R'}
+H7 : {P |- dlist Rs1 K1}
+============================
+ {P |- dlist (d+ R' Rs+1) (s (s K1))}
+
+1 other subgoal.
+
+presrv/dlsnoc < apply IH to H1 H7 H3 H5.
+Subgoal 2.1:
+
+Variables: P R Rs+1 Rs1 R' K1
+IH : forall P Rs K R Rs+, dimctx P -> {P |- dlist Rs K} -> {P |- dim R} ->
+       {dlsnoc Rs R Rs+}* -> {P |- dlist Rs+ (s K)}
+H1 : dimctx P
+H3 : {P |- dim R}
+H5 : {dlsnoc Rs1 R Rs+1}*
+H6 : {P |- dim R'}
+H7 : {P |- dlist Rs1 K1}
+H8 : {P |- dlist Rs+1 (s K1)}
+============================
+ {P |- dlist (d+ R' Rs+1) (s (s K1))}
+
+1 other subgoal.
+
+presrv/dlsnoc < search.
+Subgoal 2.2:
+
+Variables: P K R Rs+1 Rs1 R' F
+IH : forall P Rs K R Rs+, dimctx P -> {P |- dlist Rs K} -> {P |- dim R} ->
+       {dlsnoc Rs R Rs+}* -> {P |- dlist Rs+ (s K)}
+H1 : dimctx P
+H3 : {P |- dim R}
+H5 : {dlsnoc Rs1 R Rs+1}*
+H6 : {P, [F] |- dlist (d+ R' Rs1) K}
+H7 : member F P
+============================
+ {P |- dlist (d+ R' Rs+1) (s K)}
+
+presrv/dlsnoc < apply dimctx_inv to H1 H7.
+Subgoal 2.2:
+
+Variables: P K R Rs+1 Rs1 R' x
+IH : forall P Rs K R Rs+, dimctx P -> {P |- dlist Rs K} -> {P |- dim R} ->
+       {dlsnoc Rs R Rs+}* -> {P |- dlist Rs+ (s K)}
+H1 : dimctx P
+H3 : {P |- dim R}
+H5 : {dlsnoc Rs1 R Rs+1}*
+H6 : {P, [dim x] |- dlist (d+ R' Rs1) K}
+H7 : member (dim x) P
+H8 : is_name/dim x
+============================
+ {P |- dlist (d+ R' Rs+1) (s K)}
+
+presrv/dlsnoc < case H6.
+Proof completed.
+Abella < Theorem presrv/tlsnoc : 
+forall P Ns K P0 P1 Ns+, dimctx P -> {P |- tlist Ns K} -> {P |- tm P0} ->
+  {P |- tm P1} -> {tlsnoc Ns P0 P1 Ns+} -> {P |- tlist Ns+ (s K)}.
+
+
+============================
+ forall P Ns K P0 P1 Ns+, dimctx P -> {P |- tlist Ns K} -> {P |- tm P0} ->
+   {P |- tm P1} -> {tlsnoc Ns P0 P1 Ns+} -> {P |- tlist Ns+ (s K)}
+
+presrv/tlsnoc < induction on 5.
+
+IH : forall P Ns K P0 P1 Ns+, dimctx P -> {P |- tlist Ns K} ->
+       {P |- tm P0} -> {P |- tm P1} -> {tlsnoc Ns P0 P1 Ns+}* ->
+       {P |- tlist Ns+ (s K)}
+============================
+ forall P Ns K P0 P1 Ns+, dimctx P -> {P |- tlist Ns K} -> {P |- tm P0} ->
+   {P |- tm P1} -> {tlsnoc Ns P0 P1 Ns+}@ -> {P |- tlist Ns+ (s K)}
+
+presrv/tlsnoc < intros.
+
+Variables: P Ns K P0 P1 Ns+
+IH : forall P Ns K P0 P1 Ns+, dimctx P -> {P |- tlist Ns K} ->
+       {P |- tm P0} -> {P |- tm P1} -> {tlsnoc Ns P0 P1 Ns+}* ->
+       {P |- tlist Ns+ (s K)}
+H1 : dimctx P
+H2 : {P |- tlist Ns K}
+H3 : {P |- tm P0}
+H4 : {P |- tm P1}
+H5 : {tlsnoc Ns P0 P1 Ns+}@
+============================
+ {P |- tlist Ns+ (s K)}
+
+presrv/tlsnoc < case H5.
+Subgoal 1:
+
+Variables: P K P0 P1
+IH : forall P Ns K P0 P1 Ns+, dimctx P -> {P |- tlist Ns K} ->
+       {P |- tm P0} -> {P |- tm P1} -> {tlsnoc Ns P0 P1 Ns+}* ->
+       {P |- tlist Ns+ (s K)}
+H1 : dimctx P
+H2 : {P |- tlist t$ K}
+H3 : {P |- tm P0}
+H4 : {P |- tm P1}
+============================
+ {P |- tlist (t+ P0 P1 t$) (s K)}
+
+1 other subgoal.
+
+presrv/tlsnoc < search.
+Subgoal 2:
+
+Variables: P K P0 P1 Ns+1 Ns1 N1' N0'
+IH : forall P Ns K P0 P1 Ns+, dimctx P -> {P |- tlist Ns K} ->
+       {P |- tm P0} -> {P |- tm P1} -> {tlsnoc Ns P0 P1 Ns+}* ->
+       {P |- tlist Ns+ (s K)}
+H1 : dimctx P
+H2 : {P |- tlist (t+ N0' N1' Ns1) K}
+H3 : {P |- tm P0}
+H4 : {P |- tm P1}
+H6 : {tlsnoc Ns1 P0 P1 Ns+1}*
+============================
+ {P |- tlist (t+ N0' N1' Ns+1) (s K)}
+
+presrv/tlsnoc < case H2.
+Subgoal 2.1:
+
+Variables: P P0 P1 Ns+1 Ns1 N1' N0' K1
+IH : forall P Ns K P0 P1 Ns+, dimctx P -> {P |- tlist Ns K} ->
+       {P |- tm P0} -> {P |- tm P1} -> {tlsnoc Ns P0 P1 Ns+}* ->
+       {P |- tlist Ns+ (s K)}
+H1 : dimctx P
+H3 : {P |- tm P0}
+H4 : {P |- tm P1}
+H6 : {tlsnoc Ns1 P0 P1 Ns+1}*
+H7 : {P |- tm N0'}
+H8 : {P |- tm N1'}
+H9 : {P |- tlist Ns1 K1}
+============================
+ {P |- tlist (t+ N0' N1' Ns+1) (s (s K1))}
+
+1 other subgoal.
+
+presrv/tlsnoc < apply IH to H1 H9 H3 H4 H6.
+Subgoal 2.1:
+
+Variables: P P0 P1 Ns+1 Ns1 N1' N0' K1
+IH : forall P Ns K P0 P1 Ns+, dimctx P -> {P |- tlist Ns K} ->
+       {P |- tm P0} -> {P |- tm P1} -> {tlsnoc Ns P0 P1 Ns+}* ->
+       {P |- tlist Ns+ (s K)}
+H1 : dimctx P
+H3 : {P |- tm P0}
+H4 : {P |- tm P1}
+H6 : {tlsnoc Ns1 P0 P1 Ns+1}*
+H7 : {P |- tm N0'}
+H8 : {P |- tm N1'}
+H9 : {P |- tlist Ns1 K1}
+H10 : {P |- tlist Ns+1 (s K1)}
+============================
+ {P |- tlist (t+ N0' N1' Ns+1) (s (s K1))}
+
+1 other subgoal.
+
+presrv/tlsnoc < search.
+Subgoal 2.2:
+
+Variables: P K P0 P1 Ns+1 Ns1 N1' N0' F
+IH : forall P Ns K P0 P1 Ns+, dimctx P -> {P |- tlist Ns K} ->
+       {P |- tm P0} -> {P |- tm P1} -> {tlsnoc Ns P0 P1 Ns+}* ->
+       {P |- tlist Ns+ (s K)}
+H1 : dimctx P
+H3 : {P |- tm P0}
+H4 : {P |- tm P1}
+H6 : {tlsnoc Ns1 P0 P1 Ns+1}*
+H7 : {P, [F] |- tlist (t+ N0' N1' Ns1) K}
+H8 : member F P
+============================
+ {P |- tlist (t+ N0' N1' Ns+1) (s K)}
+
+presrv/tlsnoc < apply dimctx_inv to H1 H8.
+Subgoal 2.2:
+
+Variables: P K P0 P1 Ns+1 Ns1 N1' N0' x
+IH : forall P Ns K P0 P1 Ns+, dimctx P -> {P |- tlist Ns K} ->
+       {P |- tm P0} -> {P |- tm P1} -> {tlsnoc Ns P0 P1 Ns+}* ->
+       {P |- tlist Ns+ (s K)}
+H1 : dimctx P
+H3 : {P |- tm P0}
+H4 : {P |- tm P1}
+H6 : {tlsnoc Ns1 P0 P1 Ns+1}*
+H7 : {P, [dim x] |- tlist (t+ N0' N1' Ns1) K}
+H8 : member (dim x) P
+H9 : is_name/dim x
+============================
+ {P |- tlist (t+ N0' N1' Ns+1) (s K)}
+
+presrv/tlsnoc < case H7.
+Proof completed.
+Abella < Theorem presrv/tubef : 
+forall P Ns K I E Nie, dimctx P -> {P |- tlist Ns K} -> {tubef Ns I E Nie} ->
+  {P |- tm Nie}.
+
+
+============================
+ forall P Ns K I E Nie, dimctx P -> {P |- tlist Ns K} ->
+   {tubef Ns I E Nie} -> {P |- tm Nie}
+
+presrv/tubef < induction on 3.
+
+IH : forall P Ns K I E Nie, dimctx P -> {P |- tlist Ns K} ->
+       {tubef Ns I E Nie}* -> {P |- tm Nie}
+============================
+ forall P Ns K I E Nie, dimctx P -> {P |- tlist Ns K} ->
+   {tubef Ns I E Nie}@ -> {P |- tm Nie}
+
+presrv/tubef < intros.
+
+Variables: P Ns K I E Nie
+IH : forall P Ns K I E Nie, dimctx P -> {P |- tlist Ns K} ->
+       {tubef Ns I E Nie}* -> {P |- tm Nie}
+H1 : dimctx P
+H2 : {P |- tlist Ns K}
+H3 : {tubef Ns I E Nie}@
+============================
+ {P |- tm Nie}
+
+presrv/tubef < case H3.
+Subgoal 1:
+
+Variables: P K Nie Ns1 N1
+IH : forall P Ns K I E Nie, dimctx P -> {P |- tlist Ns K} ->
+       {tubef Ns I E Nie}* -> {P |- tm Nie}
+H1 : dimctx P
+H2 : {P |- tlist (t+ Nie N1 Ns1) K}
+============================
+ {P |- tm Nie}
+
+2 other subgoals.
+
+presrv/tubef < case H2.
+Subgoal 1.1:
+
+Variables: P Nie Ns1 N1 K1
+IH : forall P Ns K I E Nie, dimctx P -> {P |- tlist Ns K} ->
+       {tubef Ns I E Nie}* -> {P |- tm Nie}
+H1 : dimctx P
+H4 : {P |- tm Nie}
+H5 : {P |- tm N1}
+H6 : {P |- tlist Ns1 K1}
+============================
+ {P |- tm Nie}
+
+3 other subgoals.
+
+presrv/tubef < search.
+Subgoal 1.2:
+
+Variables: P K Nie Ns1 N1 F
+IH : forall P Ns K I E Nie, dimctx P -> {P |- tlist Ns K} ->
+       {tubef Ns I E Nie}* -> {P |- tm Nie}
+H1 : dimctx P
+H4 : {P, [F] |- tlist (t+ Nie N1 Ns1) K}
+H5 : member F P
+============================
+ {P |- tm Nie}
+
+2 other subgoals.
+
+presrv/tubef < apply dimctx_inv to H1 H5.
+Subgoal 1.2:
+
+Variables: P K Nie Ns1 N1 x
+IH : forall P Ns K I E Nie, dimctx P -> {P |- tlist Ns K} ->
+       {tubef Ns I E Nie}* -> {P |- tm Nie}
+H1 : dimctx P
+H4 : {P, [dim x] |- tlist (t+ Nie N1 Ns1) K}
+H5 : member (dim x) P
+H6 : is_name/dim x
+============================
+ {P |- tm Nie}
+
+2 other subgoals.
+
+presrv/tubef < case H4.
+Subgoal 2:
+
+Variables: P K Nie Ns1 N0
+IH : forall P Ns K I E Nie, dimctx P -> {P |- tlist Ns K} ->
+       {tubef Ns I E Nie}* -> {P |- tm Nie}
+H1 : dimctx P
+H2 : {P |- tlist (t+ N0 Nie Ns1) K}
+============================
+ {P |- tm Nie}
+
+1 other subgoal.
+
+presrv/tubef < case H2.
+Subgoal 2.1:
+
+Variables: P Nie Ns1 N0 K1
+IH : forall P Ns K I E Nie, dimctx P -> {P |- tlist Ns K} ->
+       {tubef Ns I E Nie}* -> {P |- tm Nie}
+H1 : dimctx P
+H4 : {P |- tm N0}
+H5 : {P |- tm Nie}
+H6 : {P |- tlist Ns1 K1}
+============================
+ {P |- tm Nie}
+
+2 other subgoals.
+
+presrv/tubef < search.
+Subgoal 2.2:
+
+Variables: P K Nie Ns1 N0 F
+IH : forall P Ns K I E Nie, dimctx P -> {P |- tlist Ns K} ->
+       {tubef Ns I E Nie}* -> {P |- tm Nie}
+H1 : dimctx P
+H4 : {P, [F] |- tlist (t+ N0 Nie Ns1) K}
+H5 : member F P
+============================
+ {P |- tm Nie}
+
+1 other subgoal.
+
+presrv/tubef < apply dimctx_inv to H1 H5.
+Subgoal 2.2:
+
+Variables: P K Nie Ns1 N0 x
+IH : forall P Ns K I E Nie, dimctx P -> {P |- tlist Ns K} ->
+       {tubef Ns I E Nie}* -> {P |- tm Nie}
+H1 : dimctx P
+H4 : {P, [dim x] |- tlist (t+ N0 Nie Ns1) K}
+H5 : member (dim x) P
+H6 : is_name/dim x
+============================
+ {P |- tm Nie}
+
+1 other subgoal.
+
+presrv/tubef < case H4.
+Subgoal 3:
+
+Variables: P K E Nie I1 Ns1 N1 N0
+IH : forall P Ns K I E Nie, dimctx P -> {P |- tlist Ns K} ->
+       {tubef Ns I E Nie}* -> {P |- tm Nie}
+H1 : dimctx P
+H2 : {P |- tlist (t+ N0 N1 Ns1) K}
+H4 : {tubef Ns1 I1 E Nie}*
+============================
+ {P |- tm Nie}
+
+presrv/tubef < case H2.
+Subgoal 3.1:
+
+Variables: P E Nie I1 Ns1 N1 N0 K1
+IH : forall P Ns K I E Nie, dimctx P -> {P |- tlist Ns K} ->
+       {tubef Ns I E Nie}* -> {P |- tm Nie}
+H1 : dimctx P
+H4 : {tubef Ns1 I1 E Nie}*
+H5 : {P |- tm N0}
+H6 : {P |- tm N1}
+H7 : {P |- tlist Ns1 K1}
+============================
+ {P |- tm Nie}
+
+1 other subgoal.
+
+presrv/tubef < apply IH to H1 H7 H4.
+Subgoal 3.1:
+
+Variables: P E Nie I1 Ns1 N1 N0 K1
+IH : forall P Ns K I E Nie, dimctx P -> {P |- tlist Ns K} ->
+       {tubef Ns I E Nie}* -> {P |- tm Nie}
+H1 : dimctx P
+H4 : {tubef Ns1 I1 E Nie}*
+H5 : {P |- tm N0}
+H6 : {P |- tm N1}
+H7 : {P |- tlist Ns1 K1}
+H8 : {P |- tm Nie}
+============================
+ {P |- tm Nie}
+
+1 other subgoal.
+
+presrv/tubef < search.
+Subgoal 3.2:
+
+Variables: P K E Nie I1 Ns1 N1 N0 F
+IH : forall P Ns K I E Nie, dimctx P -> {P |- tlist Ns K} ->
+       {tubef Ns I E Nie}* -> {P |- tm Nie}
+H1 : dimctx P
+H4 : {tubef Ns1 I1 E Nie}*
+H5 : {P, [F] |- tlist (t+ N0 N1 Ns1) K}
+H6 : member F P
+============================
+ {P |- tm Nie}
+
+presrv/tubef < apply dimctx_inv to H1 H6.
+Subgoal 3.2:
+
+Variables: P K E Nie I1 Ns1 N1 N0 x
+IH : forall P Ns K I E Nie, dimctx P -> {P |- tlist Ns K} ->
+       {tubef Ns I E Nie}* -> {P |- tm Nie}
+H1 : dimctx P
+H4 : {tubef Ns1 I1 E Nie}*
+H5 : {P, [dim x] |- tlist (t+ N0 N1 Ns1) K}
+H6 : member (dim x) P
+H7 : is_name/dim x
+============================
+ {P |- tm Nie}
+
+presrv/tubef < case H5.
+Proof completed.
+Abella < Theorem preservation : 
+forall P M M', dimctx P -> {P |- tm M} -> {red M M'} -> {P |- tm M'}.
+
+
+============================
+ forall P M M', dimctx P -> {P |- tm M} -> {red M M'} -> {P |- tm M'}
+
+preservation < induction on 3.
+
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+============================
+ forall P M M', dimctx P -> {P |- tm M} -> {red M M'}@ -> {P |- tm M'}
+
+preservation < intros.
+
+Variables: P M M'
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H2 : {P |- tm M}
+H3 : {red M M'}@
+============================
+ {P |- tm M'}
+
+preservation < case H3.
+Subgoal 1:
+
+Variables: P E
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H2 : {P |- tm (nott E)}
+H4 : {is_eps E}*
+============================
+ {P |- tm boolt}
+
+39 other subgoals.
+
+preservation < search.
+Subgoal 2:
+
+Variables: P A' A M1 R' R
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H2 : {P |- tm (coe A R R' M1)}
+H4 : {red (A n1) (A' n1)}*
+============================
+ {P |- tm (coe A' R R' M1)}
+
+38 other subgoals.
+
+preservation < case H2.
+Subgoal 2.1:
+
+Variables: P A' A M1 R' R
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {red (A n1) (A' n1)}*
+H5 : {P, dim n1 |- tm (A n1)}
+H6 : {P |- dim R}
+H7 : {P |- dim R'}
+H8 : {P |- tm M1}
+============================
+ {P |- tm (coe A' R R' M1)}
+
+39 other subgoals.
+
+preservation < apply IH to _ H5 H4.
+Subgoal 2.1:
+
+Variables: P A' A M1 R' R
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {red (A n1) (A' n1)}*
+H5 : {P, dim n1 |- tm (A n1)}
+H6 : {P |- dim R}
+H7 : {P |- dim R'}
+H8 : {P |- tm M1}
+H9 : {P, dim n1 |- tm (A' n1)}
+============================
+ {P |- tm (coe A' R R' M1)}
+
+39 other subgoals.
+
+preservation < search.
+Subgoal 2.2:
+
+Variables: P A' A M1 R' R F
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {red (A n1) (A' n1)}*
+H5 : {P, [F] |- tm (coe A R R' M1)}
+H6 : member F P
+============================
+ {P |- tm (coe A' R R' M1)}
+
+38 other subgoals.
+
+preservation < apply dimctx_inv to H1 H6.
+Subgoal 2.2:
+
+Variables: P A' A M1 R' R x
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {red (A n1) (A' n1)}*
+H5 : {P, [dim x] |- tm (coe A R R' M1)}
+H6 : member (dim x) P
+H7 : is_name/dim x
+============================
+ {P |- tm (coe A' R R' M1)}
+
+38 other subgoals.
+
+preservation < case H5.
+Subgoal 3:
+
+Variables: P A' A Ns M1 R' R Rs
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H2 : {P |- tm (hcom A Rs R R' M1 Ns)}
+H4 : {red A A'}*
+============================
+ {P |- tm (hcom A' Rs R R' M1 Ns)}
+
+37 other subgoals.
+
+preservation < case H2.
+Subgoal 3.1:
+
+Variables: P A' A Ns M1 R' R Rs K
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {red A A'}*
+H5 : {P |- tm A}
+H6 : {P |- dlist Rs (s K)}
+H7 : {P |- dim R}
+H8 : {P |- dim R'}
+H9 : {P |- tm M1}
+H10 : {P, dim n1 |- tlist (Ns n1) (s K)}
+============================
+ {P |- tm (hcom A' Rs R R' M1 Ns)}
+
+38 other subgoals.
+
+preservation < apply IH to H1 H5 H4.
+Subgoal 3.1:
+
+Variables: P A' A Ns M1 R' R Rs K
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {red A A'}*
+H5 : {P |- tm A}
+H6 : {P |- dlist Rs (s K)}
+H7 : {P |- dim R}
+H8 : {P |- dim R'}
+H9 : {P |- tm M1}
+H10 : {P, dim n1 |- tlist (Ns n1) (s K)}
+H11 : {P |- tm A'}
+============================
+ {P |- tm (hcom A' Rs R R' M1 Ns)}
+
+38 other subgoals.
+
+preservation < search.
+Subgoal 3.2:
+
+Variables: P A' A Ns M1 R' R Rs F
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {red A A'}*
+H5 : {P, [F] |- tm (hcom A Rs R R' M1 Ns)}
+H6 : member F P
+============================
+ {P |- tm (hcom A' Rs R R' M1 Ns)}
+
+37 other subgoals.
+
+preservation < apply dimctx_inv to H1 H6.
+Subgoal 3.2:
+
+Variables: P A' A Ns M1 R' R Rs x
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {red A A'}*
+H5 : {P, [dim x] |- tm (hcom A Rs R R' M1 Ns)}
+H6 : member (dim x) P
+H7 : is_name/dim x
+============================
+ {P |- tm (hcom A' Rs R R' M1 Ns)}
+
+37 other subgoals.
+
+preservation < case H5.
+Subgoal 4:
+
+Variables: P M'1 M1 N
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H2 : {P |- tm (app M1 N)}
+H4 : {red M1 M'1}*
+============================
+ {P |- tm (app M'1 N)}
+
+36 other subgoals.
+
+preservation < case H2.
+Subgoal 4.1:
+
+Variables: P M'1 M1 N
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {red M1 M'1}*
+H5 : {P |- tm M1}
+H6 : {P |- tm N}
+============================
+ {P |- tm (app M'1 N)}
+
+37 other subgoals.
+
+preservation < apply IH to H1 H5 H4.
+Subgoal 4.1:
+
+Variables: P M'1 M1 N
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {red M1 M'1}*
+H5 : {P |- tm M1}
+H6 : {P |- tm N}
+H7 : {P |- tm M'1}
+============================
+ {P |- tm (app M'1 N)}
+
+37 other subgoals.
+
+preservation < search.
+Subgoal 4.2:
+
+Variables: P M'1 M1 N F
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {red M1 M'1}*
+H5 : {P, [F] |- tm (app M1 N)}
+H6 : member F P
+============================
+ {P |- tm (app M'1 N)}
+
+36 other subgoals.
+
+preservation < apply dimctx_inv to H1 H6.
+Subgoal 4.2:
+
+Variables: P M'1 M1 N x
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {red M1 M'1}*
+H5 : {P, [dim x] |- tm (app M1 N)}
+H6 : member (dim x) P
+H7 : is_name/dim x
+============================
+ {P |- tm (app M'1 N)}
+
+36 other subgoals.
+
+preservation < case H5.
+Subgoal 5:
+
+Variables: P N M1
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H2 : {P |- tm (app (lam M1) N)}
+============================
+ {P |- tm (M1 N)}
+
+35 other subgoals.
+
+preservation < case H2.
+Subgoal 5.1:
+
+Variables: P N M1
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {P |- tm (lam M1)}
+H5 : {P |- tm N}
+============================
+ {P |- tm (M1 N)}
+
+36 other subgoals.
+
+preservation < case H4.
+Subgoal 5.1.1:
+
+Variables: P N M1
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H5 : {P |- tm N}
+H6 : {P, tm n1 |- tm (M1 n1)}
+============================
+ {P |- tm (M1 N)}
+
+37 other subgoals.
+
+preservation <  inst H6 with n1 = N.
+Subgoal 5.1.1:
+
+Variables: P N M1
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H5 : {P |- tm N}
+H6 : {P, tm n1 |- tm (M1 n1)}
+H7 : {P, tm N |- tm (M1 N)}
+============================
+ {P |- tm (M1 N)}
+
+37 other subgoals.
+
+preservation <  cut H7.
+Subgoal 5.1.1:
+
+Variables: P N M1
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H5 : {P |- tm N}
+H6 : {P, tm n1 |- tm (M1 n1)}
+H7 : {P, tm N |- tm (M1 N)}
+H8 : {P |- tm (M1 N)}
+============================
+ {P |- tm (M1 N)}
+
+37 other subgoals.
+
+preservation < search.
+Subgoal 5.1.2:
+
+Variables: P N M1 F
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H5 : {P |- tm N}
+H6 : {P, [F] |- tm (lam M1)}
+H7 : member F P
+============================
+ {P |- tm (M1 N)}
+
+36 other subgoals.
+
+preservation < apply dimctx_inv to H1 H7.
+Subgoal 5.1.2:
+
+Variables: P N M1 x
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H5 : {P |- tm N}
+H6 : {P, [dim x] |- tm (lam M1)}
+H7 : member (dim x) P
+H8 : is_name/dim x
+============================
+ {P |- tm (M1 N)}
+
+36 other subgoals.
+
+preservation < case H6.
+Subgoal 5.2:
+
+Variables: P N M1 F
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {P, [F] |- tm (app (lam M1) N)}
+H5 : member F P
+============================
+ {P |- tm (M1 N)}
+
+35 other subgoals.
+
+preservation < apply dimctx_inv to H1 H5.
+Subgoal 5.2:
+
+Variables: P N M1 x
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {P, [dim x] |- tm (app (lam M1) N)}
+H5 : member (dim x) P
+H6 : is_name/dim x
+============================
+ {P |- tm (M1 N)}
+
+35 other subgoals.
+
+preservation < case H4.
+Subgoal 6:
+
+Variables: P R R' A M1 B
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H2 : {P |- tm (coe (y\pit (A y) (B y)) R R' M1)}
+============================
+ {P |- tm (lam (a\coe (y\B y (coe A R' y a)) R R' (app M1 (coe A R' R a))))}
+
+34 other subgoals.
+
+preservation < case H2.
+Subgoal 6.1:
+
+Variables: P R R' A M1 B
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {P, dim n1 |- tm (pit (A n1) (B n1))}
+H5 : {P |- dim R}
+H6 : {P |- dim R'}
+H7 : {P |- tm M1}
+============================
+ {P |- tm (lam (a\coe (y\B y (coe A R' y a)) R R' (app M1 (coe A R' R a))))}
+
+35 other subgoals.
+
+preservation < case H4.
+Subgoal 6.1.1:
+
+Variables: P R R' A M1 B
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H5 : {P |- dim R}
+H6 : {P |- dim R'}
+H7 : {P |- tm M1}
+H8 : {P, dim n1 |- tm (A n1)}
+H9 : {P, dim n1, tm n2 |- tm (B n1 n2)}
+============================
+ {P |- tm (lam (a\coe (y\B y (coe A R' y a)) R R' (app M1 (coe A R' R a))))}
+
+36 other subgoals.
+
+preservation <  inst H9 with n2 = coe A R' n1 n3.
+Subgoal 6.1.1:
+
+Variables: P R R' A M1 B
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H5 : {P |- dim R}
+H6 : {P |- dim R'}
+H7 : {P |- tm M1}
+H8 : {P, dim n1 |- tm (A n1)}
+H9 : {P, dim n1, tm n2 |- tm (B n1 n2)}
+H10 : {P, dim n1, tm (coe A R' n1 n3) |- tm (B n1 (coe A R' n1 n3))}
+============================
+ {P |- tm (lam (a\coe (y\B y (coe A R' y a)) R R' (app M1 (coe A R' R a))))}
+
+36 other subgoals.
+
+preservation < assert {P, dim n1, tm n3 |- tm (coe A R' n1 n3)}.
+Subgoal 6.1.1:
+
+Variables: P R R' A M1 B
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H5 : {P |- dim R}
+H6 : {P |- dim R'}
+H7 : {P |- tm M1}
+H8 : {P, dim n1 |- tm (A n1)}
+H9 : {P, dim n1, tm n2 |- tm (B n1 n2)}
+H10 : {P, dim n1, tm (coe A R' n1 n3) |- tm (B n1 (coe A R' n1 n3))}
+H11 : {P, dim n1, tm n3 |- tm (coe A R' n1 n3)}
+============================
+ {P |- tm (lam (a\coe (y\B y (coe A R' y a)) R R' (app M1 (coe A R' R a))))}
+
+36 other subgoals.
+
+preservation < cut H10 with H11.
+Subgoal 6.1.1:
+
+Variables: P R R' A M1 B
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H5 : {P |- dim R}
+H6 : {P |- dim R'}
+H7 : {P |- tm M1}
+H8 : {P, dim n1 |- tm (A n1)}
+H9 : {P, dim n1, tm n2 |- tm (B n1 n2)}
+H10 : {P, dim n1, tm (coe A R' n1 n3) |- tm (B n1 (coe A R' n1 n3))}
+H11 : {P, dim n1, tm n3 |- tm (coe A R' n1 n3)}
+H12 : {P, dim n1, tm n3 |- tm (B n1 (coe A R' n1 n3))}
+============================
+ {P |- tm (lam (a\coe (y\B y (coe A R' y a)) R R' (app M1 (coe A R' R a))))}
+
+36 other subgoals.
+
+preservation < search.
+Subgoal 6.1.2:
+
+Variables: P R R' A M1 B F
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H5 : {P |- dim R}
+H6 : {P |- dim R'}
+H7 : {P |- tm M1}
+H8 : {P, dim n1, [F n1] |- tm (pit (A n1) (B n1))}
+H9 : member (F n1) (dim n1 :: P)
+============================
+ {P |- tm (lam (a\coe (y\B y (coe A R' y a)) R R' (app M1 (coe A R' R a))))}
+
+35 other subgoals.
+
+preservation < apply dimctx_inv to _ H9.
+Subgoal 6.1.2:
+
+Variables: P R R' A M1 B x
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H5 : {P |- dim R}
+H6 : {P |- dim R'}
+H7 : {P |- tm M1}
+H8 : {P, dim n1, [dim (x n1)] |- tm (pit (A n1) (B n1))}
+H9 : member (dim (x n1)) (dim n1 :: P)
+H10 : is_name/dim (x n1)
+============================
+ {P |- tm (lam (a\coe (y\B y (coe A R' y a)) R R' (app M1 (coe A R' R a))))}
+
+35 other subgoals.
+
+preservation < case H8.
+Subgoal 6.2:
+
+Variables: P R R' A M1 B F
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {P, [F] |- tm (coe (y\pit (A y) (B y)) R R' M1)}
+H5 : member F P
+============================
+ {P |- tm (lam (a\coe (y\B y (coe A R' y a)) R R' (app M1 (coe A R' R a))))}
+
+34 other subgoals.
+
+preservation < apply dimctx_inv to H1 H5.
+Subgoal 6.2:
+
+Variables: P R R' A M1 B x
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {P, [dim x] |- tm (coe (y\pit (A y) (B y)) R R' M1)}
+H5 : member (dim x) P
+H6 : is_name/dim x
+============================
+ {P |- tm (lam (a\coe (y\B y (coe A R' y a)) R R' (app M1 (coe A R' R a))))}
+
+34 other subgoals.
+
+preservation < case H4.
+Subgoal 7:
+
+Variables: P Ns' Ns M1 R' R Rs B A
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H2 : {P |- tm (hcom (pit A B) Rs R R' M1 Ns)}
+H4 : {map (t\app t n1) (Ns n2) (Ns' n1 n2)}*
+============================
+ {P |- tm (lam (a\hcom (B a) Rs R R' (app M1 a) (Ns' a)))}
+
+33 other subgoals.
+
+preservation < case H2.
+Subgoal 7.1:
+
+Variables: P Ns' Ns M1 R' R Rs B A K
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {map (t\app t n1) (Ns n2) (Ns' n1 n2)}*
+H5 : {P |- tm (pit A B)}
+H6 : {P |- dlist Rs (s K)}
+H7 : {P |- dim R}
+H8 : {P |- dim R'}
+H9 : {P |- tm M1}
+H10 : {P, dim n1 |- tlist (Ns n1) (s K)}
+============================
+ {P |- tm (lam (a\hcom (B a) Rs R R' (app M1 a) (Ns' a)))}
+
+34 other subgoals.
+
+preservation < case H5.
+Subgoal 7.1.1:
+
+Variables: P Ns' Ns M1 R' R Rs B A K
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {map (t\app t n1) (Ns n2) (Ns' n1 n2)}*
+H6 : {P |- dlist Rs (s K)}
+H7 : {P |- dim R}
+H8 : {P |- dim R'}
+H9 : {P |- tm M1}
+H10 : {P, dim n1 |- tlist (Ns n1) (s K)}
+H11 : {P |- tm A}
+H12 : {P, tm n1 |- tm (B n1)}
+============================
+ {P |- tm (lam (a\hcom (B a) Rs R R' (app M1 a) (Ns' a)))}
+
+35 other subgoals.
+
+preservation < apply dimctx_tmctx to H1.
+Subgoal 7.1.1:
+
+Variables: P Ns' Ns M1 R' R Rs B A K
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {map (t\app t n1) (Ns n2) (Ns' n1 n2)}*
+H6 : {P |- dlist Rs (s K)}
+H7 : {P |- dim R}
+H8 : {P |- dim R'}
+H9 : {P |- tm M1}
+H10 : {P, dim n1 |- tlist (Ns n1) (s K)}
+H11 : {P |- tm A}
+H12 : {P, tm n1 |- tm (B n1)}
+H13 : tmctx P
+============================
+ {P |- tm (lam (a\hcom (B a) Rs R R' (app M1 a) (Ns' a)))}
+
+35 other subgoals.
+
+preservation < permute (n1 n2) H10.
+Subgoal 7.1.1:
+
+Variables: P Ns' Ns M1 R' R Rs B A K
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {map (t\app t n1) (Ns n2) (Ns' n1 n2)}*
+H6 : {P |- dlist Rs (s K)}
+H7 : {P |- dim R}
+H8 : {P |- dim R'}
+H9 : {P |- tm M1}
+H10 : {P, dim n2 |- tlist (Ns n2) (s K)}
+H11 : {P |- tm A}
+H12 : {P, tm n1 |- tm (B n1)}
+H13 : tmctx P
+============================
+ {P |- tm (lam (a\hcom (B a) Rs R R' (app M1 a) (Ns' a)))}
+
+35 other subgoals.
+
+preservation < assert {P, tm n1, dim n2, tm n3 |- tm (app n3 n1)}.
+Subgoal 7.1.1:
+
+Variables: P Ns' Ns M1 R' R Rs B A K
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {map (t\app t n1) (Ns n2) (Ns' n1 n2)}*
+H6 : {P |- dlist Rs (s K)}
+H7 : {P |- dim R}
+H8 : {P |- dim R'}
+H9 : {P |- tm M1}
+H10 : {P, dim n2 |- tlist (Ns n2) (s K)}
+H11 : {P |- tm A}
+H12 : {P, tm n1 |- tm (B n1)}
+H13 : tmctx P
+H14 : {P, tm n1, dim n2, tm n3 |- tm (app n3 n1)}
+============================
+ {P |- tm (lam (a\hcom (B a) Rs R R' (app M1 a) (Ns' a)))}
+
+35 other subgoals.
+
+preservation < apply presrv/map to _ H10 H14 H4.
+Subgoal 7.1.1:
+
+Variables: P Ns' Ns M1 R' R Rs B A K
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {map (t\app t n1) (Ns n2) (Ns' n1 n2)}*
+H6 : {P |- dlist Rs (s K)}
+H7 : {P |- dim R}
+H8 : {P |- dim R'}
+H9 : {P |- tm M1}
+H10 : {P, dim n2 |- tlist (Ns n2) (s K)}
+H11 : {P |- tm A}
+H12 : {P, tm n1 |- tm (B n1)}
+H13 : tmctx P
+H14 : {P, tm n1, dim n2, tm n3 |- tm (app n3 n1)}
+H15 : {P, tm n1, dim n2 |- tlist (Ns' n1 n2) (s K)}
+============================
+ {P |- tm (lam (a\hcom (B a) Rs R R' (app M1 a) (Ns' a)))}
+
+35 other subgoals.
+
+preservation < search.
+Subgoal 7.1.2:
+
+Variables: P Ns' Ns M1 R' R Rs B A K F
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {map (t\app t n1) (Ns n2) (Ns' n1 n2)}*
+H6 : {P |- dlist Rs (s K)}
+H7 : {P |- dim R}
+H8 : {P |- dim R'}
+H9 : {P |- tm M1}
+H10 : {P, dim n1 |- tlist (Ns n1) (s K)}
+H11 : {P, [F] |- tm (pit A B)}
+H12 : member F P
+============================
+ {P |- tm (lam (a\hcom (B a) Rs R R' (app M1 a) (Ns' a)))}
+
+34 other subgoals.
+
+preservation < apply dimctx_inv to H1 H12.
+Subgoal 7.1.2:
+
+Variables: P Ns' Ns M1 R' R Rs B A K x
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {map (t\app t n1) (Ns n2) (Ns' n1 n2)}*
+H6 : {P |- dlist Rs (s K)}
+H7 : {P |- dim R}
+H8 : {P |- dim R'}
+H9 : {P |- tm M1}
+H10 : {P, dim n1 |- tlist (Ns n1) (s K)}
+H11 : {P, [dim x] |- tm (pit A B)}
+H12 : member (dim x) P
+H13 : is_name/dim x
+============================
+ {P |- tm (lam (a\hcom (B a) Rs R R' (app M1 a) (Ns' a)))}
+
+34 other subgoals.
+
+preservation < case H11.
+Subgoal 7.2:
+
+Variables: P Ns' Ns M1 R' R Rs B A F
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {map (t\app t n1) (Ns n2) (Ns' n1 n2)}*
+H5 : {P, [F] |- tm (hcom (pit A B) Rs R R' M1 Ns)}
+H6 : member F P
+============================
+ {P |- tm (lam (a\hcom (B a) Rs R R' (app M1 a) (Ns' a)))}
+
+33 other subgoals.
+
+preservation < apply dimctx_inv to H1 H6.
+Subgoal 7.2:
+
+Variables: P Ns' Ns M1 R' R Rs B A x
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {map (t\app t n1) (Ns n2) (Ns' n1 n2)}*
+H5 : {P, [dim x] |- tm (hcom (pit A B) Rs R R' M1 Ns)}
+H6 : member (dim x) P
+H7 : is_name/dim x
+============================
+ {P |- tm (lam (a\hcom (B a) Rs R R' (app M1 a) (Ns' a)))}
+
+33 other subgoals.
+
+preservation < case H5.
+Subgoal 8:
+
+Variables: P M'1 M1
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H2 : {P |- tm (fst M1)}
+H4 : {red M1 M'1}*
+============================
+ {P |- tm (fst M'1)}
+
+32 other subgoals.
+
+preservation < case H2.
+Subgoal 8.1:
+
+Variables: P M'1 M1
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {red M1 M'1}*
+H5 : {P |- tm M1}
+============================
+ {P |- tm (fst M'1)}
+
+33 other subgoals.
+
+preservation < apply IH to H1 H5 H4.
+Subgoal 8.1:
+
+Variables: P M'1 M1
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {red M1 M'1}*
+H5 : {P |- tm M1}
+H6 : {P |- tm M'1}
+============================
+ {P |- tm (fst M'1)}
+
+33 other subgoals.
+
+preservation < search.
+Subgoal 8.2:
+
+Variables: P M'1 M1 F
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {red M1 M'1}*
+H5 : {P, [F] |- tm (fst M1)}
+H6 : member F P
+============================
+ {P |- tm (fst M'1)}
+
+32 other subgoals.
+
+preservation < apply dimctx_inv to H1 H6.
+Subgoal 8.2:
+
+Variables: P M'1 M1 x
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {red M1 M'1}*
+H5 : {P, [dim x] |- tm (fst M1)}
+H6 : member (dim x) P
+H7 : is_name/dim x
+============================
+ {P |- tm (fst M'1)}
+
+32 other subgoals.
+
+preservation < case H5.
+Subgoal 9:
+
+Variables: P M'1 M1
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H2 : {P |- tm (snd M1)}
+H4 : {red M1 M'1}*
+============================
+ {P |- tm (snd M'1)}
+
+31 other subgoals.
+
+preservation < case H2.
+Subgoal 9.1:
+
+Variables: P M'1 M1
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {red M1 M'1}*
+H5 : {P |- tm M1}
+============================
+ {P |- tm (snd M'1)}
+
+32 other subgoals.
+
+preservation < apply IH to H1 H5 H4.
+Subgoal 9.1:
+
+Variables: P M'1 M1
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {red M1 M'1}*
+H5 : {P |- tm M1}
+H6 : {P |- tm M'1}
+============================
+ {P |- tm (snd M'1)}
+
+32 other subgoals.
+
+preservation < search.
+Subgoal 9.2:
+
+Variables: P M'1 M1 F
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {red M1 M'1}*
+H5 : {P, [F] |- tm (snd M1)}
+H6 : member F P
+============================
+ {P |- tm (snd M'1)}
+
+31 other subgoals.
+
+preservation < apply dimctx_inv to H1 H6.
+Subgoal 9.2:
+
+Variables: P M'1 M1 x
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {red M1 M'1}*
+H5 : {P, [dim x] |- tm (snd M1)}
+H6 : member (dim x) P
+H7 : is_name/dim x
+============================
+ {P |- tm (snd M'1)}
+
+31 other subgoals.
+
+preservation < case H5.
+Subgoal 10:
+
+Variables: P M' N
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H2 : {P |- tm (fst (pair M' N))}
+============================
+ {P |- tm M'}
+
+30 other subgoals.
+
+preservation < case H2.
+Subgoal 10.1:
+
+Variables: P M' N
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {P |- tm (pair M' N)}
+============================
+ {P |- tm M'}
+
+31 other subgoals.
+
+preservation < case H4.
+Subgoal 10.1.1:
+
+Variables: P M' N
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H5 : {P |- tm M'}
+H6 : {P |- tm N}
+============================
+ {P |- tm M'}
+
+32 other subgoals.
+
+preservation < search.
+Subgoal 10.1.2:
+
+Variables: P M' N F
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H5 : {P, [F] |- tm (pair M' N)}
+H6 : member F P
+============================
+ {P |- tm M'}
+
+31 other subgoals.
+
+preservation < apply dimctx_inv to H1 H6.
+Subgoal 10.1.2:
+
+Variables: P M' N x
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H5 : {P, [dim x] |- tm (pair M' N)}
+H6 : member (dim x) P
+H7 : is_name/dim x
+============================
+ {P |- tm M'}
+
+31 other subgoals.
+
+preservation < case H5.
+Subgoal 10.2:
+
+Variables: P M' N F
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {P, [F] |- tm (fst (pair M' N))}
+H5 : member F P
+============================
+ {P |- tm M'}
+
+30 other subgoals.
+
+preservation < apply dimctx_inv to H1 H5.
+Subgoal 10.2:
+
+Variables: P M' N x
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {P, [dim x] |- tm (fst (pair M' N))}
+H5 : member (dim x) P
+H6 : is_name/dim x
+============================
+ {P |- tm M'}
+
+30 other subgoals.
+
+preservation < case H4.
+Subgoal 11:
+
+Variables: P M' M1
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H2 : {P |- tm (snd (pair M1 M'))}
+============================
+ {P |- tm M'}
+
+29 other subgoals.
+
+preservation < case H2.
+Subgoal 11.1:
+
+Variables: P M' M1
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {P |- tm (pair M1 M')}
+============================
+ {P |- tm M'}
+
+30 other subgoals.
+
+preservation < case H4.
+Subgoal 11.1.1:
+
+Variables: P M' M1
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H5 : {P |- tm M1}
+H6 : {P |- tm M'}
+============================
+ {P |- tm M'}
+
+31 other subgoals.
+
+preservation < search.
+Subgoal 11.1.2:
+
+Variables: P M' M1 F
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H5 : {P, [F] |- tm (pair M1 M')}
+H6 : member F P
+============================
+ {P |- tm M'}
+
+30 other subgoals.
+
+preservation < apply dimctx_inv to H1 H6.
+Subgoal 11.1.2:
+
+Variables: P M' M1 x
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H5 : {P, [dim x] |- tm (pair M1 M')}
+H6 : member (dim x) P
+H7 : is_name/dim x
+============================
+ {P |- tm M'}
+
+30 other subgoals.
+
+preservation < case H5.
+Subgoal 11.2:
+
+Variables: P M' M1 F
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {P, [F] |- tm (snd (pair M1 M'))}
+H5 : member F P
+============================
+ {P |- tm M'}
+
+29 other subgoals.
+
+preservation < apply dimctx_inv to H1 H5.
+Subgoal 11.2:
+
+Variables: P M' M1 x
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {P, [dim x] |- tm (snd (pair M1 M'))}
+H5 : member (dim x) P
+H6 : is_name/dim x
+============================
+ {P |- tm M'}
+
+29 other subgoals.
+
+preservation < case H4.
+Subgoal 12:
+
+Variables: P M1 R A C R' B
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H2 : {P |- tm (coe (y\sigt (A y) (B y)) R R' M1)}
+H4 : {let C (z\coe A R z (fst M1))}*
+============================
+ {P |- tm (pair (C R') (coe (y\B y (C y)) R R' (snd M1)))}
+
+28 other subgoals.
+
+preservation < case H2.
+Subgoal 12.1:
+
+Variables: P M1 R A C R' B
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {let C (z\coe A R z (fst M1))}*
+H5 : {P, dim n1 |- tm (sigt (A n1) (B n1))}
+H6 : {P |- dim R}
+H7 : {P |- dim R'}
+H8 : {P |- tm M1}
+============================
+ {P |- tm (pair (C R') (coe (y\B y (C y)) R R' (snd M1)))}
+
+29 other subgoals.
+
+preservation < case H5.
+Subgoal 12.1.1:
+
+Variables: P M1 R A C R' B
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {let C (z\coe A R z (fst M1))}*
+H6 : {P |- dim R}
+H7 : {P |- dim R'}
+H8 : {P |- tm M1}
+H9 : {P, dim n1 |- tm (A n1)}
+H10 : {P, dim n1, tm n2 |- tm (B n1 n2)}
+============================
+ {P |- tm (pair (C R') (coe (y\B y (C y)) R R' (snd M1)))}
+
+30 other subgoals.
+
+preservation < case H4.
+Subgoal 12.1.1:
+
+Variables: P M1 R A R' B
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H6 : {P |- dim R}
+H7 : {P |- dim R'}
+H8 : {P |- tm M1}
+H9 : {P, dim n1 |- tm (A n1)}
+H10 : {P, dim n1, tm n2 |- tm (B n1 n2)}
+============================
+ {P |-
+    tm
+      (pair (coe A R R' (fst M1))
+         (coe (y\B y (coe A R y (fst M1))) R R' (snd M1)))}
+
+30 other subgoals.
+
+preservation <  inst H10 with n2 = coe A R n1 (fst M1).
+Subgoal 12.1.1:
+
+Variables: P M1 R A R' B
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H6 : {P |- dim R}
+H7 : {P |- dim R'}
+H8 : {P |- tm M1}
+H9 : {P, dim n1 |- tm (A n1)}
+H10 : {P, dim n1, tm n2 |- tm (B n1 n2)}
+H11 : {P, dim n1, tm (coe A R n1 (fst M1)) |-
+         tm (B n1 (coe A R n1 (fst M1)))}
+============================
+ {P |-
+    tm
+      (pair (coe A R R' (fst M1))
+         (coe (y\B y (coe A R y (fst M1))) R R' (snd M1)))}
+
+30 other subgoals.
+
+preservation <  cut H11.
+Subgoal 12.1.1:
+
+Variables: P M1 R A R' B
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H6 : {P |- dim R}
+H7 : {P |- dim R'}
+H8 : {P |- tm M1}
+H9 : {P, dim n1 |- tm (A n1)}
+H10 : {P, dim n1, tm n2 |- tm (B n1 n2)}
+H11 : {P, dim n1, tm (coe A R n1 (fst M1)) |-
+         tm (B n1 (coe A R n1 (fst M1)))}
+H12 : {P, dim n1 |- tm (B n1 (coe A R n1 (fst M1)))}
+============================
+ {P |-
+    tm
+      (pair (coe A R R' (fst M1))
+         (coe (y\B y (coe A R y (fst M1))) R R' (snd M1)))}
+
+30 other subgoals.
+
+preservation < search.
+Subgoal 12.1.2:
+
+Variables: P M1 R A C R' B F
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {let C (z\coe A R z (fst M1))}*
+H6 : {P |- dim R}
+H7 : {P |- dim R'}
+H8 : {P |- tm M1}
+H9 : {P, dim n1, [F n1] |- tm (sigt (A n1) (B n1))}
+H10 : member (F n1) (dim n1 :: P)
+============================
+ {P |- tm (pair (C R') (coe (y\B y (C y)) R R' (snd M1)))}
+
+29 other subgoals.
+
+preservation < apply dimctx_inv to _ H10.
+Subgoal 12.1.2:
+
+Variables: P M1 R A C R' B x
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {let C (z\coe A R z (fst M1))}*
+H6 : {P |- dim R}
+H7 : {P |- dim R'}
+H8 : {P |- tm M1}
+H9 : {P, dim n1, [dim (x n1)] |- tm (sigt (A n1) (B n1))}
+H10 : member (dim (x n1)) (dim n1 :: P)
+H11 : is_name/dim (x n1)
+============================
+ {P |- tm (pair (C R') (coe (y\B y (C y)) R R' (snd M1)))}
+
+29 other subgoals.
+
+preservation < case H9.
+Subgoal 12.2:
+
+Variables: P M1 R A C R' B F
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {let C (z\coe A R z (fst M1))}*
+H5 : {P, [F] |- tm (coe (y\sigt (A y) (B y)) R R' M1)}
+H6 : member F P
+============================
+ {P |- tm (pair (C R') (coe (y\B y (C y)) R R' (snd M1)))}
+
+28 other subgoals.
+
+preservation < apply dimctx_inv to H1 H6.
+Subgoal 12.2:
+
+Variables: P M1 R A C R' B x
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {let C (z\coe A R z (fst M1))}*
+H5 : {P, [dim x] |- tm (coe (y\sigt (A y) (B y)) R R' M1)}
+H6 : member (dim x) P
+H7 : is_name/dim x
+============================
+ {P |- tm (pair (C R') (coe (y\B y (C y)) R R' (snd M1)))}
+
+28 other subgoals.
+
+preservation < case H5.
+Subgoal 13:
+
+Variables: P Ns2 Ns R' H B Ns1 M1 R Rs A
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H2 : {P |- tm (hcom (sigt A B) Rs R R' M1 Ns)}
+H4 : {map fst (Ns n1) (Ns1 n1)}*
+H5 : {let H (z\hcom A Rs R z (fst M1) Ns1)}*
+H6 : {map (t\coe (y\B (H y)) n1 R' (snd t)) (Ns n1) (Ns2 n1)}*
+============================
+ {P |-
+    tm
+      (pair (H R')
+         (hcom (B (H R')) Rs R R' (coe (y\B (H y)) R R' (snd M1)) Ns2))}
+
+27 other subgoals.
+
+preservation < case H2.
+Subgoal 13.1:
+
+Variables: P Ns2 Ns R' H B Ns1 M1 R Rs A K
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {map fst (Ns n1) (Ns1 n1)}*
+H5 : {let H (z\hcom A Rs R z (fst M1) Ns1)}*
+H6 : {map (t\coe (y\B (H y)) n1 R' (snd t)) (Ns n1) (Ns2 n1)}*
+H7 : {P |- tm (sigt A B)}
+H8 : {P |- dlist Rs (s K)}
+H9 : {P |- dim R}
+H10 : {P |- dim R'}
+H11 : {P |- tm M1}
+H12 : {P, dim n1 |- tlist (Ns n1) (s K)}
+============================
+ {P |-
+    tm
+      (pair (H R')
+         (hcom (B (H R')) Rs R R' (coe (y\B (H y)) R R' (snd M1)) Ns2))}
+
+28 other subgoals.
+
+preservation < case H7.
+Subgoal 13.1.1:
+
+Variables: P Ns2 Ns R' H B Ns1 M1 R Rs A K
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {map fst (Ns n1) (Ns1 n1)}*
+H5 : {let H (z\hcom A Rs R z (fst M1) Ns1)}*
+H6 : {map (t\coe (y\B (H y)) n1 R' (snd t)) (Ns n1) (Ns2 n1)}*
+H8 : {P |- dlist Rs (s K)}
+H9 : {P |- dim R}
+H10 : {P |- dim R'}
+H11 : {P |- tm M1}
+H12 : {P, dim n1 |- tlist (Ns n1) (s K)}
+H13 : {P |- tm A}
+H14 : {P, tm n1 |- tm (B n1)}
+============================
+ {P |-
+    tm
+      (pair (H R')
+         (hcom (B (H R')) Rs R R' (coe (y\B (H y)) R R' (snd M1)) Ns2))}
+
+29 other subgoals.
+
+preservation < case H5.
+Subgoal 13.1.1:
+
+Variables: P Ns2 Ns R' B Ns1 M1 R Rs A K
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {map fst (Ns n1) (Ns1 n1)}*
+H6 : {map (t\coe (y\B (hcom A Rs R y (fst M1) Ns1)) n1 R' (snd t)) (Ns n1)
+        (Ns2 n1)}*
+H8 : {P |- dlist Rs (s K)}
+H9 : {P |- dim R}
+H10 : {P |- dim R'}
+H11 : {P |- tm M1}
+H12 : {P, dim n1 |- tlist (Ns n1) (s K)}
+H13 : {P |- tm A}
+H14 : {P, tm n1 |- tm (B n1)}
+============================
+ {P |-
+    tm
+      (pair (hcom A Rs R R' (fst M1) Ns1)
+         (hcom (B (hcom A Rs R R' (fst M1) Ns1)) Rs R R'
+            (coe (y\B (hcom A Rs R y (fst M1) Ns1)) R R' (snd M1)) Ns2))}
+
+29 other subgoals.
+
+preservation < apply dimctx_tmctx to H1.
+Subgoal 13.1.1:
+
+Variables: P Ns2 Ns R' B Ns1 M1 R Rs A K
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {map fst (Ns n1) (Ns1 n1)}*
+H6 : {map (t\coe (y\B (hcom A Rs R y (fst M1) Ns1)) n1 R' (snd t)) (Ns n1)
+        (Ns2 n1)}*
+H8 : {P |- dlist Rs (s K)}
+H9 : {P |- dim R}
+H10 : {P |- dim R'}
+H11 : {P |- tm M1}
+H12 : {P, dim n1 |- tlist (Ns n1) (s K)}
+H13 : {P |- tm A}
+H14 : {P, tm n1 |- tm (B n1)}
+H15 : tmctx P
+============================
+ {P |-
+    tm
+      (pair (hcom A Rs R R' (fst M1) Ns1)
+         (hcom (B (hcom A Rs R R' (fst M1) Ns1)) Rs R R'
+            (coe (y\B (hcom A Rs R y (fst M1) Ns1)) R R' (snd M1)) Ns2))}
+
+29 other subgoals.
+
+preservation < apply presrv/map to _ H12 _ H4.
+Subgoal 13.1.1:
+
+Variables: P Ns2 Ns R' B Ns1 M1 R Rs A K
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {map fst (Ns n1) (Ns1 n1)}*
+H6 : {map (t\coe (y\B (hcom A Rs R y (fst M1) Ns1)) n1 R' (snd t)) (Ns n1)
+        (Ns2 n1)}*
+H8 : {P |- dlist Rs (s K)}
+H9 : {P |- dim R}
+H10 : {P |- dim R'}
+H11 : {P |- tm M1}
+H12 : {P, dim n1 |- tlist (Ns n1) (s K)}
+H13 : {P |- tm A}
+H14 : {P, tm n1 |- tm (B n1)}
+H15 : tmctx P
+H16 : {P, dim n1 |- tlist (Ns1 n1) (s K)}
+============================
+ {P |-
+    tm
+      (pair (hcom A Rs R R' (fst M1) Ns1)
+         (hcom (B (hcom A Rs R R' (fst M1) Ns1)) Rs R R'
+            (coe (y\B (hcom A Rs R y (fst M1) Ns1)) R R' (snd M1)) Ns2))}
+
+29 other subgoals.
+
+preservation <  inst H14 with n1 = hcom A Rs R R' (fst M1) Ns1.
+Subgoal 13.1.1:
+
+Variables: P Ns2 Ns R' B Ns1 M1 R Rs A K
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {map fst (Ns n1) (Ns1 n1)}*
+H6 : {map (t\coe (y\B (hcom A Rs R y (fst M1) Ns1)) n1 R' (snd t)) (Ns n1)
+        (Ns2 n1)}*
+H8 : {P |- dlist Rs (s K)}
+H9 : {P |- dim R}
+H10 : {P |- dim R'}
+H11 : {P |- tm M1}
+H12 : {P, dim n1 |- tlist (Ns n1) (s K)}
+H13 : {P |- tm A}
+H14 : {P, tm n1 |- tm (B n1)}
+H15 : tmctx P
+H16 : {P, dim n1 |- tlist (Ns1 n1) (s K)}
+H17 : {P, tm (hcom A Rs R R' (fst M1) Ns1) |-
+         tm (B (hcom A Rs R R' (fst M1) Ns1))}
+============================
+ {P |-
+    tm
+      (pair (hcom A Rs R R' (fst M1) Ns1)
+         (hcom (B (hcom A Rs R R' (fst M1) Ns1)) Rs R R'
+            (coe (y\B (hcom A Rs R y (fst M1) Ns1)) R R' (snd M1)) Ns2))}
+
+29 other subgoals.
+
+preservation <  cut H17.
+Subgoal 13.1.1:
+
+Variables: P Ns2 Ns R' B Ns1 M1 R Rs A K
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {map fst (Ns n1) (Ns1 n1)}*
+H6 : {map (t\coe (y\B (hcom A Rs R y (fst M1) Ns1)) n1 R' (snd t)) (Ns n1)
+        (Ns2 n1)}*
+H8 : {P |- dlist Rs (s K)}
+H9 : {P |- dim R}
+H10 : {P |- dim R'}
+H11 : {P |- tm M1}
+H12 : {P, dim n1 |- tlist (Ns n1) (s K)}
+H13 : {P |- tm A}
+H14 : {P, tm n1 |- tm (B n1)}
+H15 : tmctx P
+H16 : {P, dim n1 |- tlist (Ns1 n1) (s K)}
+H17 : {P, tm (hcom A Rs R R' (fst M1) Ns1) |-
+         tm (B (hcom A Rs R R' (fst M1) Ns1))}
+H18 : {P |- tm (B (hcom A Rs R R' (fst M1) Ns1))}
+============================
+ {P |-
+    tm
+      (pair (hcom A Rs R R' (fst M1) Ns1)
+         (hcom (B (hcom A Rs R R' (fst M1) Ns1)) Rs R R'
+            (coe (y\B (hcom A Rs R y (fst M1) Ns1)) R R' (snd M1)) Ns2))}
+
+29 other subgoals.
+
+preservation <  inst H14 with n1 = hcom A Rs R n2 (fst M1) Ns1.
+Subgoal 13.1.1:
+
+Variables: P Ns2 Ns R' B Ns1 M1 R Rs A K
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {map fst (Ns n1) (Ns1 n1)}*
+H6 : {map (t\coe (y\B (hcom A Rs R y (fst M1) Ns1)) n1 R' (snd t)) (Ns n1)
+        (Ns2 n1)}*
+H8 : {P |- dlist Rs (s K)}
+H9 : {P |- dim R}
+H10 : {P |- dim R'}
+H11 : {P |- tm M1}
+H12 : {P, dim n1 |- tlist (Ns n1) (s K)}
+H13 : {P |- tm A}
+H14 : {P, tm n1 |- tm (B n1)}
+H15 : tmctx P
+H16 : {P, dim n1 |- tlist (Ns1 n1) (s K)}
+H17 : {P, tm (hcom A Rs R R' (fst M1) Ns1) |-
+         tm (B (hcom A Rs R R' (fst M1) Ns1))}
+H18 : {P |- tm (B (hcom A Rs R R' (fst M1) Ns1))}
+H19 : {P, tm (hcom A Rs R n2 (fst M1) Ns1) |-
+         tm (B (hcom A Rs R n2 (fst M1) Ns1))}
+============================
+ {P |-
+    tm
+      (pair (hcom A Rs R R' (fst M1) Ns1)
+         (hcom (B (hcom A Rs R R' (fst M1) Ns1)) Rs R R'
+            (coe (y\B (hcom A Rs R y (fst M1) Ns1)) R R' (snd M1)) Ns2))}
+
+29 other subgoals.
+
+preservation < monotone H19 with dim n2 :: tm (hcom A Rs R n2 (fst M1) Ns1) :: P.
+Subgoal 13.1.1:
+
+Variables: P Ns2 Ns R' B Ns1 M1 R Rs A K
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {map fst (Ns n1) (Ns1 n1)}*
+H6 : {map (t\coe (y\B (hcom A Rs R y (fst M1) Ns1)) n1 R' (snd t)) (Ns n1)
+        (Ns2 n1)}*
+H8 : {P |- dlist Rs (s K)}
+H9 : {P |- dim R}
+H10 : {P |- dim R'}
+H11 : {P |- tm M1}
+H12 : {P, dim n1 |- tlist (Ns n1) (s K)}
+H13 : {P |- tm A}
+H14 : {P, tm n1 |- tm (B n1)}
+H15 : tmctx P
+H16 : {P, dim n1 |- tlist (Ns1 n1) (s K)}
+H17 : {P, tm (hcom A Rs R R' (fst M1) Ns1) |-
+         tm (B (hcom A Rs R R' (fst M1) Ns1))}
+H18 : {P |- tm (B (hcom A Rs R R' (fst M1) Ns1))}
+H19 : {P, tm (hcom A Rs R n2 (fst M1) Ns1) |-
+         tm (B (hcom A Rs R n2 (fst M1) Ns1))}
+H20 : {P, tm (hcom A Rs R n2 (fst M1) Ns1), dim n2 |-
+         tm (B (hcom A Rs R n2 (fst M1) Ns1))}
+============================
+ {P |-
+    tm
+      (pair (hcom A Rs R R' (fst M1) Ns1)
+         (hcom (B (hcom A Rs R R' (fst M1) Ns1)) Rs R R'
+            (coe (y\B (hcom A Rs R y (fst M1) Ns1)) R R' (snd M1)) Ns2))}
+
+29 other subgoals.
+
+preservation <  cut H20.
+Subgoal 13.1.1:
+
+Variables: P Ns2 Ns R' B Ns1 M1 R Rs A K
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {map fst (Ns n1) (Ns1 n1)}*
+H6 : {map (t\coe (y\B (hcom A Rs R y (fst M1) Ns1)) n1 R' (snd t)) (Ns n1)
+        (Ns2 n1)}*
+H8 : {P |- dlist Rs (s K)}
+H9 : {P |- dim R}
+H10 : {P |- dim R'}
+H11 : {P |- tm M1}
+H12 : {P, dim n1 |- tlist (Ns n1) (s K)}
+H13 : {P |- tm A}
+H14 : {P, tm n1 |- tm (B n1)}
+H15 : tmctx P
+H16 : {P, dim n1 |- tlist (Ns1 n1) (s K)}
+H17 : {P, tm (hcom A Rs R R' (fst M1) Ns1) |-
+         tm (B (hcom A Rs R R' (fst M1) Ns1))}
+H18 : {P |- tm (B (hcom A Rs R R' (fst M1) Ns1))}
+H19 : {P, tm (hcom A Rs R n2 (fst M1) Ns1) |-
+         tm (B (hcom A Rs R n2 (fst M1) Ns1))}
+H20 : {P, tm (hcom A Rs R n2 (fst M1) Ns1), dim n2 |-
+         tm (B (hcom A Rs R n2 (fst M1) Ns1))}
+H21 : {P, dim n2 |- tm (B (hcom A Rs R n2 (fst M1) Ns1))}
+============================
+ {P |-
+    tm
+      (pair (hcom A Rs R R' (fst M1) Ns1)
+         (hcom (B (hcom A Rs R R' (fst M1) Ns1)) Rs R R'
+            (coe (y\B (hcom A Rs R y (fst M1) Ns1)) R R' (snd M1)) Ns2))}
+
+29 other subgoals.
+
+preservation < apply presrv/map to _ H12 _ H6.
+Subgoal 13.1.1:
+
+Variables: P Ns2 Ns R' B Ns1 M1 R Rs A K
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {map fst (Ns n1) (Ns1 n1)}*
+H6 : {map (t\coe (y\B (hcom A Rs R y (fst M1) Ns1)) n1 R' (snd t)) (Ns n1)
+        (Ns2 n1)}*
+H8 : {P |- dlist Rs (s K)}
+H9 : {P |- dim R}
+H10 : {P |- dim R'}
+H11 : {P |- tm M1}
+H12 : {P, dim n1 |- tlist (Ns n1) (s K)}
+H13 : {P |- tm A}
+H14 : {P, tm n1 |- tm (B n1)}
+H15 : tmctx P
+H16 : {P, dim n1 |- tlist (Ns1 n1) (s K)}
+H17 : {P, tm (hcom A Rs R R' (fst M1) Ns1) |-
+         tm (B (hcom A Rs R R' (fst M1) Ns1))}
+H18 : {P |- tm (B (hcom A Rs R R' (fst M1) Ns1))}
+H19 : {P, tm (hcom A Rs R n2 (fst M1) Ns1) |-
+         tm (B (hcom A Rs R n2 (fst M1) Ns1))}
+H20 : {P, tm (hcom A Rs R n2 (fst M1) Ns1), dim n2 |-
+         tm (B (hcom A Rs R n2 (fst M1) Ns1))}
+H21 : {P, dim n2 |- tm (B (hcom A Rs R n2 (fst M1) Ns1))}
+H22 : {P, dim n1 |- tlist (Ns2 n1) (s K)}
+============================
+ {P |-
+    tm
+      (pair (hcom A Rs R R' (fst M1) Ns1)
+         (hcom (B (hcom A Rs R R' (fst M1) Ns1)) Rs R R'
+            (coe (y\B (hcom A Rs R y (fst M1) Ns1)) R R' (snd M1)) Ns2))}
+
+29 other subgoals.
+
+preservation < search.
+Subgoal 13.1.2:
+
+Variables: P Ns2 Ns R' H B Ns1 M1 R Rs A K F
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {map fst (Ns n1) (Ns1 n1)}*
+H5 : {let H (z\hcom A Rs R z (fst M1) Ns1)}*
+H6 : {map (t\coe (y\B (H y)) n1 R' (snd t)) (Ns n1) (Ns2 n1)}*
+H8 : {P |- dlist Rs (s K)}
+H9 : {P |- dim R}
+H10 : {P |- dim R'}
+H11 : {P |- tm M1}
+H12 : {P, dim n1 |- tlist (Ns n1) (s K)}
+H13 : {P, [F] |- tm (sigt A B)}
+H14 : member F P
+============================
+ {P |-
+    tm
+      (pair (H R')
+         (hcom (B (H R')) Rs R R' (coe (y\B (H y)) R R' (snd M1)) Ns2))}
+
+28 other subgoals.
+
+preservation < apply dimctx_inv to H1 H14.
+Subgoal 13.1.2:
+
+Variables: P Ns2 Ns R' H B Ns1 M1 R Rs A K x
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {map fst (Ns n1) (Ns1 n1)}*
+H5 : {let H (z\hcom A Rs R z (fst M1) Ns1)}*
+H6 : {map (t\coe (y\B (H y)) n1 R' (snd t)) (Ns n1) (Ns2 n1)}*
+H8 : {P |- dlist Rs (s K)}
+H9 : {P |- dim R}
+H10 : {P |- dim R'}
+H11 : {P |- tm M1}
+H12 : {P, dim n1 |- tlist (Ns n1) (s K)}
+H13 : {P, [dim x] |- tm (sigt A B)}
+H14 : member (dim x) P
+H15 : is_name/dim x
+============================
+ {P |-
+    tm
+      (pair (H R')
+         (hcom (B (H R')) Rs R R' (coe (y\B (H y)) R R' (snd M1)) Ns2))}
+
+28 other subgoals.
+
+preservation < case H13.
+Subgoal 13.2:
+
+Variables: P Ns2 Ns R' H B Ns1 M1 R Rs A F
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {map fst (Ns n1) (Ns1 n1)}*
+H5 : {let H (z\hcom A Rs R z (fst M1) Ns1)}*
+H6 : {map (t\coe (y\B (H y)) n1 R' (snd t)) (Ns n1) (Ns2 n1)}*
+H7 : {P, [F] |- tm (hcom (sigt A B) Rs R R' M1 Ns)}
+H8 : member F P
+============================
+ {P |-
+    tm
+      (pair (H R')
+         (hcom (B (H R')) Rs R R' (coe (y\B (H y)) R R' (snd M1)) Ns2))}
+
+27 other subgoals.
+
+preservation < apply dimctx_inv to H1 H8.
+Subgoal 13.2:
+
+Variables: P Ns2 Ns R' H B Ns1 M1 R Rs A x
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {map fst (Ns n1) (Ns1 n1)}*
+H5 : {let H (z\hcom A Rs R z (fst M1) Ns1)}*
+H6 : {map (t\coe (y\B (H y)) n1 R' (snd t)) (Ns n1) (Ns2 n1)}*
+H7 : {P, [dim x] |- tm (hcom (sigt A B) Rs R R' M1 Ns)}
+H8 : member (dim x) P
+H9 : is_name/dim x
+============================
+ {P |-
+    tm
+      (pair (H R')
+         (hcom (B (H R')) Rs R R' (coe (y\B (H y)) R R' (snd M1)) Ns2))}
+
+27 other subgoals.
+
+preservation < case H7.
+Subgoal 14:
+
+Variables: P M'1 M1 R
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H2 : {P |- tm (dapp M1 R)}
+H4 : {red M1 M'1}*
+============================
+ {P |- tm (dapp M'1 R)}
+
+26 other subgoals.
+
+preservation < case H2.
+Subgoal 14.1:
+
+Variables: P M'1 M1 R
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {red M1 M'1}*
+H5 : {P |- tm M1}
+H6 : {P |- dim R}
+============================
+ {P |- tm (dapp M'1 R)}
+
+27 other subgoals.
+
+preservation < apply IH to H1 H5 H4.
+Subgoal 14.1:
+
+Variables: P M'1 M1 R
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {red M1 M'1}*
+H5 : {P |- tm M1}
+H6 : {P |- dim R}
+H7 : {P |- tm M'1}
+============================
+ {P |- tm (dapp M'1 R)}
+
+27 other subgoals.
+
+preservation < search.
+Subgoal 14.2:
+
+Variables: P M'1 M1 R F
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {red M1 M'1}*
+H5 : {P, [F] |- tm (dapp M1 R)}
+H6 : member F P
+============================
+ {P |- tm (dapp M'1 R)}
+
+26 other subgoals.
+
+preservation < apply dimctx_inv to H1 H6.
+Subgoal 14.2:
+
+Variables: P M'1 M1 R x
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {red M1 M'1}*
+H5 : {P, [dim x] |- tm (dapp M1 R)}
+H6 : member (dim x) P
+H7 : is_name/dim x
+============================
+ {P |- tm (dapp M'1 R)}
+
+26 other subgoals.
+
+preservation < case H5.
+Subgoal 15:
+
+Variables: P R M1
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H2 : {P |- tm (dapp (dabs M1) R)}
+============================
+ {P |- tm (M1 R)}
+
+25 other subgoals.
+
+preservation < case H2.
+Subgoal 15.1:
+
+Variables: P R M1
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {P |- tm (dabs M1)}
+H5 : {P |- dim R}
+============================
+ {P |- tm (M1 R)}
+
+26 other subgoals.
+
+preservation < case H4.
+Subgoal 15.1.1:
+
+Variables: P R M1
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H5 : {P |- dim R}
+H6 : {P, dim n1 |- tm (M1 n1)}
+============================
+ {P |- tm (M1 R)}
+
+27 other subgoals.
+
+preservation <  inst H6 with n1 = R.
+Subgoal 15.1.1:
+
+Variables: P R M1
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H5 : {P |- dim R}
+H6 : {P, dim n1 |- tm (M1 n1)}
+H7 : {P, dim R |- tm (M1 R)}
+============================
+ {P |- tm (M1 R)}
+
+27 other subgoals.
+
+preservation <  cut H7.
+Subgoal 15.1.1:
+
+Variables: P R M1
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H5 : {P |- dim R}
+H6 : {P, dim n1 |- tm (M1 n1)}
+H7 : {P, dim R |- tm (M1 R)}
+H8 : {P |- tm (M1 R)}
+============================
+ {P |- tm (M1 R)}
+
+27 other subgoals.
+
+preservation < search.
+Subgoal 15.1.2:
+
+Variables: P R M1 F
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H5 : {P |- dim R}
+H6 : {P, [F] |- tm (dabs M1)}
+H7 : member F P
+============================
+ {P |- tm (M1 R)}
+
+26 other subgoals.
+
+preservation < apply dimctx_inv to H1 H7.
+Subgoal 15.1.2:
+
+Variables: P R M1 x
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H5 : {P |- dim R}
+H6 : {P, [dim x] |- tm (dabs M1)}
+H7 : member (dim x) P
+H8 : is_name/dim x
+============================
+ {P |- tm (M1 R)}
+
+26 other subgoals.
+
+preservation < case H6.
+Subgoal 15.2:
+
+Variables: P R M1 F
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {P, [F] |- tm (dapp (dabs M1) R)}
+H5 : member F P
+============================
+ {P |- tm (M1 R)}
+
+25 other subgoals.
+
+preservation < apply dimctx_inv to H1 H5.
+Subgoal 15.2:
+
+Variables: P R M1 x
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {P, [dim x] |- tm (dapp (dabs M1) R)}
+H5 : member (dim x) P
+H6 : is_name/dim x
+============================
+ {P |- tm (M1 R)}
+
+25 other subgoals.
+
+preservation < case H4.
+Subgoal 16:
+
+Variables: P P1 R' A P0 M1 R
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H2 : {P |- tm (coe (y\idt (A y) (P0 y) (P1 y)) R R' M1)}
+============================
+ {P |-
+    tm
+      (dabs
+         (x\hcom (A R' x) (d+ x d$) R R' (coe (y\A y x) R R' (dapp M1 x))
+              (y\t+ (coe (y1\A y1 x) y R' (P0 y))
+                   (coe (y1\A y1 x) y R' (P1 y)) t$)))}
+
+24 other subgoals.
+
+preservation < case H2.
+Subgoal 16.1:
+
+Variables: P P1 R' A P0 M1 R
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {P, dim n1 |- tm (idt (A n1) (P0 n1) (P1 n1))}
+H5 : {P |- dim R}
+H6 : {P |- dim R'}
+H7 : {P |- tm M1}
+============================
+ {P |-
+    tm
+      (dabs
+         (x\hcom (A R' x) (d+ x d$) R R' (coe (y\A y x) R R' (dapp M1 x))
+              (y\t+ (coe (y1\A y1 x) y R' (P0 y))
+                   (coe (y1\A y1 x) y R' (P1 y)) t$)))}
+
+25 other subgoals.
+
+preservation < case H4.
+Subgoal 16.1.1:
+
+Variables: P P1 R' A P0 M1 R
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H5 : {P |- dim R}
+H6 : {P |- dim R'}
+H7 : {P |- tm M1}
+H8 : {P, dim n1, dim n2 |- tm (A n1 n2)}
+H9 : {P, dim n1 |- tm (P0 n1)}
+H10 : {P, dim n1 |- tm (P1 n1)}
+============================
+ {P |-
+    tm
+      (dabs
+         (x\hcom (A R' x) (d+ x d$) R R' (coe (y\A y x) R R' (dapp M1 x))
+              (y\t+ (coe (y1\A y1 x) y R' (P0 y))
+                   (coe (y1\A y1 x) y R' (P1 y)) t$)))}
+
+26 other subgoals.
+
+preservation <  inst H8 with n1 = R'.
+Subgoal 16.1.1:
+
+Variables: P P1 R' A P0 M1 R
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H5 : {P |- dim R}
+H6 : {P |- dim R'}
+H7 : {P |- tm M1}
+H8 : {P, dim n1, dim n2 |- tm (A n1 n2)}
+H9 : {P, dim n1 |- tm (P0 n1)}
+H10 : {P, dim n1 |- tm (P1 n1)}
+H11 : {P, dim R', dim n2 |- tm (A R' n2)}
+============================
+ {P |-
+    tm
+      (dabs
+         (x\hcom (A R' x) (d+ x d$) R R' (coe (y\A y x) R R' (dapp M1 x))
+              (y\t+ (coe (y1\A y1 x) y R' (P0 y))
+                   (coe (y1\A y1 x) y R' (P1 y)) t$)))}
+
+26 other subgoals.
+
+preservation <  cut H11.
+Subgoal 16.1.1:
+
+Variables: P P1 R' A P0 M1 R
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H5 : {P |- dim R}
+H6 : {P |- dim R'}
+H7 : {P |- tm M1}
+H8 : {P, dim n1, dim n2 |- tm (A n1 n2)}
+H9 : {P, dim n1 |- tm (P0 n1)}
+H10 : {P, dim n1 |- tm (P1 n1)}
+H11 : {P, dim R', dim n2 |- tm (A R' n2)}
+H12 : {P, dim n2 |- tm (A R' n2)}
+============================
+ {P |-
+    tm
+      (dabs
+         (x\hcom (A R' x) (d+ x d$) R R' (coe (y\A y x) R R' (dapp M1 x))
+              (y\t+ (coe (y1\A y1 x) y R' (P0 y))
+                   (coe (y1\A y1 x) y R' (P1 y)) t$)))}
+
+26 other subgoals.
+
+preservation < search.
+Subgoal 16.1.2:
+
+Variables: P P1 R' A P0 M1 R F
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H5 : {P |- dim R}
+H6 : {P |- dim R'}
+H7 : {P |- tm M1}
+H8 : {P, dim n1, [F n1] |- tm (idt (A n1) (P0 n1) (P1 n1))}
+H9 : member (F n1) (dim n1 :: P)
+============================
+ {P |-
+    tm
+      (dabs
+         (x\hcom (A R' x) (d+ x d$) R R' (coe (y\A y x) R R' (dapp M1 x))
+              (y\t+ (coe (y1\A y1 x) y R' (P0 y))
+                   (coe (y1\A y1 x) y R' (P1 y)) t$)))}
+
+25 other subgoals.
+
+preservation < apply dimctx_inv to _ H9.
+Subgoal 16.1.2:
+
+Variables: P P1 R' A P0 M1 R x
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H5 : {P |- dim R}
+H6 : {P |- dim R'}
+H7 : {P |- tm M1}
+H8 : {P, dim n1, [dim (x n1)] |- tm (idt (A n1) (P0 n1) (P1 n1))}
+H9 : member (dim (x n1)) (dim n1 :: P)
+H10 : is_name/dim (x n1)
+============================
+ {P |-
+    tm
+      (dabs
+         (x\hcom (A R' x) (d+ x d$) R R' (coe (y\A y x) R R' (dapp M1 x))
+              (y\t+ (coe (y1\A y1 x) y R' (P0 y))
+                   (coe (y1\A y1 x) y R' (P1 y)) t$)))}
+
+25 other subgoals.
+
+preservation < case H8.
+Subgoal 16.2:
+
+Variables: P P1 R' A P0 M1 R F
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {P, [F] |- tm (coe (y\idt (A y) (P0 y) (P1 y)) R R' M1)}
+H5 : member F P
+============================
+ {P |-
+    tm
+      (dabs
+         (x\hcom (A R' x) (d+ x d$) R R' (coe (y\A y x) R R' (dapp M1 x))
+              (y\t+ (coe (y1\A y1 x) y R' (P0 y))
+                   (coe (y1\A y1 x) y R' (P1 y)) t$)))}
+
+24 other subgoals.
+
+preservation < apply dimctx_inv to H1 H5.
+Subgoal 16.2:
+
+Variables: P P1 R' A P0 M1 R x
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {P, [dim x] |- tm (coe (y\idt (A y) (P0 y) (P1 y)) R R' M1)}
+H5 : member (dim x) P
+H6 : is_name/dim x
+============================
+ {P |-
+    tm
+      (dabs
+         (x\hcom (A R' x) (d+ x d$) R R' (coe (y\A y x) R R' (dapp M1 x))
+              (y\t+ (coe (y1\A y1 x) y R' (P0 y))
+                   (coe (y1\A y1 x) y R' (P1 y)) t$)))}
+
+24 other subgoals.
+
+preservation < case H4.
+Subgoal 17:
+
+Variables: P Ns+ P1 P0 Ns' Ns Rs+ Rs M1 R' R A
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H2 : {P |- tm (hcom (idt A P0 P1) Rs R R' M1 Ns)}
+H4 : {dlsnoc Rs n1 (Rs+ n1)}*
+H5 : {map (t\dapp t n2) (Ns n1) (Ns' n1 n2)}*
+H6 : {tlsnoc (Ns' n1 n2) P0 P1 (Ns+ n1 n2)}*
+============================
+ {P |- tm (dabs (x\hcom (A x) (Rs+ x) R R' (dapp M1 x) (y\Ns+ y x)))}
+
+23 other subgoals.
+
+preservation < case H2.
+Subgoal 17.1:
+
+Variables: P Ns+ P1 P0 Ns' Ns Rs+ Rs M1 R' R A K
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {dlsnoc Rs n1 (Rs+ n1)}*
+H5 : {map (t\dapp t n2) (Ns n1) (Ns' n1 n2)}*
+H6 : {tlsnoc (Ns' n1 n2) P0 P1 (Ns+ n1 n2)}*
+H7 : {P |- tm (idt A P0 P1)}
+H8 : {P |- dlist Rs (s K)}
+H9 : {P |- dim R}
+H10 : {P |- dim R'}
+H11 : {P |- tm M1}
+H12 : {P, dim n1 |- tlist (Ns n1) (s K)}
+============================
+ {P |- tm (dabs (x\hcom (A x) (Rs+ x) R R' (dapp M1 x) (y\Ns+ y x)))}
+
+24 other subgoals.
+
+preservation < case H7.
+Subgoal 17.1.1:
+
+Variables: P Ns+ P1 P0 Ns' Ns Rs+ Rs M1 R' R A K
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {dlsnoc Rs n1 (Rs+ n1)}*
+H5 : {map (t\dapp t n2) (Ns n1) (Ns' n1 n2)}*
+H6 : {tlsnoc (Ns' n1 n2) P0 P1 (Ns+ n1 n2)}*
+H8 : {P |- dlist Rs (s K)}
+H9 : {P |- dim R}
+H10 : {P |- dim R'}
+H11 : {P |- tm M1}
+H12 : {P, dim n1 |- tlist (Ns n1) (s K)}
+H13 : {P, dim n1 |- tm (A n1)}
+H14 : {P |- tm P0}
+H15 : {P |- tm P1}
+============================
+ {P |- tm (dabs (x\hcom (A x) (Rs+ x) R R' (dapp M1 x) (y\Ns+ y x)))}
+
+25 other subgoals.
+
+preservation < apply dimctx_tmctx to H1.
+Subgoal 17.1.1:
+
+Variables: P Ns+ P1 P0 Ns' Ns Rs+ Rs M1 R' R A K
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {dlsnoc Rs n1 (Rs+ n1)}*
+H5 : {map (t\dapp t n2) (Ns n1) (Ns' n1 n2)}*
+H6 : {tlsnoc (Ns' n1 n2) P0 P1 (Ns+ n1 n2)}*
+H8 : {P |- dlist Rs (s K)}
+H9 : {P |- dim R}
+H10 : {P |- dim R'}
+H11 : {P |- tm M1}
+H12 : {P, dim n1 |- tlist (Ns n1) (s K)}
+H13 : {P, dim n1 |- tm (A n1)}
+H14 : {P |- tm P0}
+H15 : {P |- tm P1}
+H16 : tmctx P
+============================
+ {P |- tm (dabs (x\hcom (A x) (Rs+ x) R R' (dapp M1 x) (y\Ns+ y x)))}
+
+25 other subgoals.
+
+preservation < apply presrv/dlsnoc to _ H8 _ H4 with P = dim n1 :: P.
+Subgoal 17.1.1:
+
+Variables: P Ns+ P1 P0 Ns' Ns Rs+ Rs M1 R' R A K
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {dlsnoc Rs n1 (Rs+ n1)}*
+H5 : {map (t\dapp t n2) (Ns n1) (Ns' n1 n2)}*
+H6 : {tlsnoc (Ns' n1 n2) P0 P1 (Ns+ n1 n2)}*
+H8 : {P |- dlist Rs (s K)}
+H9 : {P |- dim R}
+H10 : {P |- dim R'}
+H11 : {P |- tm M1}
+H12 : {P, dim n1 |- tlist (Ns n1) (s K)}
+H13 : {P, dim n1 |- tm (A n1)}
+H14 : {P |- tm P0}
+H15 : {P |- tm P1}
+H16 : tmctx P
+H17 : {P, dim n1 |- dlist (Rs+ n1) (s (s K))}
+============================
+ {P |- tm (dabs (x\hcom (A x) (Rs+ x) R R' (dapp M1 x) (y\Ns+ y x)))}
+
+25 other subgoals.
+
+preservation < apply presrv/map to _ H12 _ H5 with G = dim n2 :: dim n1 :: P.
+Subgoal 17.1.1:
+
+Variables: P Ns+ P1 P0 Ns' Ns Rs+ Rs M1 R' R A K
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {dlsnoc Rs n1 (Rs+ n1)}*
+H5 : {map (t\dapp t n2) (Ns n1) (Ns' n1 n2)}*
+H6 : {tlsnoc (Ns' n1 n2) P0 P1 (Ns+ n1 n2)}*
+H8 : {P |- dlist Rs (s K)}
+H9 : {P |- dim R}
+H10 : {P |- dim R'}
+H11 : {P |- tm M1}
+H12 : {P, dim n1 |- tlist (Ns n1) (s K)}
+H13 : {P, dim n1 |- tm (A n1)}
+H14 : {P |- tm P0}
+H15 : {P |- tm P1}
+H16 : tmctx P
+H17 : {P, dim n1 |- dlist (Rs+ n1) (s (s K))}
+H18 : {P, dim n1, dim n2 |- tlist (Ns' n1 n2) (s K)}
+============================
+ {P |- tm (dabs (x\hcom (A x) (Rs+ x) R R' (dapp M1 x) (y\Ns+ y x)))}
+
+25 other subgoals.
+
+preservation < apply presrv/tlsnoc to _ H18 H14 H15 H6.
+Subgoal 17.1.1:
+
+Variables: P Ns+ P1 P0 Ns' Ns Rs+ Rs M1 R' R A K
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {dlsnoc Rs n1 (Rs+ n1)}*
+H5 : {map (t\dapp t n2) (Ns n1) (Ns' n1 n2)}*
+H6 : {tlsnoc (Ns' n1 n2) P0 P1 (Ns+ n1 n2)}*
+H8 : {P |- dlist Rs (s K)}
+H9 : {P |- dim R}
+H10 : {P |- dim R'}
+H11 : {P |- tm M1}
+H12 : {P, dim n1 |- tlist (Ns n1) (s K)}
+H13 : {P, dim n1 |- tm (A n1)}
+H14 : {P |- tm P0}
+H15 : {P |- tm P1}
+H16 : tmctx P
+H17 : {P, dim n1 |- dlist (Rs+ n1) (s (s K))}
+H18 : {P, dim n1, dim n2 |- tlist (Ns' n1 n2) (s K)}
+H19 : {P, dim n1, dim n2 |- tlist (Ns+ n1 n2) (s (s K))}
+============================
+ {P |- tm (dabs (x\hcom (A x) (Rs+ x) R R' (dapp M1 x) (y\Ns+ y x)))}
+
+25 other subgoals.
+
+preservation < search.
+Subgoal 17.1.2:
+
+Variables: P Ns+ P1 P0 Ns' Ns Rs+ Rs M1 R' R A K F
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {dlsnoc Rs n1 (Rs+ n1)}*
+H5 : {map (t\dapp t n2) (Ns n1) (Ns' n1 n2)}*
+H6 : {tlsnoc (Ns' n1 n2) P0 P1 (Ns+ n1 n2)}*
+H8 : {P |- dlist Rs (s K)}
+H9 : {P |- dim R}
+H10 : {P |- dim R'}
+H11 : {P |- tm M1}
+H12 : {P, dim n1 |- tlist (Ns n1) (s K)}
+H13 : {P, [F] |- tm (idt A P0 P1)}
+H14 : member F P
+============================
+ {P |- tm (dabs (x\hcom (A x) (Rs+ x) R R' (dapp M1 x) (y\Ns+ y x)))}
+
+24 other subgoals.
+
+preservation < apply dimctx_inv to H1 H14.
+Subgoal 17.1.2:
+
+Variables: P Ns+ P1 P0 Ns' Ns Rs+ Rs M1 R' R A K x
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {dlsnoc Rs n1 (Rs+ n1)}*
+H5 : {map (t\dapp t n2) (Ns n1) (Ns' n1 n2)}*
+H6 : {tlsnoc (Ns' n1 n2) P0 P1 (Ns+ n1 n2)}*
+H8 : {P |- dlist Rs (s K)}
+H9 : {P |- dim R}
+H10 : {P |- dim R'}
+H11 : {P |- tm M1}
+H12 : {P, dim n1 |- tlist (Ns n1) (s K)}
+H13 : {P, [dim x] |- tm (idt A P0 P1)}
+H14 : member (dim x) P
+H15 : is_name/dim x
+============================
+ {P |- tm (dabs (x\hcom (A x) (Rs+ x) R R' (dapp M1 x) (y\Ns+ y x)))}
+
+24 other subgoals.
+
+preservation < case H13.
+Subgoal 17.2:
+
+Variables: P Ns+ P1 P0 Ns' Ns Rs+ Rs M1 R' R A F
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {dlsnoc Rs n1 (Rs+ n1)}*
+H5 : {map (t\dapp t n2) (Ns n1) (Ns' n1 n2)}*
+H6 : {tlsnoc (Ns' n1 n2) P0 P1 (Ns+ n1 n2)}*
+H7 : {P, [F] |- tm (hcom (idt A P0 P1) Rs R R' M1 Ns)}
+H8 : member F P
+============================
+ {P |- tm (dabs (x\hcom (A x) (Rs+ x) R R' (dapp M1 x) (y\Ns+ y x)))}
+
+23 other subgoals.
+
+preservation < apply dimctx_inv to H1 H8.
+Subgoal 17.2:
+
+Variables: P Ns+ P1 P0 Ns' Ns Rs+ Rs M1 R' R A x
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {dlsnoc Rs n1 (Rs+ n1)}*
+H5 : {map (t\dapp t n2) (Ns n1) (Ns' n1 n2)}*
+H6 : {tlsnoc (Ns' n1 n2) P0 P1 (Ns+ n1 n2)}*
+H7 : {P, [dim x] |- tm (hcom (idt A P0 P1) Rs R R' M1 Ns)}
+H8 : member (dim x) P
+H9 : is_name/dim x
+============================
+ {P |- tm (dabs (x\hcom (A x) (Rs+ x) R R' (dapp M1 x) (y\Ns+ y x)))}
+
+23 other subgoals.
+
+preservation < case H7.
+Subgoal 18:
+
+Variables: P M'1 M1 F T A
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H2 : {P |- tm (if A M1 T F)}
+H4 : {red M1 M'1}*
+============================
+ {P |- tm (if A M'1 T F)}
+
+22 other subgoals.
+
+preservation < case H2.
+Subgoal 18.1:
+
+Variables: P M'1 M1 F T A
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {red M1 M'1}*
+H5 : {P, tm n1 |- tm (A n1)}
+H6 : {P |- tm M1}
+H7 : {P |- tm T}
+H8 : {P |- tm F}
+============================
+ {P |- tm (if A M'1 T F)}
+
+23 other subgoals.
+
+preservation < apply IH to H1 H6 H4.
+Subgoal 18.1:
+
+Variables: P M'1 M1 F T A
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {red M1 M'1}*
+H5 : {P, tm n1 |- tm (A n1)}
+H6 : {P |- tm M1}
+H7 : {P |- tm T}
+H8 : {P |- tm F}
+H9 : {P |- tm M'1}
+============================
+ {P |- tm (if A M'1 T F)}
+
+23 other subgoals.
+
+preservation < search.
+Subgoal 18.2:
+
+Variables: P M'1 M1 F T A F1
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {red M1 M'1}*
+H5 : {P, [F1] |- tm (if A M1 T F)}
+H6 : member F1 P
+============================
+ {P |- tm (if A M'1 T F)}
+
+22 other subgoals.
+
+preservation < apply dimctx_inv to H1 H6.
+Subgoal 18.2:
+
+Variables: P M'1 M1 F T A x
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {red M1 M'1}*
+H5 : {P, [dim x] |- tm (if A M1 T F)}
+H6 : member (dim x) P
+H7 : is_name/dim x
+============================
+ {P |- tm (if A M'1 T F)}
+
+22 other subgoals.
+
+preservation < case H5.
+Subgoal 19:
+
+Variables: P M' F A
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H2 : {P |- tm (if A tt M' F)}
+============================
+ {P |- tm M'}
+
+21 other subgoals.
+
+preservation < case H2.
+Subgoal 19.1:
+
+Variables: P M' F A
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {P, tm n1 |- tm (A n1)}
+H5 : {P |- tm tt}
+H6 : {P |- tm M'}
+H7 : {P |- tm F}
+============================
+ {P |- tm M'}
+
+22 other subgoals.
+
+preservation < search.
+Subgoal 19.2:
+
+Variables: P M' F A F1
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {P, [F1] |- tm (if A tt M' F)}
+H5 : member F1 P
+============================
+ {P |- tm M'}
+
+21 other subgoals.
+
+preservation < apply dimctx_inv to H1 H5.
+Subgoal 19.2:
+
+Variables: P M' F A x
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {P, [dim x] |- tm (if A tt M' F)}
+H5 : member (dim x) P
+H6 : is_name/dim x
+============================
+ {P |- tm M'}
+
+21 other subgoals.
+
+preservation < case H4.
+Subgoal 20:
+
+Variables: P M' T A
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H2 : {P |- tm (if A ff T M')}
+============================
+ {P |- tm M'}
+
+20 other subgoals.
+
+preservation < case H2.
+Subgoal 20.1:
+
+Variables: P M' T A
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {P, tm n1 |- tm (A n1)}
+H5 : {P |- tm ff}
+H6 : {P |- tm T}
+H7 : {P |- tm M'}
+============================
+ {P |- tm M'}
+
+21 other subgoals.
+
+preservation < search.
+Subgoal 20.2:
+
+Variables: P M' T A F
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {P, [F] |- tm (if A ff T M')}
+H5 : member F P
+============================
+ {P |- tm M'}
+
+20 other subgoals.
+
+preservation < apply dimctx_inv to H1 H5.
+Subgoal 20.2:
+
+Variables: P M' T A x
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {P, [dim x] |- tm (if A ff T M')}
+H5 : member (dim x) P
+H6 : is_name/dim x
+============================
+ {P |- tm M'}
+
+20 other subgoals.
+
+preservation < case H4.
+Subgoal 21:
+
+Variables: P Ns' Ns F T A R' H M1 R Rs
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H2 : {P |- tm (if A (hcom boolt Rs R R' M1 Ns) T F)}
+H4 : {let H (z\hcom boolt Rs R z M1 Ns)}*
+H5 : {map (t\coe (y\A (H y)) n1 R' (if A t T F)) (Ns n1) (Ns' n1)}*
+============================
+ {P |- tm (hcom (A (H R')) Rs R R' (coe (y\A (H y)) R R' (if A M1 T F)) Ns')}
+
+19 other subgoals.
+
+preservation < case H2.
+Subgoal 21.1:
+
+Variables: P Ns' Ns F T A R' H M1 R Rs
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {let H (z\hcom boolt Rs R z M1 Ns)}*
+H5 : {map (t\coe (y\A (H y)) n1 R' (if A t T F)) (Ns n1) (Ns' n1)}*
+H6 : {P, tm n1 |- tm (A n1)}
+H7 : {P |- tm (hcom boolt Rs R R' M1 Ns)}
+H8 : {P |- tm T}
+H9 : {P |- tm F}
+============================
+ {P |- tm (hcom (A (H R')) Rs R R' (coe (y\A (H y)) R R' (if A M1 T F)) Ns')}
+
+20 other subgoals.
+
+preservation < case H7.
+Subgoal 21.1.1:
+
+Variables: P Ns' Ns F T A R' H M1 R Rs K
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {let H (z\hcom boolt Rs R z M1 Ns)}*
+H5 : {map (t\coe (y\A (H y)) n1 R' (if A t T F)) (Ns n1) (Ns' n1)}*
+H6 : {P, tm n1 |- tm (A n1)}
+H8 : {P |- tm T}
+H9 : {P |- tm F}
+H10 : {P |- tm boolt}
+H11 : {P |- dlist Rs (s K)}
+H12 : {P |- dim R}
+H13 : {P |- dim R'}
+H14 : {P |- tm M1}
+H15 : {P, dim n1 |- tlist (Ns n1) (s K)}
+============================
+ {P |- tm (hcom (A (H R')) Rs R R' (coe (y\A (H y)) R R' (if A M1 T F)) Ns')}
+
+21 other subgoals.
+
+preservation < case H4.
+Subgoal 21.1.1:
+
+Variables: P Ns' Ns F T A R' M1 R Rs K
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H5 : {map (t\coe (y\A (hcom boolt Rs R y M1 Ns)) n1 R' (if A t T F)) 
+        (Ns n1) (Ns' n1)}*
+H6 : {P, tm n1 |- tm (A n1)}
+H8 : {P |- tm T}
+H9 : {P |- tm F}
+H10 : {P |- tm boolt}
+H11 : {P |- dlist Rs (s K)}
+H12 : {P |- dim R}
+H13 : {P |- dim R'}
+H14 : {P |- tm M1}
+H15 : {P, dim n1 |- tlist (Ns n1) (s K)}
+============================
+ {P |-
+    tm
+      (hcom (A (hcom boolt Rs R R' M1 Ns)) Rs R R'
+         (coe (y\A (hcom boolt Rs R y M1 Ns)) R R' (if A M1 T F)) Ns')}
+
+21 other subgoals.
+
+preservation <  inst H6 with n1 = hcom boolt Rs R R' M1 Ns.
+Subgoal 21.1.1:
+
+Variables: P Ns' Ns F T A R' M1 R Rs K
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H5 : {map (t\coe (y\A (hcom boolt Rs R y M1 Ns)) n1 R' (if A t T F)) 
+        (Ns n1) (Ns' n1)}*
+H6 : {P, tm n1 |- tm (A n1)}
+H8 : {P |- tm T}
+H9 : {P |- tm F}
+H10 : {P |- tm boolt}
+H11 : {P |- dlist Rs (s K)}
+H12 : {P |- dim R}
+H13 : {P |- dim R'}
+H14 : {P |- tm M1}
+H15 : {P, dim n1 |- tlist (Ns n1) (s K)}
+H16 : {P, tm (hcom boolt Rs R R' M1 Ns) |- tm (A (hcom boolt Rs R R' M1 Ns))}
+============================
+ {P |-
+    tm
+      (hcom (A (hcom boolt Rs R R' M1 Ns)) Rs R R'
+         (coe (y\A (hcom boolt Rs R y M1 Ns)) R R' (if A M1 T F)) Ns')}
+
+21 other subgoals.
+
+preservation <  cut H16.
+Subgoal 21.1.1:
+
+Variables: P Ns' Ns F T A R' M1 R Rs K
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H5 : {map (t\coe (y\A (hcom boolt Rs R y M1 Ns)) n1 R' (if A t T F)) 
+        (Ns n1) (Ns' n1)}*
+H6 : {P, tm n1 |- tm (A n1)}
+H8 : {P |- tm T}
+H9 : {P |- tm F}
+H10 : {P |- tm boolt}
+H11 : {P |- dlist Rs (s K)}
+H12 : {P |- dim R}
+H13 : {P |- dim R'}
+H14 : {P |- tm M1}
+H15 : {P, dim n1 |- tlist (Ns n1) (s K)}
+H16 : {P, tm (hcom boolt Rs R R' M1 Ns) |- tm (A (hcom boolt Rs R R' M1 Ns))}
+H17 : {P |- tm (A (hcom boolt Rs R R' M1 Ns))}
+============================
+ {P |-
+    tm
+      (hcom (A (hcom boolt Rs R R' M1 Ns)) Rs R R'
+         (coe (y\A (hcom boolt Rs R y M1 Ns)) R R' (if A M1 T F)) Ns')}
+
+21 other subgoals.
+
+preservation <  inst H6 with n1 = hcom boolt Rs R n2 M1 Ns.
+Subgoal 21.1.1:
+
+Variables: P Ns' Ns F T A R' M1 R Rs K
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H5 : {map (t\coe (y\A (hcom boolt Rs R y M1 Ns)) n1 R' (if A t T F)) 
+        (Ns n1) (Ns' n1)}*
+H6 : {P, tm n1 |- tm (A n1)}
+H8 : {P |- tm T}
+H9 : {P |- tm F}
+H10 : {P |- tm boolt}
+H11 : {P |- dlist Rs (s K)}
+H12 : {P |- dim R}
+H13 : {P |- dim R'}
+H14 : {P |- tm M1}
+H15 : {P, dim n1 |- tlist (Ns n1) (s K)}
+H16 : {P, tm (hcom boolt Rs R R' M1 Ns) |- tm (A (hcom boolt Rs R R' M1 Ns))}
+H17 : {P |- tm (A (hcom boolt Rs R R' M1 Ns))}
+H18 : {P, tm (hcom boolt Rs R n2 M1 Ns) |- tm (A (hcom boolt Rs R n2 M1 Ns))}
+============================
+ {P |-
+    tm
+      (hcom (A (hcom boolt Rs R R' M1 Ns)) Rs R R'
+         (coe (y\A (hcom boolt Rs R y M1 Ns)) R R' (if A M1 T F)) Ns')}
+
+21 other subgoals.
+
+preservation < monotone H18 with dim n2 :: tm (hcom boolt Rs R n2 M1 Ns) :: P.
+Subgoal 21.1.1:
+
+Variables: P Ns' Ns F T A R' M1 R Rs K
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H5 : {map (t\coe (y\A (hcom boolt Rs R y M1 Ns)) n1 R' (if A t T F)) 
+        (Ns n1) (Ns' n1)}*
+H6 : {P, tm n1 |- tm (A n1)}
+H8 : {P |- tm T}
+H9 : {P |- tm F}
+H10 : {P |- tm boolt}
+H11 : {P |- dlist Rs (s K)}
+H12 : {P |- dim R}
+H13 : {P |- dim R'}
+H14 : {P |- tm M1}
+H15 : {P, dim n1 |- tlist (Ns n1) (s K)}
+H16 : {P, tm (hcom boolt Rs R R' M1 Ns) |- tm (A (hcom boolt Rs R R' M1 Ns))}
+H17 : {P |- tm (A (hcom boolt Rs R R' M1 Ns))}
+H18 : {P, tm (hcom boolt Rs R n2 M1 Ns) |- tm (A (hcom boolt Rs R n2 M1 Ns))}
+H19 : {P, tm (hcom boolt Rs R n2 M1 Ns), dim n2 |-
+         tm (A (hcom boolt Rs R n2 M1 Ns))}
+============================
+ {P |-
+    tm
+      (hcom (A (hcom boolt Rs R R' M1 Ns)) Rs R R'
+         (coe (y\A (hcom boolt Rs R y M1 Ns)) R R' (if A M1 T F)) Ns')}
+
+21 other subgoals.
+
+preservation <  cut H19.
+Subgoal 21.1.1:
+
+Variables: P Ns' Ns F T A R' M1 R Rs K
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H5 : {map (t\coe (y\A (hcom boolt Rs R y M1 Ns)) n1 R' (if A t T F)) 
+        (Ns n1) (Ns' n1)}*
+H6 : {P, tm n1 |- tm (A n1)}
+H8 : {P |- tm T}
+H9 : {P |- tm F}
+H10 : {P |- tm boolt}
+H11 : {P |- dlist Rs (s K)}
+H12 : {P |- dim R}
+H13 : {P |- dim R'}
+H14 : {P |- tm M1}
+H15 : {P, dim n1 |- tlist (Ns n1) (s K)}
+H16 : {P, tm (hcom boolt Rs R R' M1 Ns) |- tm (A (hcom boolt Rs R R' M1 Ns))}
+H17 : {P |- tm (A (hcom boolt Rs R R' M1 Ns))}
+H18 : {P, tm (hcom boolt Rs R n2 M1 Ns) |- tm (A (hcom boolt Rs R n2 M1 Ns))}
+H19 : {P, tm (hcom boolt Rs R n2 M1 Ns), dim n2 |-
+         tm (A (hcom boolt Rs R n2 M1 Ns))}
+H20 : {P, dim n2 |- tm (A (hcom boolt Rs R n2 M1 Ns))}
+============================
+ {P |-
+    tm
+      (hcom (A (hcom boolt Rs R R' M1 Ns)) Rs R R'
+         (coe (y\A (hcom boolt Rs R y M1 Ns)) R R' (if A M1 T F)) Ns')}
+
+21 other subgoals.
+
+preservation < apply dimctx_tmctx to H1.
+Subgoal 21.1.1:
+
+Variables: P Ns' Ns F T A R' M1 R Rs K
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H5 : {map (t\coe (y\A (hcom boolt Rs R y M1 Ns)) n1 R' (if A t T F)) 
+        (Ns n1) (Ns' n1)}*
+H6 : {P, tm n1 |- tm (A n1)}
+H8 : {P |- tm T}
+H9 : {P |- tm F}
+H10 : {P |- tm boolt}
+H11 : {P |- dlist Rs (s K)}
+H12 : {P |- dim R}
+H13 : {P |- dim R'}
+H14 : {P |- tm M1}
+H15 : {P, dim n1 |- tlist (Ns n1) (s K)}
+H16 : {P, tm (hcom boolt Rs R R' M1 Ns) |- tm (A (hcom boolt Rs R R' M1 Ns))}
+H17 : {P |- tm (A (hcom boolt Rs R R' M1 Ns))}
+H18 : {P, tm (hcom boolt Rs R n2 M1 Ns) |- tm (A (hcom boolt Rs R n2 M1 Ns))}
+H19 : {P, tm (hcom boolt Rs R n2 M1 Ns), dim n2 |-
+         tm (A (hcom boolt Rs R n2 M1 Ns))}
+H20 : {P, dim n2 |- tm (A (hcom boolt Rs R n2 M1 Ns))}
+H21 : tmctx P
+============================
+ {P |-
+    tm
+      (hcom (A (hcom boolt Rs R R' M1 Ns)) Rs R R'
+         (coe (y\A (hcom boolt Rs R y M1 Ns)) R R' (if A M1 T F)) Ns')}
+
+21 other subgoals.
+
+preservation < apply presrv/map to _ H15 _ H5.
+Subgoal 21.1.1:
+
+Variables: P Ns' Ns F T A R' M1 R Rs K
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H5 : {map (t\coe (y\A (hcom boolt Rs R y M1 Ns)) n1 R' (if A t T F)) 
+        (Ns n1) (Ns' n1)}*
+H6 : {P, tm n1 |- tm (A n1)}
+H8 : {P |- tm T}
+H9 : {P |- tm F}
+H10 : {P |- tm boolt}
+H11 : {P |- dlist Rs (s K)}
+H12 : {P |- dim R}
+H13 : {P |- dim R'}
+H14 : {P |- tm M1}
+H15 : {P, dim n1 |- tlist (Ns n1) (s K)}
+H16 : {P, tm (hcom boolt Rs R R' M1 Ns) |- tm (A (hcom boolt Rs R R' M1 Ns))}
+H17 : {P |- tm (A (hcom boolt Rs R R' M1 Ns))}
+H18 : {P, tm (hcom boolt Rs R n2 M1 Ns) |- tm (A (hcom boolt Rs R n2 M1 Ns))}
+H19 : {P, tm (hcom boolt Rs R n2 M1 Ns), dim n2 |-
+         tm (A (hcom boolt Rs R n2 M1 Ns))}
+H20 : {P, dim n2 |- tm (A (hcom boolt Rs R n2 M1 Ns))}
+H21 : tmctx P
+H22 : {P, dim n1 |- tlist (Ns' n1) (s K)}
+============================
+ {P |-
+    tm
+      (hcom (A (hcom boolt Rs R R' M1 Ns)) Rs R R'
+         (coe (y\A (hcom boolt Rs R y M1 Ns)) R R' (if A M1 T F)) Ns')}
+
+21 other subgoals.
+
+preservation < search.
+Subgoal 21.1.2:
+
+Variables: P Ns' Ns F T A R' H M1 R Rs F1
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {let H (z\hcom boolt Rs R z M1 Ns)}*
+H5 : {map (t\coe (y\A (H y)) n1 R' (if A t T F)) (Ns n1) (Ns' n1)}*
+H6 : {P, tm n1 |- tm (A n1)}
+H8 : {P |- tm T}
+H9 : {P |- tm F}
+H10 : {P, [F1] |- tm (hcom boolt Rs R R' M1 Ns)}
+H11 : member F1 P
+============================
+ {P |- tm (hcom (A (H R')) Rs R R' (coe (y\A (H y)) R R' (if A M1 T F)) Ns')}
+
+20 other subgoals.
+
+preservation < apply dimctx_inv to H1 H11.
+Subgoal 21.1.2:
+
+Variables: P Ns' Ns F T A R' H M1 R Rs x
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {let H (z\hcom boolt Rs R z M1 Ns)}*
+H5 : {map (t\coe (y\A (H y)) n1 R' (if A t T F)) (Ns n1) (Ns' n1)}*
+H6 : {P, tm n1 |- tm (A n1)}
+H8 : {P |- tm T}
+H9 : {P |- tm F}
+H10 : {P, [dim x] |- tm (hcom boolt Rs R R' M1 Ns)}
+H11 : member (dim x) P
+H12 : is_name/dim x
+============================
+ {P |- tm (hcom (A (H R')) Rs R R' (coe (y\A (H y)) R R' (if A M1 T F)) Ns')}
+
+20 other subgoals.
+
+preservation < case H10.
+Subgoal 21.2:
+
+Variables: P Ns' Ns F T A R' H M1 R Rs F1
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {let H (z\hcom boolt Rs R z M1 Ns)}*
+H5 : {map (t\coe (y\A (H y)) n1 R' (if A t T F)) (Ns n1) (Ns' n1)}*
+H6 : {P, [F1] |- tm (if A (hcom boolt Rs R R' M1 Ns) T F)}
+H7 : member F1 P
+============================
+ {P |- tm (hcom (A (H R')) Rs R R' (coe (y\A (H y)) R R' (if A M1 T F)) Ns')}
+
+19 other subgoals.
+
+preservation < apply dimctx_inv to H1 H7.
+Subgoal 21.2:
+
+Variables: P Ns' Ns F T A R' H M1 R Rs x
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {let H (z\hcom boolt Rs R z M1 Ns)}*
+H5 : {map (t\coe (y\A (H y)) n1 R' (if A t T F)) (Ns n1) (Ns' n1)}*
+H6 : {P, [dim x] |- tm (if A (hcom boolt Rs R R' M1 Ns) T F)}
+H7 : member (dim x) P
+H8 : is_name/dim x
+============================
+ {P |- tm (hcom (A (H R')) Rs R R' (coe (y\A (H y)) R R' (if A M1 T F)) Ns')}
+
+19 other subgoals.
+
+preservation < case H6.
+Subgoal 22:
+
+Variables: P M' R' R
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H2 : {P |- tm (coe y\boolt R R' M')}
+============================
+ {P |- tm M'}
+
+18 other subgoals.
+
+preservation < case H2.
+Subgoal 22.1:
+
+Variables: P M' R' R
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {P, dim n1 |- tm boolt}
+H5 : {P |- dim R}
+H6 : {P |- dim R'}
+H7 : {P |- tm M'}
+============================
+ {P |- tm M'}
+
+19 other subgoals.
+
+preservation < search.
+Subgoal 22.2:
+
+Variables: P M' R' R F
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {P, [F] |- tm (coe y\boolt R R' M')}
+H5 : member F P
+============================
+ {P |- tm M'}
+
+18 other subgoals.
+
+preservation < apply dimctx_inv to H1 H5.
+Subgoal 22.2:
+
+Variables: P M' R' R x
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {P, [dim x] |- tm (coe y\boolt R R' M')}
+H5 : member (dim x) P
+H6 : is_name/dim x
+============================
+ {P |- tm M'}
+
+18 other subgoals.
+
+preservation < case H4.
+Subgoal 23:
+
+Variables: P Nie E I Ns Rs R' M1 R
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H2 : {P |- tm (hcom boolt Rs R R' M1 Ns)}
+H4 : {findeps Rs I E}*
+H5 : {tubef (Ns n1) I E (Nie n1)}*
+============================
+ {P |- tm (Nie R')}
+
+17 other subgoals.
+
+preservation < case H2.
+Subgoal 23.1:
+
+Variables: P Nie E I Ns Rs R' M1 R K
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {findeps Rs I E}*
+H5 : {tubef (Ns n1) I E (Nie n1)}*
+H6 : {P |- tm boolt}
+H7 : {P |- dlist Rs (s K)}
+H8 : {P |- dim R}
+H9 : {P |- dim R'}
+H10 : {P |- tm M1}
+H11 : {P, dim n1 |- tlist (Ns n1) (s K)}
+============================
+ {P |- tm (Nie R')}
+
+18 other subgoals.
+
+preservation < apply presrv/tubef to _ H11 H5.
+Subgoal 23.1:
+
+Variables: P Nie E I Ns Rs R' M1 R K
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {findeps Rs I E}*
+H5 : {tubef (Ns n1) I E (Nie n1)}*
+H6 : {P |- tm boolt}
+H7 : {P |- dlist Rs (s K)}
+H8 : {P |- dim R}
+H9 : {P |- dim R'}
+H10 : {P |- tm M1}
+H11 : {P, dim n1 |- tlist (Ns n1) (s K)}
+H12 : {P, dim n1 |- tm (Nie n1)}
+============================
+ {P |- tm (Nie R')}
+
+18 other subgoals.
+
+preservation <  inst H12 with n1 = R'.
+Subgoal 23.1:
+
+Variables: P Nie E I Ns Rs R' M1 R K
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {findeps Rs I E}*
+H5 : {tubef (Ns n1) I E (Nie n1)}*
+H6 : {P |- tm boolt}
+H7 : {P |- dlist Rs (s K)}
+H8 : {P |- dim R}
+H9 : {P |- dim R'}
+H10 : {P |- tm M1}
+H11 : {P, dim n1 |- tlist (Ns n1) (s K)}
+H12 : {P, dim n1 |- tm (Nie n1)}
+H13 : {P, dim R' |- tm (Nie R')}
+============================
+ {P |- tm (Nie R')}
+
+18 other subgoals.
+
+preservation < cut H13 with H9.
+Subgoal 23.1:
+
+Variables: P Nie E I Ns Rs R' M1 R K
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {findeps Rs I E}*
+H5 : {tubef (Ns n1) I E (Nie n1)}*
+H6 : {P |- tm boolt}
+H7 : {P |- dlist Rs (s K)}
+H8 : {P |- dim R}
+H9 : {P |- dim R'}
+H10 : {P |- tm M1}
+H11 : {P, dim n1 |- tlist (Ns n1) (s K)}
+H12 : {P, dim n1 |- tm (Nie n1)}
+H13 : {P, dim R' |- tm (Nie R')}
+H14 : {P |- tm (Nie R')}
+============================
+ {P |- tm (Nie R')}
+
+18 other subgoals.
+
+preservation < search.
+Subgoal 23.2:
+
+Variables: P Nie E I Ns Rs R' M1 R F
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {findeps Rs I E}*
+H5 : {tubef (Ns n1) I E (Nie n1)}*
+H6 : {P, [F] |- tm (hcom boolt Rs R R' M1 Ns)}
+H7 : member F P
+============================
+ {P |- tm (Nie R')}
+
+17 other subgoals.
+
+preservation < apply dimctx_inv to H1 H7.
+Subgoal 23.2:
+
+Variables: P Nie E I Ns Rs R' M1 R x
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {findeps Rs I E}*
+H5 : {tubef (Ns n1) I E (Nie n1)}*
+H6 : {P, [dim x] |- tm (hcom boolt Rs R R' M1 Ns)}
+H7 : member (dim x) P
+H8 : is_name/dim x
+============================
+ {P |- tm (Nie R')}
+
+17 other subgoals.
+
+preservation < case H6.
+Subgoal 24:
+
+Variables: P M' Ns R Rs
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H2 : {P |- tm (hcom boolt Rs R R M' Ns)}
+============================
+ {P |- tm M'}
+
+16 other subgoals.
+
+preservation < case H2.
+Subgoal 24.1:
+
+Variables: P M' Ns R Rs K
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {P |- tm boolt}
+H5 : {P |- dlist Rs (s K)}
+H6 : {P |- dim R}
+H7 : {P |- dim R}
+H8 : {P |- tm M'}
+H9 : {P, dim n1 |- tlist (Ns n1) (s K)}
+============================
+ {P |- tm M'}
+
+17 other subgoals.
+
+preservation < search.
+Subgoal 24.2:
+
+Variables: P M' Ns R Rs F
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {P, [F] |- tm (hcom boolt Rs R R M' Ns)}
+H5 : member F P
+============================
+ {P |- tm M'}
+
+16 other subgoals.
+
+preservation < apply dimctx_inv to H1 H5.
+Subgoal 24.2:
+
+Variables: P M' Ns R Rs x
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {P, [dim x] |- tm (hcom boolt Rs R R M' Ns)}
+H5 : member (dim x) P
+H6 : is_name/dim x
+============================
+ {P |- tm M'}
+
+16 other subgoals.
+
+preservation < case H4.
+Subgoal 25:
+
+Variables: P E
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H2 : {P |- tm (loop E)}
+H4 : {is_eps E}*
+============================
+ {P |- tm base}
+
+15 other subgoals.
+
+preservation < search.
+Subgoal 26:
+
+Variables: P M'1 M1 L P1 A
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H2 : {P |- tm (s1-elim A M1 P1 L)}
+H4 : {red M1 M'1}*
+============================
+ {P |- tm (s1-elim A M'1 P1 L)}
+
+14 other subgoals.
+
+preservation < case H2.
+Subgoal 26.1:
+
+Variables: P M'1 M1 L P1 A
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {red M1 M'1}*
+H5 : {P, tm n1 |- tm (A n1)}
+H6 : {P |- tm M1}
+H7 : {P |- tm P1}
+H8 : {P, dim n1 |- tm (L n1)}
+============================
+ {P |- tm (s1-elim A M'1 P1 L)}
+
+15 other subgoals.
+
+preservation < apply IH to H1 H6 H4.
+Subgoal 26.1:
+
+Variables: P M'1 M1 L P1 A
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {red M1 M'1}*
+H5 : {P, tm n1 |- tm (A n1)}
+H6 : {P |- tm M1}
+H7 : {P |- tm P1}
+H8 : {P, dim n1 |- tm (L n1)}
+H9 : {P |- tm M'1}
+============================
+ {P |- tm (s1-elim A M'1 P1 L)}
+
+15 other subgoals.
+
+preservation < search.
+Subgoal 26.2:
+
+Variables: P M'1 M1 L P1 A F
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {red M1 M'1}*
+H5 : {P, [F] |- tm (s1-elim A M1 P1 L)}
+H6 : member F P
+============================
+ {P |- tm (s1-elim A M'1 P1 L)}
+
+14 other subgoals.
+
+preservation < apply dimctx_inv to H1 H6.
+Subgoal 26.2:
+
+Variables: P M'1 M1 L P1 A x
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {red M1 M'1}*
+H5 : {P, [dim x] |- tm (s1-elim A M1 P1 L)}
+H6 : member (dim x) P
+H7 : is_name/dim x
+============================
+ {P |- tm (s1-elim A M'1 P1 L)}
+
+14 other subgoals.
+
+preservation < case H5.
+Subgoal 27:
+
+Variables: P M' L A
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H2 : {P |- tm (s1-elim A base M' L)}
+============================
+ {P |- tm M'}
+
+13 other subgoals.
+
+preservation < case H2.
+Subgoal 27.1:
+
+Variables: P M' L A
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {P, tm n1 |- tm (A n1)}
+H5 : {P |- tm base}
+H6 : {P |- tm M'}
+H7 : {P, dim n1 |- tm (L n1)}
+============================
+ {P |- tm M'}
+
+14 other subgoals.
+
+preservation < search.
+Subgoal 27.2:
+
+Variables: P M' L A F
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {P, [F] |- tm (s1-elim A base M' L)}
+H5 : member F P
+============================
+ {P |- tm M'}
+
+13 other subgoals.
+
+preservation < apply dimctx_inv to H1 H5.
+Subgoal 27.2:
+
+Variables: P M' L A x
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {P, [dim x] |- tm (s1-elim A base M' L)}
+H5 : member (dim x) P
+H6 : is_name/dim x
+============================
+ {P |- tm M'}
+
+13 other subgoals.
+
+preservation < case H4.
+Subgoal 28:
+
+Variables: P R L P1 A
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H2 : {P |- tm (s1-elim A (loop R) P1 L)}
+============================
+ {P |- tm (L R)}
+
+12 other subgoals.
+
+preservation < case H2.
+Subgoal 28.1:
+
+Variables: P R L P1 A
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {P, tm n1 |- tm (A n1)}
+H5 : {P |- tm (loop R)}
+H6 : {P |- tm P1}
+H7 : {P, dim n1 |- tm (L n1)}
+============================
+ {P |- tm (L R)}
+
+13 other subgoals.
+
+preservation < case H5.
+Subgoal 28.1.1:
+
+Variables: P R L P1 A
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {P, tm n1 |- tm (A n1)}
+H6 : {P |- tm P1}
+H7 : {P, dim n1 |- tm (L n1)}
+H8 : {P |- dim R}
+============================
+ {P |- tm (L R)}
+
+14 other subgoals.
+
+preservation <  inst H7 with n1 = R.
+Subgoal 28.1.1:
+
+Variables: P R L P1 A
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {P, tm n1 |- tm (A n1)}
+H6 : {P |- tm P1}
+H7 : {P, dim n1 |- tm (L n1)}
+H8 : {P |- dim R}
+H9 : {P, dim R |- tm (L R)}
+============================
+ {P |- tm (L R)}
+
+14 other subgoals.
+
+preservation < cut H9 with H8.
+Subgoal 28.1.1:
+
+Variables: P R L P1 A
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {P, tm n1 |- tm (A n1)}
+H6 : {P |- tm P1}
+H7 : {P, dim n1 |- tm (L n1)}
+H8 : {P |- dim R}
+H9 : {P, dim R |- tm (L R)}
+H10 : {P |- tm (L R)}
+============================
+ {P |- tm (L R)}
+
+14 other subgoals.
+
+preservation < search.
+Subgoal 28.1.2:
+
+Variables: P R L P1 A F
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {P, tm n1 |- tm (A n1)}
+H6 : {P |- tm P1}
+H7 : {P, dim n1 |- tm (L n1)}
+H8 : {P, [F] |- tm (loop R)}
+H9 : member F P
+============================
+ {P |- tm (L R)}
+
+13 other subgoals.
+
+preservation < apply dimctx_inv to H1 H9.
+Subgoal 28.1.2:
+
+Variables: P R L P1 A x
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {P, tm n1 |- tm (A n1)}
+H6 : {P |- tm P1}
+H7 : {P, dim n1 |- tm (L n1)}
+H8 : {P, [dim x] |- tm (loop R)}
+H9 : member (dim x) P
+H10 : is_name/dim x
+============================
+ {P |- tm (L R)}
+
+13 other subgoals.
+
+preservation < case H8.
+Subgoal 28.2:
+
+Variables: P R L P1 A F
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {P, [F] |- tm (s1-elim A (loop R) P1 L)}
+H5 : member F P
+============================
+ {P |- tm (L R)}
+
+12 other subgoals.
+
+preservation < apply dimctx_inv to H1 H5.
+Subgoal 28.2:
+
+Variables: P R L P1 A x
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {P, [dim x] |- tm (s1-elim A (loop R) P1 L)}
+H5 : member (dim x) P
+H6 : is_name/dim x
+============================
+ {P |- tm (L R)}
+
+12 other subgoals.
+
+preservation < case H4.
+Subgoal 29:
+
+Variables: P Ns' Ns L P1 A R' H M1 R Rs
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H2 : {P |- tm (s1-elim A (hcom s1t Rs R R' M1 Ns) P1 L)}
+H4 : {let H (z\hcom s1t Rs R z M1 Ns)}*
+H5 : {map (t\coe (y\A (H y)) n1 R' (s1-elim A t P1 L)) (Ns n1) (Ns' n1)}*
+============================
+ {P |- tm (hcom (A (H R')) Rs R R' M1 Ns')}
+
+11 other subgoals.
+
+preservation < case H2.
+Subgoal 29.1:
+
+Variables: P Ns' Ns L P1 A R' H M1 R Rs
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {let H (z\hcom s1t Rs R z M1 Ns)}*
+H5 : {map (t\coe (y\A (H y)) n1 R' (s1-elim A t P1 L)) (Ns n1) (Ns' n1)}*
+H6 : {P, tm n1 |- tm (A n1)}
+H7 : {P |- tm (hcom s1t Rs R R' M1 Ns)}
+H8 : {P |- tm P1}
+H9 : {P, dim n1 |- tm (L n1)}
+============================
+ {P |- tm (hcom (A (H R')) Rs R R' M1 Ns')}
+
+12 other subgoals.
+
+preservation < case H7 (keep).
+Subgoal 29.1.1:
+
+Variables: P Ns' Ns L P1 A R' H M1 R Rs K
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {let H (z\hcom s1t Rs R z M1 Ns)}*
+H5 : {map (t\coe (y\A (H y)) n1 R' (s1-elim A t P1 L)) (Ns n1) (Ns' n1)}*
+H6 : {P, tm n1 |- tm (A n1)}
+H7 : {P |- tm (hcom s1t Rs R R' M1 Ns)}
+H8 : {P |- tm P1}
+H9 : {P, dim n1 |- tm (L n1)}
+H10 : {P |- tm s1t}
+H11 : {P |- dlist Rs (s K)}
+H12 : {P |- dim R}
+H13 : {P |- dim R'}
+H14 : {P |- tm M1}
+H15 : {P, dim n1 |- tlist (Ns n1) (s K)}
+============================
+ {P |- tm (hcom (A (H R')) Rs R R' M1 Ns')}
+
+13 other subgoals.
+
+preservation <  inst H6 with n1 = H R'.
+Subgoal 29.1.1:
+
+Variables: P Ns' Ns L P1 A R' H M1 R Rs K
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {let H (z\hcom s1t Rs R z M1 Ns)}*
+H5 : {map (t\coe (y\A (H y)) n1 R' (s1-elim A t P1 L)) (Ns n1) (Ns' n1)}*
+H6 : {P, tm n1 |- tm (A n1)}
+H7 : {P |- tm (hcom s1t Rs R R' M1 Ns)}
+H8 : {P |- tm P1}
+H9 : {P, dim n1 |- tm (L n1)}
+H10 : {P |- tm s1t}
+H11 : {P |- dlist Rs (s K)}
+H12 : {P |- dim R}
+H13 : {P |- dim R'}
+H14 : {P |- tm M1}
+H15 : {P, dim n1 |- tlist (Ns n1) (s K)}
+H16 : {P, tm (H R') |- tm (A (H R'))}
+============================
+ {P |- tm (hcom (A (H R')) Rs R R' M1 Ns')}
+
+13 other subgoals.
+
+preservation <  inst H6 with n1 = H n2.
+Subgoal 29.1.1:
+
+Variables: P Ns' Ns L P1 A R' H M1 R Rs K
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {let H (z\hcom s1t Rs R z M1 Ns)}*
+H5 : {map (t\coe (y\A (H y)) n1 R' (s1-elim A t P1 L)) (Ns n1) (Ns' n1)}*
+H6 : {P, tm n1 |- tm (A n1)}
+H7 : {P |- tm (hcom s1t Rs R R' M1 Ns)}
+H8 : {P |- tm P1}
+H9 : {P, dim n1 |- tm (L n1)}
+H10 : {P |- tm s1t}
+H11 : {P |- dlist Rs (s K)}
+H12 : {P |- dim R}
+H13 : {P |- dim R'}
+H14 : {P |- tm M1}
+H15 : {P, dim n1 |- tlist (Ns n1) (s K)}
+H16 : {P, tm (H R') |- tm (A (H R'))}
+H17 : {P, tm (H n2) |- tm (A (H n2))}
+============================
+ {P |- tm (hcom (A (H R')) Rs R R' M1 Ns')}
+
+13 other subgoals.
+
+preservation < monotone H17 with dim n2 :: tm (H n2) :: P.
+Subgoal 29.1.1:
+
+Variables: P Ns' Ns L P1 A R' H M1 R Rs K
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {let H (z\hcom s1t Rs R z M1 Ns)}*
+H5 : {map (t\coe (y\A (H y)) n1 R' (s1-elim A t P1 L)) (Ns n1) (Ns' n1)}*
+H6 : {P, tm n1 |- tm (A n1)}
+H7 : {P |- tm (hcom s1t Rs R R' M1 Ns)}
+H8 : {P |- tm P1}
+H9 : {P, dim n1 |- tm (L n1)}
+H10 : {P |- tm s1t}
+H11 : {P |- dlist Rs (s K)}
+H12 : {P |- dim R}
+H13 : {P |- dim R'}
+H14 : {P |- tm M1}
+H15 : {P, dim n1 |- tlist (Ns n1) (s K)}
+H16 : {P, tm (H R') |- tm (A (H R'))}
+H17 : {P, tm (H n2) |- tm (A (H n2))}
+H18 : {P, tm (H n2), dim n2 |- tm (A (H n2))}
+============================
+ {P |- tm (hcom (A (H R')) Rs R R' M1 Ns')}
+
+13 other subgoals.
+
+preservation < case H4.
+Subgoal 29.1.1:
+
+Variables: P Ns' Ns L P1 A R' M1 R Rs K
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H5 : {map (t\coe (y\A (hcom s1t Rs R y M1 Ns)) n1 R' (s1-elim A t P1 L))
+        (Ns n1) (Ns' n1)}*
+H6 : {P, tm n1 |- tm (A n1)}
+H7 : {P |- tm (hcom s1t Rs R R' M1 Ns)}
+H8 : {P |- tm P1}
+H9 : {P, dim n1 |- tm (L n1)}
+H10 : {P |- tm s1t}
+H11 : {P |- dlist Rs (s K)}
+H12 : {P |- dim R}
+H13 : {P |- dim R'}
+H14 : {P |- tm M1}
+H15 : {P, dim n1 |- tlist (Ns n1) (s K)}
+H16 : {P, tm (hcom s1t Rs R R' M1 Ns) |- tm (A (hcom s1t Rs R R' M1 Ns))}
+H17 : {P, tm (hcom s1t Rs R n2 M1 Ns) |- tm (A (hcom s1t Rs R n2 M1 Ns))}
+H18 : {P, tm (hcom s1t Rs R n2 M1 Ns), dim n2 |-
+         tm (A (hcom s1t Rs R n2 M1 Ns))}
+============================
+ {P |- tm (hcom (A (hcom s1t Rs R R' M1 Ns)) Rs R R' M1 Ns')}
+
+13 other subgoals.
+
+preservation <  cut H16.
+Subgoal 29.1.1:
+
+Variables: P Ns' Ns L P1 A R' M1 R Rs K
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H5 : {map (t\coe (y\A (hcom s1t Rs R y M1 Ns)) n1 R' (s1-elim A t P1 L))
+        (Ns n1) (Ns' n1)}*
+H6 : {P, tm n1 |- tm (A n1)}
+H7 : {P |- tm (hcom s1t Rs R R' M1 Ns)}
+H8 : {P |- tm P1}
+H9 : {P, dim n1 |- tm (L n1)}
+H10 : {P |- tm s1t}
+H11 : {P |- dlist Rs (s K)}
+H12 : {P |- dim R}
+H13 : {P |- dim R'}
+H14 : {P |- tm M1}
+H15 : {P, dim n1 |- tlist (Ns n1) (s K)}
+H16 : {P, tm (hcom s1t Rs R R' M1 Ns) |- tm (A (hcom s1t Rs R R' M1 Ns))}
+H17 : {P, tm (hcom s1t Rs R n2 M1 Ns) |- tm (A (hcom s1t Rs R n2 M1 Ns))}
+H18 : {P, tm (hcom s1t Rs R n2 M1 Ns), dim n2 |-
+         tm (A (hcom s1t Rs R n2 M1 Ns))}
+H19 : {P |- tm (A (hcom s1t Rs R R' M1 Ns))}
+============================
+ {P |- tm (hcom (A (hcom s1t Rs R R' M1 Ns)) Rs R R' M1 Ns')}
+
+13 other subgoals.
+
+preservation <  cut H18.
+Subgoal 29.1.1:
+
+Variables: P Ns' Ns L P1 A R' M1 R Rs K
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H5 : {map (t\coe (y\A (hcom s1t Rs R y M1 Ns)) n1 R' (s1-elim A t P1 L))
+        (Ns n1) (Ns' n1)}*
+H6 : {P, tm n1 |- tm (A n1)}
+H7 : {P |- tm (hcom s1t Rs R R' M1 Ns)}
+H8 : {P |- tm P1}
+H9 : {P, dim n1 |- tm (L n1)}
+H10 : {P |- tm s1t}
+H11 : {P |- dlist Rs (s K)}
+H12 : {P |- dim R}
+H13 : {P |- dim R'}
+H14 : {P |- tm M1}
+H15 : {P, dim n1 |- tlist (Ns n1) (s K)}
+H16 : {P, tm (hcom s1t Rs R R' M1 Ns) |- tm (A (hcom s1t Rs R R' M1 Ns))}
+H17 : {P, tm (hcom s1t Rs R n2 M1 Ns) |- tm (A (hcom s1t Rs R n2 M1 Ns))}
+H18 : {P, tm (hcom s1t Rs R n2 M1 Ns), dim n2 |-
+         tm (A (hcom s1t Rs R n2 M1 Ns))}
+H19 : {P |- tm (A (hcom s1t Rs R R' M1 Ns))}
+H20 : {P, dim n2 |- tm (A (hcom s1t Rs R n2 M1 Ns))}
+============================
+ {P |- tm (hcom (A (hcom s1t Rs R R' M1 Ns)) Rs R R' M1 Ns')}
+
+13 other subgoals.
+
+preservation < apply dimctx_tmctx to H1.
+Subgoal 29.1.1:
+
+Variables: P Ns' Ns L P1 A R' M1 R Rs K
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H5 : {map (t\coe (y\A (hcom s1t Rs R y M1 Ns)) n1 R' (s1-elim A t P1 L))
+        (Ns n1) (Ns' n1)}*
+H6 : {P, tm n1 |- tm (A n1)}
+H7 : {P |- tm (hcom s1t Rs R R' M1 Ns)}
+H8 : {P |- tm P1}
+H9 : {P, dim n1 |- tm (L n1)}
+H10 : {P |- tm s1t}
+H11 : {P |- dlist Rs (s K)}
+H12 : {P |- dim R}
+H13 : {P |- dim R'}
+H14 : {P |- tm M1}
+H15 : {P, dim n1 |- tlist (Ns n1) (s K)}
+H16 : {P, tm (hcom s1t Rs R R' M1 Ns) |- tm (A (hcom s1t Rs R R' M1 Ns))}
+H17 : {P, tm (hcom s1t Rs R n2 M1 Ns) |- tm (A (hcom s1t Rs R n2 M1 Ns))}
+H18 : {P, tm (hcom s1t Rs R n2 M1 Ns), dim n2 |-
+         tm (A (hcom s1t Rs R n2 M1 Ns))}
+H19 : {P |- tm (A (hcom s1t Rs R R' M1 Ns))}
+H20 : {P, dim n2 |- tm (A (hcom s1t Rs R n2 M1 Ns))}
+H21 : tmctx P
+============================
+ {P |- tm (hcom (A (hcom s1t Rs R R' M1 Ns)) Rs R R' M1 Ns')}
+
+13 other subgoals.
+
+preservation < apply presrv/map to _ H15 _ H5.
+Subgoal 29.1.1:
+
+Variables: P Ns' Ns L P1 A R' M1 R Rs K
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H5 : {map (t\coe (y\A (hcom s1t Rs R y M1 Ns)) n1 R' (s1-elim A t P1 L))
+        (Ns n1) (Ns' n1)}*
+H6 : {P, tm n1 |- tm (A n1)}
+H7 : {P |- tm (hcom s1t Rs R R' M1 Ns)}
+H8 : {P |- tm P1}
+H9 : {P, dim n1 |- tm (L n1)}
+H10 : {P |- tm s1t}
+H11 : {P |- dlist Rs (s K)}
+H12 : {P |- dim R}
+H13 : {P |- dim R'}
+H14 : {P |- tm M1}
+H15 : {P, dim n1 |- tlist (Ns n1) (s K)}
+H16 : {P, tm (hcom s1t Rs R R' M1 Ns) |- tm (A (hcom s1t Rs R R' M1 Ns))}
+H17 : {P, tm (hcom s1t Rs R n2 M1 Ns) |- tm (A (hcom s1t Rs R n2 M1 Ns))}
+H18 : {P, tm (hcom s1t Rs R n2 M1 Ns), dim n2 |-
+         tm (A (hcom s1t Rs R n2 M1 Ns))}
+H19 : {P |- tm (A (hcom s1t Rs R R' M1 Ns))}
+H20 : {P, dim n2 |- tm (A (hcom s1t Rs R n2 M1 Ns))}
+H21 : tmctx P
+H22 : {P, dim n1 |- tlist (Ns' n1) (s K)}
+============================
+ {P |- tm (hcom (A (hcom s1t Rs R R' M1 Ns)) Rs R R' M1 Ns')}
+
+13 other subgoals.
+
+preservation < search.
+Subgoal 29.1.2:
+
+Variables: P Ns' Ns L P1 A R' H M1 R Rs F
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {let H (z\hcom s1t Rs R z M1 Ns)}*
+H5 : {map (t\coe (y\A (H y)) n1 R' (s1-elim A t P1 L)) (Ns n1) (Ns' n1)}*
+H6 : {P, tm n1 |- tm (A n1)}
+H7 : {P |- tm (hcom s1t Rs R R' M1 Ns)}
+H8 : {P |- tm P1}
+H9 : {P, dim n1 |- tm (L n1)}
+H10 : {P, [F] |- tm (hcom s1t Rs R R' M1 Ns)}
+H11 : member F P
+============================
+ {P |- tm (hcom (A (H R')) Rs R R' M1 Ns')}
+
+12 other subgoals.
+
+preservation < apply dimctx_inv to H1 H11.
+Subgoal 29.1.2:
+
+Variables: P Ns' Ns L P1 A R' H M1 R Rs x
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {let H (z\hcom s1t Rs R z M1 Ns)}*
+H5 : {map (t\coe (y\A (H y)) n1 R' (s1-elim A t P1 L)) (Ns n1) (Ns' n1)}*
+H6 : {P, tm n1 |- tm (A n1)}
+H7 : {P |- tm (hcom s1t Rs R R' M1 Ns)}
+H8 : {P |- tm P1}
+H9 : {P, dim n1 |- tm (L n1)}
+H10 : {P, [dim x] |- tm (hcom s1t Rs R R' M1 Ns)}
+H11 : member (dim x) P
+H12 : is_name/dim x
+============================
+ {P |- tm (hcom (A (H R')) Rs R R' M1 Ns')}
+
+12 other subgoals.
+
+preservation < case H10.
+Subgoal 29.2:
+
+Variables: P Ns' Ns L P1 A R' H M1 R Rs F
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {let H (z\hcom s1t Rs R z M1 Ns)}*
+H5 : {map (t\coe (y\A (H y)) n1 R' (s1-elim A t P1 L)) (Ns n1) (Ns' n1)}*
+H6 : {P, [F] |- tm (s1-elim A (hcom s1t Rs R R' M1 Ns) P1 L)}
+H7 : member F P
+============================
+ {P |- tm (hcom (A (H R')) Rs R R' M1 Ns')}
+
+11 other subgoals.
+
+preservation < apply dimctx_inv to H1 H7.
+Subgoal 29.2:
+
+Variables: P Ns' Ns L P1 A R' H M1 R Rs x
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {let H (z\hcom s1t Rs R z M1 Ns)}*
+H5 : {map (t\coe (y\A (H y)) n1 R' (s1-elim A t P1 L)) (Ns n1) (Ns' n1)}*
+H6 : {P, [dim x] |- tm (s1-elim A (hcom s1t Rs R R' M1 Ns) P1 L)}
+H7 : member (dim x) P
+H8 : is_name/dim x
+============================
+ {P |- tm (hcom (A (H R')) Rs R R' M1 Ns')}
+
+11 other subgoals.
+
+preservation < case H6.
+Subgoal 30:
+
+Variables: P M' R' R
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H2 : {P |- tm (coe y\s1t R R' M')}
+============================
+ {P |- tm M'}
+
+10 other subgoals.
+
+preservation < case H2.
+Subgoal 30.1:
+
+Variables: P M' R' R
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {P, dim n1 |- tm s1t}
+H5 : {P |- dim R}
+H6 : {P |- dim R'}
+H7 : {P |- tm M'}
+============================
+ {P |- tm M'}
+
+11 other subgoals.
+
+preservation < search.
+Subgoal 30.2:
+
+Variables: P M' R' R F
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {P, [F] |- tm (coe y\s1t R R' M')}
+H5 : member F P
+============================
+ {P |- tm M'}
+
+10 other subgoals.
+
+preservation < apply dimctx_inv to H1 H5.
+Subgoal 30.2:
+
+Variables: P M' R' R x
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {P, [dim x] |- tm (coe y\s1t R R' M')}
+H5 : member (dim x) P
+H6 : is_name/dim x
+============================
+ {P |- tm M'}
+
+10 other subgoals.
+
+preservation < case H4.
+Subgoal 31:
+
+Variables: P Nie E I Ns Rs R' M1 R
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H2 : {P |- tm (hcom s1t Rs R R' M1 Ns)}
+H4 : {findeps Rs I E}*
+H5 : {tubef (Ns n1) I E (Nie n1)}*
+============================
+ {P |- tm (Nie R')}
+
+9 other subgoals.
+
+preservation < case H2.
+Subgoal 31.1:
+
+Variables: P Nie E I Ns Rs R' M1 R K
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {findeps Rs I E}*
+H5 : {tubef (Ns n1) I E (Nie n1)}*
+H6 : {P |- tm s1t}
+H7 : {P |- dlist Rs (s K)}
+H8 : {P |- dim R}
+H9 : {P |- dim R'}
+H10 : {P |- tm M1}
+H11 : {P, dim n1 |- tlist (Ns n1) (s K)}
+============================
+ {P |- tm (Nie R')}
+
+10 other subgoals.
+
+preservation < apply presrv/tubef to _ H11 H5.
+Subgoal 31.1:
+
+Variables: P Nie E I Ns Rs R' M1 R K
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {findeps Rs I E}*
+H5 : {tubef (Ns n1) I E (Nie n1)}*
+H6 : {P |- tm s1t}
+H7 : {P |- dlist Rs (s K)}
+H8 : {P |- dim R}
+H9 : {P |- dim R'}
+H10 : {P |- tm M1}
+H11 : {P, dim n1 |- tlist (Ns n1) (s K)}
+H12 : {P, dim n1 |- tm (Nie n1)}
+============================
+ {P |- tm (Nie R')}
+
+10 other subgoals.
+
+preservation <  inst H12 with n1 = R'.
+Subgoal 31.1:
+
+Variables: P Nie E I Ns Rs R' M1 R K
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {findeps Rs I E}*
+H5 : {tubef (Ns n1) I E (Nie n1)}*
+H6 : {P |- tm s1t}
+H7 : {P |- dlist Rs (s K)}
+H8 : {P |- dim R}
+H9 : {P |- dim R'}
+H10 : {P |- tm M1}
+H11 : {P, dim n1 |- tlist (Ns n1) (s K)}
+H12 : {P, dim n1 |- tm (Nie n1)}
+H13 : {P, dim R' |- tm (Nie R')}
+============================
+ {P |- tm (Nie R')}
+
+10 other subgoals.
+
+preservation < cut H13 with H9.
+Subgoal 31.1:
+
+Variables: P Nie E I Ns Rs R' M1 R K
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {findeps Rs I E}*
+H5 : {tubef (Ns n1) I E (Nie n1)}*
+H6 : {P |- tm s1t}
+H7 : {P |- dlist Rs (s K)}
+H8 : {P |- dim R}
+H9 : {P |- dim R'}
+H10 : {P |- tm M1}
+H11 : {P, dim n1 |- tlist (Ns n1) (s K)}
+H12 : {P, dim n1 |- tm (Nie n1)}
+H13 : {P, dim R' |- tm (Nie R')}
+H14 : {P |- tm (Nie R')}
+============================
+ {P |- tm (Nie R')}
+
+10 other subgoals.
+
+preservation < search.
+Subgoal 31.2:
+
+Variables: P Nie E I Ns Rs R' M1 R F
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {findeps Rs I E}*
+H5 : {tubef (Ns n1) I E (Nie n1)}*
+H6 : {P, [F] |- tm (hcom s1t Rs R R' M1 Ns)}
+H7 : member F P
+============================
+ {P |- tm (Nie R')}
+
+9 other subgoals.
+
+preservation < apply dimctx_inv to H1 H7.
+Subgoal 31.2:
+
+Variables: P Nie E I Ns Rs R' M1 R x
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {findeps Rs I E}*
+H5 : {tubef (Ns n1) I E (Nie n1)}*
+H6 : {P, [dim x] |- tm (hcom s1t Rs R R' M1 Ns)}
+H7 : member (dim x) P
+H8 : is_name/dim x
+============================
+ {P |- tm (Nie R')}
+
+9 other subgoals.
+
+preservation < case H6.
+Subgoal 32:
+
+Variables: P M' Ns R Rs
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H2 : {P |- tm (hcom s1t Rs R R M' Ns)}
+============================
+ {P |- tm M'}
+
+8 other subgoals.
+
+preservation < case H2.
+Subgoal 32.1:
+
+Variables: P M' Ns R Rs K
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {P |- tm s1t}
+H5 : {P |- dlist Rs (s K)}
+H6 : {P |- dim R}
+H7 : {P |- dim R}
+H8 : {P |- tm M'}
+H9 : {P, dim n1 |- tlist (Ns n1) (s K)}
+============================
+ {P |- tm M'}
+
+9 other subgoals.
+
+preservation < search.
+Subgoal 32.2:
+
+Variables: P M' Ns R Rs F
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {P, [F] |- tm (hcom s1t Rs R R M' Ns)}
+H5 : member F P
+============================
+ {P |- tm M'}
+
+8 other subgoals.
+
+preservation < apply dimctx_inv to H1 H5.
+Subgoal 32.2:
+
+Variables: P M' Ns R Rs x
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {P, [dim x] |- tm (hcom s1t Rs R R M' Ns)}
+H5 : member (dim x) P
+H6 : is_name/dim x
+============================
+ {P |- tm M'}
+
+8 other subgoals.
+
+preservation < case H4.
+Subgoal 33:
+
+Variables: P Not M1
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H2 : {P |- tm (notel d0 M1)}
+H4 : {notdef Not}*
+============================
+ {P |- tm (Not M1)}
+
+7 other subgoals.
+
+preservation < case H2.
+Subgoal 33.1:
+
+Variables: P Not M1
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {notdef Not}*
+H5 : {P |- dim d0}
+H6 : {P |- tm M1}
+============================
+ {P |- tm (Not M1)}
+
+8 other subgoals.
+
+preservation < case H4.
+Subgoal 33.1:
+
+Variables: P M1
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H5 : {P |- dim d0}
+H6 : {P |- tm M1}
+============================
+ {P |- tm (if z\boolt M1 ff tt)}
+
+8 other subgoals.
+
+preservation < search.
+Subgoal 33.2:
+
+Variables: P Not M1 F
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {notdef Not}*
+H5 : {P, [F] |- tm (notel d0 M1)}
+H6 : member F P
+============================
+ {P |- tm (Not M1)}
+
+7 other subgoals.
+
+preservation < apply dimctx_inv to H1 H6.
+Subgoal 33.2:
+
+Variables: P Not M1 x
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {notdef Not}*
+H5 : {P, [dim x] |- tm (notel d0 M1)}
+H6 : member (dim x) P
+H7 : is_name/dim x
+============================
+ {P |- tm (Not M1)}
+
+7 other subgoals.
+
+preservation < case H5.
+Subgoal 34:
+
+Variables: P M'
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H2 : {P |- tm (notel d1 M')}
+============================
+ {P |- tm M'}
+
+6 other subgoals.
+
+preservation < case H2.
+Subgoal 34.1:
+
+Variables: P M'
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {P |- dim d1}
+H5 : {P |- tm M'}
+============================
+ {P |- tm M'}
+
+7 other subgoals.
+
+preservation < search.
+Subgoal 34.2:
+
+Variables: P M' F
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {P, [F] |- tm (notel d1 M')}
+H5 : member F P
+============================
+ {P |- tm M'}
+
+6 other subgoals.
+
+preservation < apply dimctx_inv to H1 H5.
+Subgoal 34.2:
+
+Variables: P M' x
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {P, [dim x] |- tm (notel d1 M')}
+H5 : member (dim x) P
+H6 : is_name/dim x
+============================
+ {P |- tm M'}
+
+6 other subgoals.
+
+preservation < case H4.
+Subgoal 35:
+
+Variables: P M'1 M1 R' R
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H2 : {P |- tm (coe nott R R' M1)}
+H4 : {red M1 M'1}*
+============================
+ {P |- tm (coe nott R R' M'1)}
+
+5 other subgoals.
+
+preservation < case H2.
+Subgoal 35.1:
+
+Variables: P M'1 M1 R' R
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {red M1 M'1}*
+H5 : {P, dim n1 |- tm (nott n1)}
+H6 : {P |- dim R}
+H7 : {P |- dim R'}
+H8 : {P |- tm M1}
+============================
+ {P |- tm (coe nott R R' M'1)}
+
+6 other subgoals.
+
+preservation < apply IH to H1 H8 H4.
+Subgoal 35.1:
+
+Variables: P M'1 M1 R' R
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {red M1 M'1}*
+H5 : {P, dim n1 |- tm (nott n1)}
+H6 : {P |- dim R}
+H7 : {P |- dim R'}
+H8 : {P |- tm M1}
+H9 : {P |- tm M'1}
+============================
+ {P |- tm (coe nott R R' M'1)}
+
+6 other subgoals.
+
+preservation < search.
+Subgoal 35.2:
+
+Variables: P M'1 M1 R' R F
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {red M1 M'1}*
+H5 : {P, [F] |- tm (coe nott R R' M1)}
+H6 : member F P
+============================
+ {P |- tm (coe nott R R' M'1)}
+
+5 other subgoals.
+
+preservation < apply dimctx_inv to H1 H6.
+Subgoal 35.2:
+
+Variables: P M'1 M1 R' R x
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {red M1 M'1}*
+H5 : {P, [dim x] |- tm (coe nott R R' M1)}
+H6 : member (dim x) P
+H7 : is_name/dim x
+============================
+ {P |- tm (coe nott R R' M'1)}
+
+5 other subgoals.
+
+preservation < case H5.
+Subgoal 36:
+
+Variables: P Not M1 R'
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H2 : {P |- tm (coe nott d0 R' M1)}
+H4 : {notdef Not}*
+============================
+ {P |- tm (notel R' (Not M1))}
+
+4 other subgoals.
+
+preservation < case H2.
+Subgoal 36.1:
+
+Variables: P Not M1 R'
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {notdef Not}*
+H5 : {P, dim n1 |- tm (nott n1)}
+H6 : {P |- dim d0}
+H7 : {P |- dim R'}
+H8 : {P |- tm M1}
+============================
+ {P |- tm (notel R' (Not M1))}
+
+5 other subgoals.
+
+preservation < case H4.
+Subgoal 36.1:
+
+Variables: P M1 R'
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H5 : {P, dim n1 |- tm (nott n1)}
+H6 : {P |- dim d0}
+H7 : {P |- dim R'}
+H8 : {P |- tm M1}
+============================
+ {P |- tm (notel R' (if z\boolt M1 ff tt))}
+
+5 other subgoals.
+
+preservation < search.
+Subgoal 36.2:
+
+Variables: P Not M1 R' F
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {notdef Not}*
+H5 : {P, [F] |- tm (coe nott d0 R' M1)}
+H6 : member F P
+============================
+ {P |- tm (notel R' (Not M1))}
+
+4 other subgoals.
+
+preservation < apply dimctx_inv to H1 H6.
+Subgoal 36.2:
+
+Variables: P Not M1 R' x
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {notdef Not}*
+H5 : {P, [dim x] |- tm (coe nott d0 R' M1)}
+H6 : member (dim x) P
+H7 : is_name/dim x
+============================
+ {P |- tm (notel R' (Not M1))}
+
+4 other subgoals.
+
+preservation < case H5.
+Subgoal 37:
+
+Variables: P M1 R'
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H2 : {P |- tm (coe nott d1 R' M1)}
+============================
+ {P |- tm (notel R' M1)}
+
+3 other subgoals.
+
+preservation < case H2.
+Subgoal 37.1:
+
+Variables: P M1 R'
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {P, dim n1 |- tm (nott n1)}
+H5 : {P |- dim d1}
+H6 : {P |- dim R'}
+H7 : {P |- tm M1}
+============================
+ {P |- tm (notel R' M1)}
+
+4 other subgoals.
+
+preservation < search.
+Subgoal 37.2:
+
+Variables: P M1 R' F
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {P, [F] |- tm (coe nott d1 R' M1)}
+H5 : member F P
+============================
+ {P |- tm (notel R' M1)}
+
+3 other subgoals.
+
+preservation < apply dimctx_inv to H1 H5.
+Subgoal 37.2:
+
+Variables: P M1 R' x
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {P, [dim x] |- tm (coe nott d1 R' M1)}
+H5 : member (dim x) P
+H6 : is_name/dim x
+============================
+ {P |- tm (notel R' M1)}
+
+3 other subgoals.
+
+preservation < case H4.
+Subgoal 38:
+
+Variables: P M1 R' R
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H2 : {P |- tm (coe nott R R' (notel R M1))}
+============================
+ {P |- tm (notel R' M1)}
+
+2 other subgoals.
+
+preservation < case H2.
+Subgoal 38.1:
+
+Variables: P M1 R' R
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {P, dim n1 |- tm (nott n1)}
+H5 : {P |- dim R}
+H6 : {P |- dim R'}
+H7 : {P |- tm (notel R M1)}
+============================
+ {P |- tm (notel R' M1)}
+
+3 other subgoals.
+
+preservation < case H7.
+Subgoal 38.1.1:
+
+Variables: P M1 R' R
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {P, dim n1 |- tm (nott n1)}
+H5 : {P |- dim R}
+H6 : {P |- dim R'}
+H8 : {P |- dim R}
+H9 : {P |- tm M1}
+============================
+ {P |- tm (notel R' M1)}
+
+4 other subgoals.
+
+preservation < search.
+Subgoal 38.1.2:
+
+Variables: P M1 R' R F
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {P, dim n1 |- tm (nott n1)}
+H5 : {P |- dim R}
+H6 : {P |- dim R'}
+H8 : {P, [F] |- tm (notel R M1)}
+H9 : member F P
+============================
+ {P |- tm (notel R' M1)}
+
+3 other subgoals.
+
+preservation < apply dimctx_inv to H1 H9.
+Subgoal 38.1.2:
+
+Variables: P M1 R' R x
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {P, dim n1 |- tm (nott n1)}
+H5 : {P |- dim R}
+H6 : {P |- dim R'}
+H8 : {P, [dim x] |- tm (notel R M1)}
+H9 : member (dim x) P
+H10 : is_name/dim x
+============================
+ {P |- tm (notel R' M1)}
+
+3 other subgoals.
+
+preservation < case H8.
+Subgoal 38.2:
+
+Variables: P M1 R' R F
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {P, [F] |- tm (coe nott R R' (notel R M1))}
+H5 : member F P
+============================
+ {P |- tm (notel R' M1)}
+
+2 other subgoals.
+
+preservation < apply dimctx_inv to H1 H5.
+Subgoal 38.2:
+
+Variables: P M1 R' R x
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {P, [dim x] |- tm (coe nott R R' (notel R M1))}
+H5 : member (dim x) P
+H6 : is_name/dim x
+============================
+ {P |- tm (notel R' M1)}
+
+2 other subgoals.
+
+preservation < case H4.
+Subgoal 39:
+
+Variables: P M' R' R X
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H2 : {P |- tm (coe (y\nott X) R R' M')}
+============================
+ {P |- tm M'}
+
+1 other subgoal.
+
+preservation < case H2.
+Subgoal 39.1:
+
+Variables: P M' R' R X
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {P, dim n1 |- tm (nott X)}
+H5 : {P |- dim R}
+H6 : {P |- dim R'}
+H7 : {P |- tm M'}
+============================
+ {P |- tm M'}
+
+2 other subgoals.
+
+preservation < search.
+Subgoal 39.2:
+
+Variables: P M' R' R X F
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {P, [F] |- tm (coe (y\nott X) R R' M')}
+H5 : member F P
+============================
+ {P |- tm M'}
+
+1 other subgoal.
+
+preservation < apply dimctx_inv to H1 H5.
+Subgoal 39.2:
+
+Variables: P M' R' R X x
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {P, [dim x] |- tm (coe (y\nott X) R R' M')}
+H5 : member (dim x) P
+H6 : is_name/dim x
+============================
+ {P |- tm M'}
+
+1 other subgoal.
+
+preservation < case H4.
+Subgoal 40:
+
+Variables: P Ns' Ns W M1 R' R Rs
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H2 : {P |- tm (hcom (nott W) Rs R R' M1 Ns)}
+H4 : {map (t\coe nott W d1 t) (Ns n1) (Ns' n1)}*
+============================
+ {P |- tm (notel W (hcom boolt Rs R R' (coe nott W d1 M1) Ns'))}
+
+preservation < case H2.
+Subgoal 40.1:
+
+Variables: P Ns' Ns W M1 R' R Rs K
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {map (t\coe nott W d1 t) (Ns n1) (Ns' n1)}*
+H5 : {P |- tm (nott W)}
+H6 : {P |- dlist Rs (s K)}
+H7 : {P |- dim R}
+H8 : {P |- dim R'}
+H9 : {P |- tm M1}
+H10 : {P, dim n1 |- tlist (Ns n1) (s K)}
+============================
+ {P |- tm (notel W (hcom boolt Rs R R' (coe nott W d1 M1) Ns'))}
+
+1 other subgoal.
+
+preservation < case H5.
+Subgoal 40.1.1:
+
+Variables: P Ns' Ns W M1 R' R Rs K
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {map (t\coe nott W d1 t) (Ns n1) (Ns' n1)}*
+H6 : {P |- dlist Rs (s K)}
+H7 : {P |- dim R}
+H8 : {P |- dim R'}
+H9 : {P |- tm M1}
+H10 : {P, dim n1 |- tlist (Ns n1) (s K)}
+H11 : {P |- dim W}
+============================
+ {P |- tm (notel W (hcom boolt Rs R R' (coe nott W d1 M1) Ns'))}
+
+2 other subgoals.
+
+preservation < apply dimctx_tmctx to H1.
+Subgoal 40.1.1:
+
+Variables: P Ns' Ns W M1 R' R Rs K
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {map (t\coe nott W d1 t) (Ns n1) (Ns' n1)}*
+H6 : {P |- dlist Rs (s K)}
+H7 : {P |- dim R}
+H8 : {P |- dim R'}
+H9 : {P |- tm M1}
+H10 : {P, dim n1 |- tlist (Ns n1) (s K)}
+H11 : {P |- dim W}
+H12 : tmctx P
+============================
+ {P |- tm (notel W (hcom boolt Rs R R' (coe nott W d1 M1) Ns'))}
+
+2 other subgoals.
+
+preservation < apply presrv/map to _ H10 _ H4.
+Subgoal 40.1.1:
+
+Variables: P Ns' Ns W M1 R' R Rs K
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {map (t\coe nott W d1 t) (Ns n1) (Ns' n1)}*
+H6 : {P |- dlist Rs (s K)}
+H7 : {P |- dim R}
+H8 : {P |- dim R'}
+H9 : {P |- tm M1}
+H10 : {P, dim n1 |- tlist (Ns n1) (s K)}
+H11 : {P |- dim W}
+H12 : tmctx P
+H13 : {P, dim n1 |- tlist (Ns' n1) (s K)}
+============================
+ {P |- tm (notel W (hcom boolt Rs R R' (coe nott W d1 M1) Ns'))}
+
+2 other subgoals.
+
+preservation < search.
+Subgoal 40.1.2:
+
+Variables: P Ns' Ns W M1 R' R Rs K F
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {map (t\coe nott W d1 t) (Ns n1) (Ns' n1)}*
+H6 : {P |- dlist Rs (s K)}
+H7 : {P |- dim R}
+H8 : {P |- dim R'}
+H9 : {P |- tm M1}
+H10 : {P, dim n1 |- tlist (Ns n1) (s K)}
+H11 : {P, [F] |- tm (nott W)}
+H12 : member F P
+============================
+ {P |- tm (notel W (hcom boolt Rs R R' (coe nott W d1 M1) Ns'))}
+
+1 other subgoal.
+
+preservation < apply dimctx_inv to H1 H12.
+Subgoal 40.1.2:
+
+Variables: P Ns' Ns W M1 R' R Rs K x
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {map (t\coe nott W d1 t) (Ns n1) (Ns' n1)}*
+H6 : {P |- dlist Rs (s K)}
+H7 : {P |- dim R}
+H8 : {P |- dim R'}
+H9 : {P |- tm M1}
+H10 : {P, dim n1 |- tlist (Ns n1) (s K)}
+H11 : {P, [dim x] |- tm (nott W)}
+H12 : member (dim x) P
+H13 : is_name/dim x
+============================
+ {P |- tm (notel W (hcom boolt Rs R R' (coe nott W d1 M1) Ns'))}
+
+1 other subgoal.
+
+preservation < case H11.
+Subgoal 40.2:
+
+Variables: P Ns' Ns W M1 R' R Rs F
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {map (t\coe nott W d1 t) (Ns n1) (Ns' n1)}*
+H5 : {P, [F] |- tm (hcom (nott W) Rs R R' M1 Ns)}
+H6 : member F P
+============================
+ {P |- tm (notel W (hcom boolt Rs R R' (coe nott W d1 M1) Ns'))}
+
+preservation < apply dimctx_inv to H1 H6.
+Subgoal 40.2:
+
+Variables: P Ns' Ns W M1 R' R Rs x
+IH : forall P M M', dimctx P -> {P |- tm M} -> {red M M'}* -> {P |- tm M'}
+H1 : dimctx P
+H4 : {map (t\coe nott W d1 t) (Ns n1) (Ns' n1)}*
+H5 : {P, [dim x] |- tm (hcom (nott W) Rs R R' M1 Ns)}
+H6 : member (dim x) P
+H7 : is_name/dim x
+============================
+ {P |- tm (notel W (hcom boolt Rs R R' (coe nott W d1 M1) Ns'))}
+
+preservation < case H5.
+Proof completed.
+Abella < 

@@ -1,0 +1,277 @@
+Specification "cubical".
+
+%%%% Names
+Define is_name/dim : dim -> prop by
+  nabla x, is_name/dim x.
+
+Define is_name/tm : tm -> prop by
+  nabla a, is_name/tm a.
+
+
+%%%% Dimension contexts
+
+Define dimctx : olist -> prop by
+  dimctx nil;
+  nabla x, dimctx (dim x :: P) := dimctx P.
+
+% Inversion lemma
+Theorem dimctx_inv : forall P E,
+  dimctx P -> member E P ->
+    exists x, E = dim x /\ is_name/dim x.
+induction on 1. intros. case H1.
+  case H2.
+  case H2.
+    search.
+    apply IH to H3 H4. search.
+
+
+%%%% Term contexts
+
+Define tmctx : olist -> prop by
+  tmctx nil;
+  nabla x, tmctx (dim x :: G) := tmctx G;
+  nabla a, tmctx (tm a :: G) := tmctx G.
+  
+% Inversion lemma
+Theorem tmctx_inv : forall G E,
+  tmctx G -> member E G ->
+    (exists x, E = dim x /\ is_name/dim x) \/
+    (exists a, E = tm a /\ is_name/tm a).
+induction on 1. intros. case H1.
+  case H2.
+  case H2.
+    search.
+    apply IH to H3 H4. search.
+  case H2.
+    search.
+    apply IH to H3 H4. search.
+    
+% Dimension contexts are term contexts
+Theorem dimctx_tmctx : forall P, dimctx P -> tmctx P.
+induction on 1. intros. case H1.
+  search.
+  apply IH to H2. search.
+
+
+%%%% Operational semantics preserves well-formedness
+
+% Preservation for map
+Theorem presrv/map : forall G Ns K F Ns', nabla t,
+  tmctx G -> {G |- tlist Ns K} -> {G, tm t |- tm (F t)} -> {map F Ns Ns'} ->
+    {G |- tlist Ns' K}.
+induction on 4. intros. case H4.
+  search.
+  case H2.
+    inst H3 with n1 = N0. cut H9 with H6. inst H3 with n1 = N1. %\
+       cut H11 with H7. apply IH to H1 H8 H3 H5. search.
+    apply tmctx_inv to H1 H7. case H8.
+      case H6.
+      case H6.
+
+% Preservation for dlsnoc
+Theorem presrv/dlsnoc : forall P Rs K R Rs+,
+  dimctx P -> {P |- dlist Rs K} -> {P |- dim R} -> {dlsnoc Rs R Rs+} ->
+    {P |- dlist Rs+ (s K)}.
+induction on 4. intros. case H4.
+  search.
+  case H2.
+    apply IH to H1 H7 H3 H5. search.
+    apply dimctx_inv to H1 H7. case H6.
+
+% Preservation for tlsnoc
+Theorem presrv/tlsnoc : forall P Ns K P0 P1 Ns+,
+  dimctx P -> {P |- tlist Ns K} -> {P |- tm P0} -> {P |- tm P1} ->
+  {tlsnoc Ns P0 P1 Ns+} ->
+    {P |- tlist Ns+ (s K)}.
+induction on 5. intros. case H5.
+  search.
+  case H2.
+    apply IH to H1 H9 H3 H4 H6. search.
+    apply dimctx_inv to H1 H8. case H7.
+  
+% Preservation for tubef
+Theorem presrv/tubef : forall P Ns K I E Nie,
+  dimctx P -> {P |- tlist Ns K} -> {tubef Ns I E Nie} ->
+  {P |- tm Nie}.
+induction on 3. intros. case H3.
+  case H2.
+    search.
+    apply dimctx_inv to H1 H5. case H4.
+  case H2.
+    search.
+    apply dimctx_inv to H1 H5. case H4.
+  case H2.
+    apply IH to H1 H7 H4. search.
+    apply dimctx_inv to H1 H6. case H5.
+
+% Main theorem
+Theorem preservation : forall P M M',
+  dimctx P -> {P |- tm M} -> {red M M'} ->
+    {P |- tm M'}.
+induction on 3. intros. case H3.
+  search.
+  case H2.
+    apply IH to _ H5 H4. search.
+    apply dimctx_inv to H1 H6. case H5.
+  case H2.
+    apply IH to H1 H5 H4. search.
+    apply dimctx_inv to H1 H6. case H5.
+  case H2.
+    apply IH to H1 H5 H4. search.
+    apply dimctx_inv to H1 H6. case H5.
+  case H2.
+    case H4.
+      inst H6 with n1 = N. cut H7. search.
+      apply dimctx_inv to H1 H7. case H6.
+    apply dimctx_inv to H1 H5. case H4.
+  case H2.
+    case H4.
+      inst H9 with n2 = coe A R' n1 n3. %\
+         assert {P, dim n1, tm n3 |- tm (coe A R' n1 n3)}. cut H10 with H11. %\
+         search.
+      apply dimctx_inv to _ H9. case H8.
+    apply dimctx_inv to H1 H5. case H4.
+  case H2.
+    case H5.
+      apply dimctx_tmctx to H1. permute (n1 n2) H10. %\
+         assert {P, tm n1, dim n2, tm n3 |- tm (app n3 n1)}. %\
+         apply presrv/map to _ H10 H14 H4. search.
+      apply dimctx_inv to H1 H12. case H11.
+    apply dimctx_inv to H1 H6. case H5.
+  case H2.
+    apply IH to H1 H5 H4. search.
+    apply dimctx_inv to H1 H6. case H5.
+  case H2.
+    apply IH to H1 H5 H4. search.
+    apply dimctx_inv to H1 H6. case H5.
+  case H2.
+    case H4.
+      search.
+      apply dimctx_inv to H1 H6. case H5.
+    apply dimctx_inv to H1 H5. case H4.
+  case H2.
+    case H4.
+      search.
+      apply dimctx_inv to H1 H6. case H5.
+    apply dimctx_inv to H1 H5. case H4.
+  case H2.
+    case H5.
+      case H4. inst H10 with n2 = coe A R n1 (fst M1). cut H11. search.
+      apply dimctx_inv to _ H10. case H9.
+    apply dimctx_inv to H1 H6. case H5.
+  case H2.
+    case H7.
+      case H5. apply dimctx_tmctx to H1. apply presrv/map to _ H12 _ H4. %\
+         inst H14 with n1 = hcom A Rs R R' (fst M1) Ns1. cut H17. %\
+         inst H14 with n1 = hcom A Rs R n2 (fst M1) Ns1. %\
+         monotone H19 with dim n2 :: tm (hcom A Rs R n2 (fst M1) Ns1) :: P.
+         cut H20. apply presrv/map to _ H12 _ H6. search.
+      apply dimctx_inv to H1 H14. case H13.
+    apply dimctx_inv to H1 H8. case H7.
+  case H2.
+    apply IH to H1 H5 H4. search.
+    apply dimctx_inv to H1 H6. case H5.
+  case H2.
+    case H4.
+      inst H6 with n1 = R. cut H7. search.
+      apply dimctx_inv to H1 H7. case H6.
+    apply dimctx_inv to H1 H5. case H4.
+  case H2.
+    case H4.
+      inst H8 with n1 = R'. cut H11. search.
+      apply dimctx_inv to _ H9. case H8.
+    apply dimctx_inv to H1 H5. case H4.
+  case H2.
+    case H7.
+      apply dimctx_tmctx to H1. %\
+         apply presrv/dlsnoc to _ H8 _ H4 with P = dim n1 :: P. %\
+         apply presrv/map to _ H12 _ H5 with G = dim n2 :: dim n1 :: P. %\
+         apply presrv/tlsnoc to _ H18 H14 H15 H6. search.
+      apply dimctx_inv to H1 H14. case H13.
+    apply dimctx_inv to H1 H8. case H7.
+  case H2.
+    apply IH to H1 H6 H4. search.
+    apply dimctx_inv to H1 H6. case H5.
+  case H2.
+    search.
+    apply dimctx_inv to H1 H5. case H4.
+  case H2.
+    search.
+    apply dimctx_inv to H1 H5. case H4.
+  case H2.
+    case H7.
+      case H4. inst H6 with n1 = hcom boolt Rs R R' M1 Ns. cut H16. %\
+         inst H6 with n1 = hcom boolt Rs R n2 M1 Ns. %\
+         monotone H18 with dim n2 :: tm (hcom boolt Rs R n2 M1 Ns) :: P. %\
+         cut H19. apply dimctx_tmctx to H1. apply presrv/map to _ H15 _ H5. %\
+         search.
+      apply dimctx_inv to H1 H11. case H10.
+    apply dimctx_inv to H1 H7. case H6.
+  case H2.
+    search.
+    apply dimctx_inv to H1 H5. case H4.
+  case H2.
+    apply presrv/tubef to _ H11 H5. inst H12 with n1 = R'. cut H13 with H9. %\
+       search.
+    apply dimctx_inv to H1 H7. case H6.
+  case H2.
+    search.
+    apply dimctx_inv to H1 H5. case H4.
+  search.
+  case H2.
+    apply IH to H1 H6 H4. search.
+    apply dimctx_inv to H1 H6. case H5.
+  case H2.
+    search.
+    apply dimctx_inv to H1 H5. case H4.
+  case H2.
+    case H5.
+      inst H7 with n1 = R. cut H9 with H8. search.
+      apply dimctx_inv to H1 H9. case H8.
+    apply dimctx_inv to H1 H5. case H4.
+  case H2.
+    case H7 (keep).
+      inst H6 with n1 = H R'. inst H6 with n1 = H n2. %\
+         monotone H17 with dim n2 :: tm (H n2) :: P. case H4. cut H16. %\
+         cut H18. apply dimctx_tmctx to H1. apply presrv/map to _ H15 _ H5. %\
+         search.
+      apply dimctx_inv to H1 H11. case H10.
+    apply dimctx_inv to H1 H7. case H6.
+  case H2.
+    search.
+    apply dimctx_inv to H1 H5. case H4.
+  case H2.
+    apply presrv/tubef to _ H11 H5. inst H12 with n1 = R'. cut H13 with H9. %\
+       search.
+    apply dimctx_inv to H1 H7. case H6.
+  case H2.
+    search.
+    apply dimctx_inv to H1 H5. case H4.
+  case H2.
+    case H4. search.
+    apply dimctx_inv to H1 H6. case H5.
+  case H2.
+    search.
+    apply dimctx_inv to H1 H5. case H4.
+  case H2.
+    apply IH to H1 H8 H4. search.
+    apply dimctx_inv to H1 H6. case H5.
+  case H2.
+    case H4. search.
+    apply dimctx_inv to H1 H6. case H5.
+  case H2.
+    search.
+    apply dimctx_inv to H1 H5. case H4.
+  case H2.
+    case H7.
+      search.
+      apply dimctx_inv to H1 H9. case H8.
+    apply dimctx_inv to H1 H5. case H4.
+  case H2.
+    search.
+    apply dimctx_inv to H1 H5. case H4.
+  case H2.
+    case H5.
+      apply dimctx_tmctx to H1. apply presrv/map to _ H10 _ H4. search.
+      apply dimctx_inv to H1 H12. case H11.
+    apply dimctx_inv to H1 H6. case H5.
