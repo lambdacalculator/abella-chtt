@@ -254,3 +254,71 @@ red (coe (y\nott X) R R' M) M.
 red (hcom (nott W) Rs R R' M Ns)
     (notel W (hcom boolt Rs R R' (coe nott W d1 M) Ns')) :-
   pi y\ map (t\ coe nott W d1 t) (Ns y) (Ns' y).
+
+
+
+%%%% Simultaneous dimension substitutuions %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% S |- R > R' (or R<S> = R')
+dsub d0 d0.
+dsub d1 d1.
+
+% S |- Rs > Rs'
+dlsub d$ d$.
+dlsub (d+ R Rs) (d+ R' Rs') :- dsub R R', dlsub Rs Rs'.
+
+% S |- M > M'
+sub (pit A B) (pit A' B') :-
+  sub A A',
+  pi a\ pi a'\ sub a a' => sub (B a) (B' a').
+sub (sigt A B) (sigt A' B') :-
+  sub A A',
+  pi a\ pi a'\ sub a a' => sub (B a) (B' a').
+sub (idt A M N) (idt A' M' N') :-
+  pi x\ pi x'\ dsub x x' => sub (A x) (A' x'),
+  sub M M',
+  sub N N'.
+sub boolt boolt.
+sub (nott R) (nott R') :- dsub R R'.
+sub s1t s1t.
+sub (lam M) (lam M') :- pi a\ pi a'\ sub a a' => sub (M a) (M' a').
+sub (app M N) (app M' N') :- sub M M', sub N N'.
+sub (pair M N) (pair M' N') :- sub M M', sub N N'.
+sub (fst M) (fst M') :- sub M M'.
+sub (snd M) (snd M') :- sub M M'.
+sub (dabs M) (dabs M') :- pi x\ pi x'\ dsub x x' => sub (M x) (M' x').
+sub (dapp M R) (dapp M' R') :- sub M M', dsub R R'.
+sub tt tt.
+sub ff ff.
+sub (if A M N1 N2) (if A' M' N1' N2') :-
+  pi a\ pi a'\ sub a a' => sub (A a) (A' a'),
+  sub M M',
+  sub N1 N1',
+  sub N2 N2'.
+sub (notel R M) (notel R' M') :- dsub R R', sub M M'.
+sub base base.
+sub (loop R) (loop R') :- dsub R R'.
+sub (s1-elim A M N1 N2) (s1-elim A' M' N1' N2') :-
+  pi a\ pi a'\ sub a a' => sub (A a) (A' a'),
+  sub M M',
+  sub N1 N1',
+  pi x\ pi x'\ dsub x x' => sub (N2 x) (N2' x').
+sub (coe A R0 R1 M) (coe A' R0' R1' M') :-
+  pi y\ pi y'\ dsub y y' => sub (A y) (A' y'),
+  dsub R0 R0',
+  dsub R1 R1',
+  sub M M'.
+sub (hcom A Rs R0 R1 M Ns) (hcom A' Rs' R0' R1' M' Ns') :-
+  sub A A',
+  dlsub Rs Rs',
+  dsub R0 R0',
+  dsub R1 R1',
+  sub M M',
+  pi y\ pi y'\ dsub y y' => tsub (Ns y) (Ns' y').
+
+% S |- Ns > Ns'
+tsub t$ t$.
+tsub (t+ T0 T1 Ts) (t+ T0' T1' Ts') :- sub T0 T0', sub T1 T1', tsub Ts Ts'.
+
+
+

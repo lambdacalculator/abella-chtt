@@ -1,0 +1,2351 @@
+Welcome to Abella 2.0.4-b1
+Abella < Specification "cubical".
+Reading specification "/home/twilson/proj/abella/chtt-ctx/./cubical" (from "/home/twilson/proj/abella/chtt-ctx/.")
+
+Abella < Close nat, dim, dlist, tm, tlist.
+
+Abella < Define is_name/dim : dim -> prop by 
+nabla x, is_name/dim x.
+
+Abella < Define is_name/tm : tm -> prop by 
+nabla a, is_name/tm a.
+
+Abella < Theorem prune_arg/dim : 
+forall E L, nabla x, member (E x) L -> (exists E0, E = x\E0).
+
+
+============================
+ forall E L, nabla x, member (E x) L -> (exists E0, E = x\E0)
+
+prune_arg/dim < induction on 1.
+
+IH : forall E L, nabla x, member (E x) L * -> (exists E0, E = x\E0)
+============================
+ forall E L, nabla x, member (E x) L @ -> (exists E0, E = x\E0)
+
+prune_arg/dim < intros.
+
+Variables: E L
+IH : forall E L, nabla x, member (E x) L * -> (exists E0, E = x\E0)
+H1 : member (E n1) L @
+============================
+ exists E0, E = x\E0
+
+prune_arg/dim < case H1.
+Subgoal 1:
+
+Variables: L3 L2
+IH : forall E L, nabla x, member (E x) L * -> (exists E0, E = x\E0)
+============================
+ exists E0, z1\L2 = x\E0
+
+Subgoal 2 is:
+ exists E0, E = x\E0
+
+prune_arg/dim < search.
+Subgoal 2:
+
+Variables: E L3 L2
+IH : forall E L, nabla x, member (E x) L * -> (exists E0, E = x\E0)
+H2 : member (E n1) L3 *
+============================
+ exists E0, E = x\E0
+
+prune_arg/dim < apply IH to H2.
+Subgoal 2:
+
+Variables: L3 L2 E0
+IH : forall E L, nabla x, member (E x) L * -> (exists E0, E = x\E0)
+H2 : member E0 L3 *
+============================
+ exists E1, z1\E0 = x\E1
+
+prune_arg/dim < search.
+Proof completed.
+Abella < Theorem prune_arg/tm : 
+forall E L, nabla a, member (E a) L -> (exists E0, E = a\E0).
+
+
+============================
+ forall E L, nabla a, member (E a) L -> (exists E0, E = a\E0)
+
+prune_arg/tm < induction on 1.
+
+IH : forall E L, nabla a, member (E a) L * -> (exists E0, E = a\E0)
+============================
+ forall E L, nabla a, member (E a) L @ -> (exists E0, E = a\E0)
+
+prune_arg/tm < intros.
+
+Variables: E L
+IH : forall E L, nabla a, member (E a) L * -> (exists E0, E = a\E0)
+H1 : member (E n1) L @
+============================
+ exists E0, E = a\E0
+
+prune_arg/tm < case H1.
+Subgoal 1:
+
+Variables: L3 L2
+IH : forall E L, nabla a, member (E a) L * -> (exists E0, E = a\E0)
+============================
+ exists E0, z1\L2 = a\E0
+
+Subgoal 2 is:
+ exists E0, E = a\E0
+
+prune_arg/tm < search.
+Subgoal 2:
+
+Variables: E L3 L2
+IH : forall E L, nabla a, member (E a) L * -> (exists E0, E = a\E0)
+H2 : member (E n1) L3 *
+============================
+ exists E0, E = a\E0
+
+prune_arg/tm < apply IH to H2.
+Subgoal 2:
+
+Variables: L3 L2 E0
+IH : forall E L, nabla a, member (E a) L * -> (exists E0, E = a\E0)
+H2 : member E0 L3 *
+============================
+ exists E1, z1\E0 = a\E1
+
+prune_arg/tm < search.
+Proof completed.
+Abella < Define dimctx : olist -> prop by 
+dimctx nil;
+nabla x, dimctx (dim x :: P) := dimctx P.
+
+Abella < Theorem dimctx_inv : 
+forall P E, dimctx P -> member E P -> (exists x, E = dim x /\ is_name/dim x).
+
+
+============================
+ forall P E, dimctx P -> member E P -> (exists x, E = dim x /\ is_name/dim x)
+
+dimctx_inv < induction on 1.
+
+IH : forall P E, dimctx P * -> member E P ->
+       (exists x, E = dim x /\ is_name/dim x)
+============================
+ forall P E, dimctx P @ -> member E P ->
+   (exists x, E = dim x /\ is_name/dim x)
+
+dimctx_inv < intros.
+
+Variables: P E
+IH : forall P E, dimctx P * -> member E P ->
+       (exists x, E = dim x /\ is_name/dim x)
+H1 : dimctx P @
+H2 : member E P
+============================
+ exists x, E = dim x /\ is_name/dim x
+
+dimctx_inv < case H1.
+Subgoal 1:
+
+Variables: E
+IH : forall P E, dimctx P * -> member E P ->
+       (exists x, E = dim x /\ is_name/dim x)
+H2 : member E nil
+============================
+ exists x, E = dim x /\ is_name/dim x
+
+Subgoal 2 is:
+ exists x, E n1 = dim x /\ is_name/dim x
+
+dimctx_inv < case H2.
+Subgoal 2:
+
+Variables: E P1
+IH : forall P E, dimctx P * -> member E P ->
+       (exists x, E = dim x /\ is_name/dim x)
+H2 : member (E n1) (dim n1 :: P1)
+H3 : dimctx P1 *
+============================
+ exists x, E n1 = dim x /\ is_name/dim x
+
+dimctx_inv < case H2.
+Subgoal 2.1:
+
+Variables: P1
+IH : forall P E, dimctx P * -> member E P ->
+       (exists x, E = dim x /\ is_name/dim x)
+H3 : dimctx P1 *
+============================
+ exists x, dim n1 = dim x /\ is_name/dim x
+
+Subgoal 2.2 is:
+ exists x, E n1 = dim x /\ is_name/dim x
+
+dimctx_inv < search.
+Subgoal 2.2:
+
+Variables: E P1
+IH : forall P E, dimctx P * -> member E P ->
+       (exists x, E = dim x /\ is_name/dim x)
+H3 : dimctx P1 *
+H4 : member (E n1) P1
+============================
+ exists x, E n1 = dim x /\ is_name/dim x
+
+dimctx_inv < apply IH to H3 H4.
+Subgoal 2.2:
+
+Variables: P1 x
+IH : forall P E, dimctx P * -> member E P ->
+       (exists x, E = dim x /\ is_name/dim x)
+H3 : dimctx P1 *
+H4 : member (dim (x n1)) P1
+H5 : is_name/dim (x n1)
+============================
+ exists x1, dim (x n1) = dim x1 /\ is_name/dim x1
+
+dimctx_inv < search.
+Proof completed.
+Abella < Define tmctx : olist -> prop by 
+tmctx nil;
+nabla x, tmctx (dim x :: G) := tmctx G;
+nabla a, tmctx (tm a :: G) := tmctx G.
+
+Abella < Theorem tmctx_inv : 
+forall G E, tmctx G -> member E G ->
+  (exists x, E = dim x /\ is_name/dim x) \/
+  (exists a, E = tm a /\ is_name/tm a).
+
+
+============================
+ forall G E, tmctx G -> member E G ->
+   (exists x, E = dim x /\ is_name/dim x) \/
+   (exists a, E = tm a /\ is_name/tm a)
+
+tmctx_inv < induction on 1.
+
+IH : forall G E, tmctx G * -> member E G ->
+       (exists x, E = dim x /\ is_name/dim x) \/
+       (exists a, E = tm a /\ is_name/tm a)
+============================
+ forall G E, tmctx G @ -> member E G ->
+   (exists x, E = dim x /\ is_name/dim x) \/
+   (exists a, E = tm a /\ is_name/tm a)
+
+tmctx_inv < intros.
+
+Variables: G E
+IH : forall G E, tmctx G * -> member E G ->
+       (exists x, E = dim x /\ is_name/dim x) \/
+       (exists a, E = tm a /\ is_name/tm a)
+H1 : tmctx G @
+H2 : member E G
+============================
+ (exists x, E = dim x /\ is_name/dim x) \/
+   (exists a, E = tm a /\ is_name/tm a)
+
+tmctx_inv < case H1.
+Subgoal 1:
+
+Variables: E
+IH : forall G E, tmctx G * -> member E G ->
+       (exists x, E = dim x /\ is_name/dim x) \/
+       (exists a, E = tm a /\ is_name/tm a)
+H2 : member E nil
+============================
+ (exists x, E = dim x /\ is_name/dim x) \/
+   (exists a, E = tm a /\ is_name/tm a)
+
+Subgoal 2 is:
+ (exists x, E n1 = dim x /\ is_name/dim x) \/
+   (exists a, E n1 = tm a /\ is_name/tm a)
+
+Subgoal 3 is:
+ (exists x, E n1 = dim x /\ is_name/dim x) \/
+   (exists a, E n1 = tm a /\ is_name/tm a)
+
+tmctx_inv < case H2.
+Subgoal 2:
+
+Variables: E G1
+IH : forall G E, tmctx G * -> member E G ->
+       (exists x, E = dim x /\ is_name/dim x) \/
+       (exists a, E = tm a /\ is_name/tm a)
+H2 : member (E n1) (dim n1 :: G1)
+H3 : tmctx G1 *
+============================
+ (exists x, E n1 = dim x /\ is_name/dim x) \/
+   (exists a, E n1 = tm a /\ is_name/tm a)
+
+Subgoal 3 is:
+ (exists x, E n1 = dim x /\ is_name/dim x) \/
+   (exists a, E n1 = tm a /\ is_name/tm a)
+
+tmctx_inv < case H2.
+Subgoal 2.1:
+
+Variables: G1
+IH : forall G E, tmctx G * -> member E G ->
+       (exists x, E = dim x /\ is_name/dim x) \/
+       (exists a, E = tm a /\ is_name/tm a)
+H3 : tmctx G1 *
+============================
+ (exists x, dim n1 = dim x /\ is_name/dim x) \/
+   (exists a, dim n1 = tm a /\ is_name/tm a)
+
+Subgoal 2.2 is:
+ (exists x, E n1 = dim x /\ is_name/dim x) \/
+   (exists a, E n1 = tm a /\ is_name/tm a)
+
+Subgoal 3 is:
+ (exists x, E n1 = dim x /\ is_name/dim x) \/
+   (exists a, E n1 = tm a /\ is_name/tm a)
+
+tmctx_inv < search.
+Subgoal 2.2:
+
+Variables: E G1
+IH : forall G E, tmctx G * -> member E G ->
+       (exists x, E = dim x /\ is_name/dim x) \/
+       (exists a, E = tm a /\ is_name/tm a)
+H3 : tmctx G1 *
+H4 : member (E n1) G1
+============================
+ (exists x, E n1 = dim x /\ is_name/dim x) \/
+   (exists a, E n1 = tm a /\ is_name/tm a)
+
+Subgoal 3 is:
+ (exists x, E n1 = dim x /\ is_name/dim x) \/
+   (exists a, E n1 = tm a /\ is_name/tm a)
+
+tmctx_inv < apply IH to H3 H4.
+Subgoal 2.2:
+
+Variables: E G1
+IH : forall G E, tmctx G * -> member E G ->
+       (exists x, E = dim x /\ is_name/dim x) \/
+       (exists a, E = tm a /\ is_name/tm a)
+H3 : tmctx G1 *
+H4 : member (E n1) G1
+H5 : (exists x, E n1 = dim x /\ is_name/dim x) \/
+       (exists a, E n1 = tm a /\ is_name/tm a)
+============================
+ (exists x, E n1 = dim x /\ is_name/dim x) \/
+   (exists a, E n1 = tm a /\ is_name/tm a)
+
+Subgoal 3 is:
+ (exists x, E n1 = dim x /\ is_name/dim x) \/
+   (exists a, E n1 = tm a /\ is_name/tm a)
+
+tmctx_inv < search.
+Subgoal 3:
+
+Variables: E G1
+IH : forall G E, tmctx G * -> member E G ->
+       (exists x, E = dim x /\ is_name/dim x) \/
+       (exists a, E = tm a /\ is_name/tm a)
+H2 : member (E n1) (tm n1 :: G1)
+H3 : tmctx G1 *
+============================
+ (exists x, E n1 = dim x /\ is_name/dim x) \/
+   (exists a, E n1 = tm a /\ is_name/tm a)
+
+tmctx_inv < case H2.
+Subgoal 3.1:
+
+Variables: G1
+IH : forall G E, tmctx G * -> member E G ->
+       (exists x, E = dim x /\ is_name/dim x) \/
+       (exists a, E = tm a /\ is_name/tm a)
+H3 : tmctx G1 *
+============================
+ (exists x, tm n1 = dim x /\ is_name/dim x) \/
+   (exists a, tm n1 = tm a /\ is_name/tm a)
+
+Subgoal 3.2 is:
+ (exists x, E n1 = dim x /\ is_name/dim x) \/
+   (exists a, E n1 = tm a /\ is_name/tm a)
+
+tmctx_inv < search.
+Subgoal 3.2:
+
+Variables: E G1
+IH : forall G E, tmctx G * -> member E G ->
+       (exists x, E = dim x /\ is_name/dim x) \/
+       (exists a, E = tm a /\ is_name/tm a)
+H3 : tmctx G1 *
+H4 : member (E n1) G1
+============================
+ (exists x, E n1 = dim x /\ is_name/dim x) \/
+   (exists a, E n1 = tm a /\ is_name/tm a)
+
+tmctx_inv < apply IH to H3 H4.
+Subgoal 3.2:
+
+Variables: E G1
+IH : forall G E, tmctx G * -> member E G ->
+       (exists x, E = dim x /\ is_name/dim x) \/
+       (exists a, E = tm a /\ is_name/tm a)
+H3 : tmctx G1 *
+H4 : member (E n1) G1
+H5 : (exists x, E n1 = dim x /\ is_name/dim x) \/
+       (exists a, E n1 = tm a /\ is_name/tm a)
+============================
+ (exists x, E n1 = dim x /\ is_name/dim x) \/
+   (exists a, E n1 = tm a /\ is_name/tm a)
+
+tmctx_inv < search.
+Proof completed.
+Abella < Theorem dimctx_tmctx : 
+forall P, dimctx P -> tmctx P.
+
+
+============================
+ forall P, dimctx P -> tmctx P
+
+dimctx_tmctx < induction on 1.
+
+IH : forall P, dimctx P * -> tmctx P
+============================
+ forall P, dimctx P @ -> tmctx P
+
+dimctx_tmctx < intros.
+
+Variables: P
+IH : forall P, dimctx P * -> tmctx P
+H1 : dimctx P @
+============================
+ tmctx P
+
+dimctx_tmctx < case H1.
+Subgoal 1:
+
+IH : forall P, dimctx P * -> tmctx P
+============================
+ tmctx nil
+
+Subgoal 2 is:
+ tmctx (dim n1 :: P1)
+
+dimctx_tmctx < search.
+Subgoal 2:
+
+Variables: P1
+IH : forall P, dimctx P * -> tmctx P
+H2 : dimctx P1 *
+============================
+ tmctx (dim n1 :: P1)
+
+dimctx_tmctx < apply IH to H2.
+Subgoal 2:
+
+Variables: P1
+IH : forall P, dimctx P * -> tmctx P
+H2 : dimctx P1 *
+H3 : tmctx P1
+============================
+ tmctx (dim n1 :: P1)
+
+dimctx_tmctx < search.
+Proof completed.
+Abella < Define subst : olist -> olist -> olist -> prop by 
+subst nil P' nil;
+nabla x, subst (dsub x (R x) :: S x) (P' x) (dim x :: P) := nabla x, {P' x |- dim (R x)} /\ subst (S x) (P' x) P.
+
+Abella < Theorem subst_inv1 : 
+forall S P' P E, subst S P' P -> member E S ->
+  (exists X R', E = dsub X R' /\ is_name/dim X /\ member (dim X) P /\
+       {P' |- dim R'}).
+
+
+============================
+ forall S P' P E, subst S P' P -> member E S ->
+   (exists X R', E = dsub X R' /\ is_name/dim X /\ member (dim X) P /\
+        {P' |- dim R'})
+
+subst_inv1 < induction on 1.
+
+IH : forall S P' P E, subst S P' P * -> member E S ->
+       (exists X R', E = dsub X R' /\ is_name/dim X /\ member (dim X) P /\
+            {P' |- dim R'})
+============================
+ forall S P' P E, subst S P' P @ -> member E S ->
+   (exists X R', E = dsub X R' /\ is_name/dim X /\ member (dim X) P /\
+        {P' |- dim R'})
+
+subst_inv1 < intros.
+
+Variables: S P' P E
+IH : forall S P' P E, subst S P' P * -> member E S ->
+       (exists X R', E = dsub X R' /\ is_name/dim X /\ member (dim X) P /\
+            {P' |- dim R'})
+H1 : subst S P' P @
+H2 : member E S
+============================
+ exists X R', E = dsub X R' /\ is_name/dim X /\ member (dim X) P /\
+   {P' |- dim R'}
+
+subst_inv1 < case H1.
+Subgoal 1:
+
+Variables: P' E
+IH : forall S P' P E, subst S P' P * -> member E S ->
+       (exists X R', E = dsub X R' /\ is_name/dim X /\ member (dim X) P /\
+            {P' |- dim R'})
+H2 : member E nil
+============================
+ exists X R', E = dsub X R' /\ is_name/dim X /\ member (dim X) nil /\
+   {P' |- dim R'}
+
+Subgoal 2 is:
+ exists X R', E n1 = dsub X R' /\ is_name/dim X /\
+   member (dim X) (dim n1 :: P1) /\ {P' n1 |- dim R'}
+
+subst_inv1 < case H2.
+Subgoal 2:
+
+Variables: P' E P1 S1 R
+IH : forall S P' P E, subst S P' P * -> member E S ->
+       (exists X R', E = dsub X R' /\ is_name/dim X /\ member (dim X) P /\
+            {P' |- dim R'})
+H2 : member (E n1) (dsub n1 (R n1) :: S1 n1)
+H3 : {P' n1 |- dim (R n1)}
+H4 : subst (S1 n1) (P' n1) P1 *
+============================
+ exists X R', E n1 = dsub X R' /\ is_name/dim X /\
+   member (dim X) (dim n1 :: P1) /\ {P' n1 |- dim R'}
+
+subst_inv1 < case H2.
+Subgoal 2.1:
+
+Variables: P' P1 S1 R
+IH : forall S P' P E, subst S P' P * -> member E S ->
+       (exists X R', E = dsub X R' /\ is_name/dim X /\ member (dim X) P /\
+            {P' |- dim R'})
+H3 : {P' n1 |- dim (R n1)}
+H4 : subst (S1 n1) (P' n1) P1 *
+============================
+ exists X R', dsub n1 (R n1) = dsub X R' /\ is_name/dim X /\
+   member (dim X) (dim n1 :: P1) /\ {P' n1 |- dim R'}
+
+Subgoal 2.2 is:
+ exists X R', E n1 = dsub X R' /\ is_name/dim X /\
+   member (dim X) (dim n1 :: P1) /\ {P' n1 |- dim R'}
+
+subst_inv1 < search.
+Subgoal 2.2:
+
+Variables: P' E P1 S1 R
+IH : forall S P' P E, subst S P' P * -> member E S ->
+       (exists X R', E = dsub X R' /\ is_name/dim X /\ member (dim X) P /\
+            {P' |- dim R'})
+H3 : {P' n1 |- dim (R n1)}
+H4 : subst (S1 n1) (P' n1) P1 *
+H5 : member (E n1) (S1 n1)
+============================
+ exists X R', E n1 = dsub X R' /\ is_name/dim X /\
+   member (dim X) (dim n1 :: P1) /\ {P' n1 |- dim R'}
+
+subst_inv1 < apply IH to H4 H5.
+Subgoal 2.2:
+
+Variables: P' P1 S1 R X R'
+IH : forall S P' P E, subst S P' P * -> member E S ->
+       (exists X R', E = dsub X R' /\ is_name/dim X /\ member (dim X) P /\
+            {P' |- dim R'})
+H3 : {P' n1 |- dim (R n1)}
+H4 : subst (S1 n1) (P' n1) P1 *
+H5 : member (dsub (X n1) (R' n1)) (S1 n1)
+H6 : is_name/dim (X n1)
+H7 : member (dim (X n1)) P1
+H8 : {P' n1 |- dim (R' n1)}
+============================
+ exists X1 R'1, dsub (X n1) (R' n1) = dsub X1 R'1 /\ is_name/dim X1 /\
+   member (dim X1) (dim n1 :: P1) /\ {P' n1 |- dim R'1}
+
+subst_inv1 < search.
+Proof completed.
+Abella < Theorem subst_inv3 : 
+forall S P' P E, subst S P' P -> member E P ->
+  (exists X R', E = dim X /\ is_name/dim X /\ member (dsub X R') S /\
+       {P' |- dim R'}).
+
+
+============================
+ forall S P' P E, subst S P' P -> member E P ->
+   (exists X R', E = dim X /\ is_name/dim X /\ member (dsub X R') S /\
+        {P' |- dim R'})
+
+subst_inv3 < induction on 1.
+
+IH : forall S P' P E, subst S P' P * -> member E P ->
+       (exists X R', E = dim X /\ is_name/dim X /\ member (dsub X R') S /\
+            {P' |- dim R'})
+============================
+ forall S P' P E, subst S P' P @ -> member E P ->
+   (exists X R', E = dim X /\ is_name/dim X /\ member (dsub X R') S /\
+        {P' |- dim R'})
+
+subst_inv3 < intros.
+
+Variables: S P' P E
+IH : forall S P' P E, subst S P' P * -> member E P ->
+       (exists X R', E = dim X /\ is_name/dim X /\ member (dsub X R') S /\
+            {P' |- dim R'})
+H1 : subst S P' P @
+H2 : member E P
+============================
+ exists X R', E = dim X /\ is_name/dim X /\ member (dsub X R') S /\
+   {P' |- dim R'}
+
+subst_inv3 < case H1.
+Subgoal 1:
+
+Variables: P' E
+IH : forall S P' P E, subst S P' P * -> member E P ->
+       (exists X R', E = dim X /\ is_name/dim X /\ member (dsub X R') S /\
+            {P' |- dim R'})
+H2 : member E nil
+============================
+ exists X R', E = dim X /\ is_name/dim X /\ member (dsub X R') nil /\
+   {P' |- dim R'}
+
+Subgoal 2 is:
+ exists X R', E n1 = dim X /\ is_name/dim X /\
+   member (dsub X R') (dsub n1 (R n1) :: S1 n1) /\ {P' n1 |- dim R'}
+
+subst_inv3 < case H2.
+Subgoal 2:
+
+Variables: P' E P1 S1 R
+IH : forall S P' P E, subst S P' P * -> member E P ->
+       (exists X R', E = dim X /\ is_name/dim X /\ member (dsub X R') S /\
+            {P' |- dim R'})
+H2 : member (E n1) (dim n1 :: P1)
+H3 : {P' n1 |- dim (R n1)}
+H4 : subst (S1 n1) (P' n1) P1 *
+============================
+ exists X R', E n1 = dim X /\ is_name/dim X /\
+   member (dsub X R') (dsub n1 (R n1) :: S1 n1) /\ {P' n1 |- dim R'}
+
+subst_inv3 < case H2.
+Subgoal 2.1:
+
+Variables: P' P1 S1 R
+IH : forall S P' P E, subst S P' P * -> member E P ->
+       (exists X R', E = dim X /\ is_name/dim X /\ member (dsub X R') S /\
+            {P' |- dim R'})
+H3 : {P' n1 |- dim (R n1)}
+H4 : subst (S1 n1) (P' n1) P1 *
+============================
+ exists X R', dim n1 = dim X /\ is_name/dim X /\
+   member (dsub X R') (dsub n1 (R n1) :: S1 n1) /\ {P' n1 |- dim R'}
+
+Subgoal 2.2 is:
+ exists X R', E n1 = dim X /\ is_name/dim X /\
+   member (dsub X R') (dsub n1 (R n1) :: S1 n1) /\ {P' n1 |- dim R'}
+
+subst_inv3 < search.
+Subgoal 2.2:
+
+Variables: P' E P1 S1 R
+IH : forall S P' P E, subst S P' P * -> member E P ->
+       (exists X R', E = dim X /\ is_name/dim X /\ member (dsub X R') S /\
+            {P' |- dim R'})
+H3 : {P' n1 |- dim (R n1)}
+H4 : subst (S1 n1) (P' n1) P1 *
+H5 : member (E n1) P1
+============================
+ exists X R', E n1 = dim X /\ is_name/dim X /\
+   member (dsub X R') (dsub n1 (R n1) :: S1 n1) /\ {P' n1 |- dim R'}
+
+subst_inv3 < apply IH to H4 H5.
+Subgoal 2.2:
+
+Variables: P' P1 S1 R X R'
+IH : forall S P' P E, subst S P' P * -> member E P ->
+       (exists X R', E = dim X /\ is_name/dim X /\ member (dsub X R') S /\
+            {P' |- dim R'})
+H3 : {P' n1 |- dim (R n1)}
+H4 : subst (S1 n1) (P' n1) P1 *
+H5 : member (dim (X n1)) P1
+H6 : is_name/dim (X n1)
+H7 : member (dsub (X n1) (R' n1)) (S1 n1)
+H8 : {P' n1 |- dim (R' n1)}
+============================
+ exists X1 R', dim (X n1) = dim X1 /\ is_name/dim X1 /\
+   member (dsub X1 R') (dsub n1 (R n1) :: S1 n1) /\ {P' n1 |- dim R'}
+
+subst_inv3 < search.
+Proof completed.
+Abella < Theorem subst_unique : 
+forall S P' P X R'1 R'2, subst S P' P -> member (dsub X R'1) S ->
+  member (dsub X R'2) S -> R'1 =
+R'2.
+
+
+============================
+ forall S P' P X R'1 R'2, subst S P' P -> member (dsub X R'1) S ->
+   member (dsub X R'2) S -> R'1 =
+ R'2
+
+subst_unique < induction on 1.
+
+IH : forall S P' P X R'1 R'2, subst S P' P * -> member (dsub X R'1) S ->
+       member (dsub X R'2) S -> R'1 =
+     R'2
+============================
+ forall S P' P X R'1 R'2, subst S P' P @ -> member (dsub X R'1) S ->
+   member (dsub X R'2) S -> R'1 =
+ R'2
+
+subst_unique < intros.
+
+Variables: S P' P X R'1 R'2
+IH : forall S P' P X R'1 R'2, subst S P' P * -> member (dsub X R'1) S ->
+       member (dsub X R'2) S -> R'1 =
+     R'2
+H1 : subst S P' P @
+H2 : member (dsub X R'1) S
+H3 : member (dsub X R'2) S
+============================
+ R'1 = R'2
+
+subst_unique < case H1.
+Subgoal 1:
+
+Variables: P' X R'1 R'2
+IH : forall S P' P X R'1 R'2, subst S P' P * -> member (dsub X R'1) S ->
+       member (dsub X R'2) S -> R'1 =
+     R'2
+H2 : member (dsub X R'1) nil
+H3 : member (dsub X R'2) nil
+============================
+ R'1 = R'2
+
+Subgoal 2 is:
+ R'1 n1 = R'2 n1
+
+subst_unique < case H2.
+Subgoal 2:
+
+Variables: P' X R'1 R'2 P1 S1 R
+IH : forall S P' P X R'1 R'2, subst S P' P * -> member (dsub X R'1) S ->
+       member (dsub X R'2) S -> R'1 =
+     R'2
+H2 : member (dsub (X n1) (R'1 n1)) (dsub n1 (R n1) :: S1 n1)
+H3 : member (dsub (X n1) (R'2 n1)) (dsub n1 (R n1) :: S1 n1)
+H4 : {P' n1 |- dim (R n1)}
+H5 : subst (S1 n1) (P' n1) P1 *
+============================
+ R'1 n1 = R'2 n1
+
+subst_unique < case H2.
+Subgoal 2.1:
+
+Variables: P' R'2 P1 S1 R
+IH : forall S P' P X R'1 R'2, subst S P' P * -> member (dsub X R'1) S ->
+       member (dsub X R'2) S -> R'1 =
+     R'2
+H3 : member (dsub n1 (R'2 n1)) (dsub n1 (R n1) :: S1 n1)
+H4 : {P' n1 |- dim (R n1)}
+H5 : subst (S1 n1) (P' n1) P1 *
+============================
+ R n1 = R'2 n1
+
+Subgoal 2.2 is:
+ R'1 n1 = R'2 n1
+
+subst_unique < case H3.
+Subgoal 2.1.1:
+
+Variables: P' P1 S1 R
+IH : forall S P' P X R'1 R'2, subst S P' P * -> member (dsub X R'1) S ->
+       member (dsub X R'2) S -> R'1 =
+     R'2
+H4 : {P' n1 |- dim (R n1)}
+H5 : subst (S1 n1) (P' n1) P1 *
+============================
+ R n1 = R n1
+
+Subgoal 2.1.2 is:
+ R n1 = R'2 n1
+
+Subgoal 2.2 is:
+ R'1 n1 = R'2 n1
+
+subst_unique < search.
+Subgoal 2.1.2:
+
+Variables: P' R'2 P1 S1 R
+IH : forall S P' P X R'1 R'2, subst S P' P * -> member (dsub X R'1) S ->
+       member (dsub X R'2) S -> R'1 =
+     R'2
+H4 : {P' n1 |- dim (R n1)}
+H5 : subst (S1 n1) (P' n1) P1 *
+H6 : member (dsub n1 (R'2 n1)) (S1 n1)
+============================
+ R n1 = R'2 n1
+
+Subgoal 2.2 is:
+ R'1 n1 = R'2 n1
+
+subst_unique < apply subst_inv1 to H5 H6.
+Subgoal 2.1.2:
+
+Variables: P' P1 S1 R R'
+IH : forall S P' P X R'1 R'2, subst S P' P * -> member (dsub X R'1) S ->
+       member (dsub X R'2) S -> R'1 =
+     R'2
+H4 : {P' n1 |- dim (R n1)}
+H5 : subst (S1 n1) (P' n1) P1 *
+H6 : member (dsub n1 (R' n1)) (S1 n1)
+H7 : is_name/dim n1
+H8 : member (dim n1) P1
+H9 : {P' n1 |- dim (R' n1)}
+============================
+ R n1 = R' n1
+
+Subgoal 2.2 is:
+ R'1 n1 = R'2 n1
+
+subst_unique < apply prune_arg/dim to H8.
+Subgoal 2.2:
+
+Variables: P' X R'1 R'2 P1 S1 R
+IH : forall S P' P X R'1 R'2, subst S P' P * -> member (dsub X R'1) S ->
+       member (dsub X R'2) S -> R'1 =
+     R'2
+H3 : member (dsub (X n1) (R'2 n1)) (dsub n1 (R n1) :: S1 n1)
+H4 : {P' n1 |- dim (R n1)}
+H5 : subst (S1 n1) (P' n1) P1 *
+H6 : member (dsub (X n1) (R'1 n1)) (S1 n1)
+============================
+ R'1 n1 = R'2 n1
+
+subst_unique < case H3.
+Subgoal 2.2.1:
+
+Variables: P' R'1 P1 S1 R
+IH : forall S P' P X R'1 R'2, subst S P' P * -> member (dsub X R'1) S ->
+       member (dsub X R'2) S -> R'1 =
+     R'2
+H4 : {P' n1 |- dim (R n1)}
+H5 : subst (S1 n1) (P' n1) P1 *
+H6 : member (dsub n1 (R'1 n1)) (S1 n1)
+============================
+ R'1 n1 = R n1
+
+Subgoal 2.2.2 is:
+ R'1 n1 = R'2 n1
+
+subst_unique < apply subst_inv1 to H5 H6.
+Subgoal 2.2.1:
+
+Variables: P' P1 S1 R R'
+IH : forall S P' P X R'1 R'2, subst S P' P * -> member (dsub X R'1) S ->
+       member (dsub X R'2) S -> R'1 =
+     R'2
+H4 : {P' n1 |- dim (R n1)}
+H5 : subst (S1 n1) (P' n1) P1 *
+H6 : member (dsub n1 (R' n1)) (S1 n1)
+H7 : is_name/dim n1
+H8 : member (dim n1) P1
+H9 : {P' n1 |- dim (R' n1)}
+============================
+ R' n1 = R n1
+
+Subgoal 2.2.2 is:
+ R'1 n1 = R'2 n1
+
+subst_unique < apply prune_arg/dim to H8.
+Subgoal 2.2.2:
+
+Variables: P' X R'1 R'2 P1 S1 R
+IH : forall S P' P X R'1 R'2, subst S P' P * -> member (dsub X R'1) S ->
+       member (dsub X R'2) S -> R'1 =
+     R'2
+H4 : {P' n1 |- dim (R n1)}
+H5 : subst (S1 n1) (P' n1) P1 *
+H6 : member (dsub (X n1) (R'1 n1)) (S1 n1)
+H7 : member (dsub (X n1) (R'2 n1)) (S1 n1)
+============================
+ R'1 n1 = R'2 n1
+
+subst_unique < apply IH to H5 H6 H7.
+Subgoal 2.2.2:
+
+Variables: P' X R'2 P1 S1 R
+IH : forall S P' P X R'1 R'2, subst S P' P * -> member (dsub X R'1) S ->
+       member (dsub X R'2) S -> R'1 =
+     R'2
+H4 : {P' n1 |- dim (R n1)}
+H5 : subst (S1 n1) (P' n1) P1 *
+H6 : member (dsub (X n1) (R'2 n1)) (S1 n1)
+H7 : member (dsub (X n1) (R'2 n1)) (S1 n1)
+============================
+ R'2 n1 = R'2 n1
+
+subst_unique < search.
+Proof completed.
+Abella < Define xsubst : olist -> olist -> olist -> prop by 
+nabla x x', xsubst (dsub x x' :: S) (dim x' :: G') (dim x :: G) := xsubst S G' G;
+nabla a a', xsubst (sub a a' :: S) (tm a' :: G') (tm a :: G) := xsubst S G' G;
+xsubst S P' P := subst S P' P.
+
+Abella < Theorem xsubst_inv1 : 
+forall S G' G E, xsubst S G' G -> member E S ->
+  (exists X R', E = dsub X R' /\ is_name/dim X /\ {G' |- dim R'} /\
+       member (dim X) G) \/
+  (exists A A', E = sub A A' /\ is_name/tm A /\ is_name/tm A' /\
+       member (tm A) G /\ member (tm A') G').
+
+
+============================
+ forall S G' G E, xsubst S G' G -> member E S ->
+   (exists X R', E = dsub X R' /\ is_name/dim X /\ {G' |- dim R'} /\
+        member (dim X) G) \/
+   (exists A A', E = sub A A' /\ is_name/tm A /\ is_name/tm A' /\
+        member (tm A) G /\ member (tm A') G')
+
+xsubst_inv1 < induction on 1.
+
+IH : forall S G' G E, xsubst S G' G * -> member E S ->
+       (exists X R', E = dsub X R' /\ is_name/dim X /\ {G' |- dim R'} /\
+            member (dim X) G) \/
+       (exists A A', E = sub A A' /\ is_name/tm A /\ is_name/tm A' /\
+            member (tm A) G /\ member (tm A') G')
+============================
+ forall S G' G E, xsubst S G' G @ -> member E S ->
+   (exists X R', E = dsub X R' /\ is_name/dim X /\ {G' |- dim R'} /\
+        member (dim X) G) \/
+   (exists A A', E = sub A A' /\ is_name/tm A /\ is_name/tm A' /\
+        member (tm A) G /\ member (tm A') G')
+
+xsubst_inv1 < intros.
+
+Variables: S G' G E
+IH : forall S G' G E, xsubst S G' G * -> member E S ->
+       (exists X R', E = dsub X R' /\ is_name/dim X /\ {G' |- dim R'} /\
+            member (dim X) G) \/
+       (exists A A', E = sub A A' /\ is_name/tm A /\ is_name/tm A' /\
+            member (tm A) G /\ member (tm A') G')
+H1 : xsubst S G' G @
+H2 : member E S
+============================
+ (exists X R', E = dsub X R' /\ is_name/dim X /\ {G' |- dim R'} /\
+      member (dim X) G) \/
+   (exists A A', E = sub A A' /\ is_name/tm A /\ is_name/tm A' /\
+        member (tm A) G /\ member (tm A') G')
+
+xsubst_inv1 < case H1.
+Subgoal 1:
+
+Variables: E G1 G'1 S1
+IH : forall S G' G E, xsubst S G' G * -> member E S ->
+       (exists X R', E = dsub X R' /\ is_name/dim X /\ {G' |- dim R'} /\
+            member (dim X) G) \/
+       (exists A A', E = sub A A' /\ is_name/tm A /\ is_name/tm A' /\
+            member (tm A) G /\ member (tm A') G')
+H2 : member (E n1 n2) (dsub n1 n2 :: S1)
+H3 : xsubst S1 G'1 G1 *
+============================
+ (exists X R', E n1 n2 = dsub X R' /\ is_name/dim X /\
+      {G'1, dim n2 |- dim R'} /\ member (dim X) (dim n1 :: G1)) \/
+   (exists A A', E n1 n2 = sub A A' /\ is_name/tm A /\ is_name/tm A' /\
+        member (tm A) (dim n1 :: G1) /\ member (tm A') (dim n2 :: G'1))
+
+Subgoal 2 is:
+ (exists X R', E n1 n2 = dsub X R' /\ is_name/dim X /\
+      {G'1, tm n2 |- dim R'} /\ member (dim X) (tm n1 :: G1)) \/
+   (exists A A', E n1 n2 = sub A A' /\ is_name/tm A /\ is_name/tm A' /\
+        member (tm A) (tm n1 :: G1) /\ member (tm A') (tm n2 :: G'1))
+
+Subgoal 3 is:
+ (exists X R', E = dsub X R' /\ is_name/dim X /\ {G' |- dim R'} /\
+      member (dim X) G) \/
+   (exists A A', E = sub A A' /\ is_name/tm A /\ is_name/tm A' /\
+        member (tm A) G /\ member (tm A') G')
+
+xsubst_inv1 < case H2.
+Subgoal 1.1:
+
+Variables: G1 G'1 S1
+IH : forall S G' G E, xsubst S G' G * -> member E S ->
+       (exists X R', E = dsub X R' /\ is_name/dim X /\ {G' |- dim R'} /\
+            member (dim X) G) \/
+       (exists A A', E = sub A A' /\ is_name/tm A /\ is_name/tm A' /\
+            member (tm A) G /\ member (tm A') G')
+H3 : xsubst S1 G'1 G1 *
+============================
+ (exists X R', dsub n1 n2 = dsub X R' /\ is_name/dim X /\
+      {G'1, dim n2 |- dim R'} /\ member (dim X) (dim n1 :: G1)) \/
+   (exists A A', dsub n1 n2 = sub A A' /\ is_name/tm A /\ is_name/tm A' /\
+        member (tm A) (dim n1 :: G1) /\ member (tm A') (dim n2 :: G'1))
+
+Subgoal 1.2 is:
+ (exists X R', E n1 n2 = dsub X R' /\ is_name/dim X /\
+      {G'1, dim n2 |- dim R'} /\ member (dim X) (dim n1 :: G1)) \/
+   (exists A A', E n1 n2 = sub A A' /\ is_name/tm A /\ is_name/tm A' /\
+        member (tm A) (dim n1 :: G1) /\ member (tm A') (dim n2 :: G'1))
+
+Subgoal 2 is:
+ (exists X R', E n1 n2 = dsub X R' /\ is_name/dim X /\
+      {G'1, tm n2 |- dim R'} /\ member (dim X) (tm n1 :: G1)) \/
+   (exists A A', E n1 n2 = sub A A' /\ is_name/tm A /\ is_name/tm A' /\
+        member (tm A) (tm n1 :: G1) /\ member (tm A') (tm n2 :: G'1))
+
+Subgoal 3 is:
+ (exists X R', E = dsub X R' /\ is_name/dim X /\ {G' |- dim R'} /\
+      member (dim X) G) \/
+   (exists A A', E = sub A A' /\ is_name/tm A /\ is_name/tm A' /\
+        member (tm A) G /\ member (tm A') G')
+
+xsubst_inv1 < search.
+Subgoal 1.2:
+
+Variables: E G1 G'1 S1
+IH : forall S G' G E, xsubst S G' G * -> member E S ->
+       (exists X R', E = dsub X R' /\ is_name/dim X /\ {G' |- dim R'} /\
+            member (dim X) G) \/
+       (exists A A', E = sub A A' /\ is_name/tm A /\ is_name/tm A' /\
+            member (tm A) G /\ member (tm A') G')
+H3 : xsubst S1 G'1 G1 *
+H4 : member (E n1 n2) S1
+============================
+ (exists X R', E n1 n2 = dsub X R' /\ is_name/dim X /\
+      {G'1, dim n2 |- dim R'} /\ member (dim X) (dim n1 :: G1)) \/
+   (exists A A', E n1 n2 = sub A A' /\ is_name/tm A /\ is_name/tm A' /\
+        member (tm A) (dim n1 :: G1) /\ member (tm A') (dim n2 :: G'1))
+
+Subgoal 2 is:
+ (exists X R', E n1 n2 = dsub X R' /\ is_name/dim X /\
+      {G'1, tm n2 |- dim R'} /\ member (dim X) (tm n1 :: G1)) \/
+   (exists A A', E n1 n2 = sub A A' /\ is_name/tm A /\ is_name/tm A' /\
+        member (tm A) (tm n1 :: G1) /\ member (tm A') (tm n2 :: G'1))
+
+Subgoal 3 is:
+ (exists X R', E = dsub X R' /\ is_name/dim X /\ {G' |- dim R'} /\
+      member (dim X) G) \/
+   (exists A A', E = sub A A' /\ is_name/tm A /\ is_name/tm A' /\
+        member (tm A) G /\ member (tm A') G')
+
+xsubst_inv1 < apply IH to H3 H4.
+Subgoal 1.2:
+
+Variables: E G1 G'1 S1
+IH : forall S G' G E, xsubst S G' G * -> member E S ->
+       (exists X R', E = dsub X R' /\ is_name/dim X /\ {G' |- dim R'} /\
+            member (dim X) G) \/
+       (exists A A', E = sub A A' /\ is_name/tm A /\ is_name/tm A' /\
+            member (tm A) G /\ member (tm A') G')
+H3 : xsubst S1 G'1 G1 *
+H4 : member (E n1 n2) S1
+H5 : (exists X R', E n1 n2 = dsub X R' /\ is_name/dim X /\ {G'1 |- dim R'} /\
+          member (dim X) G1) \/
+       (exists A A', E n1 n2 = sub A A' /\ is_name/tm A /\ is_name/tm A' /\
+            member (tm A) G1 /\ member (tm A') G'1)
+============================
+ (exists X R', E n1 n2 = dsub X R' /\ is_name/dim X /\
+      {G'1, dim n2 |- dim R'} /\ member (dim X) (dim n1 :: G1)) \/
+   (exists A A', E n1 n2 = sub A A' /\ is_name/tm A /\ is_name/tm A' /\
+        member (tm A) (dim n1 :: G1) /\ member (tm A') (dim n2 :: G'1))
+
+Subgoal 2 is:
+ (exists X R', E n1 n2 = dsub X R' /\ is_name/dim X /\
+      {G'1, tm n2 |- dim R'} /\ member (dim X) (tm n1 :: G1)) \/
+   (exists A A', E n1 n2 = sub A A' /\ is_name/tm A /\ is_name/tm A' /\
+        member (tm A) (tm n1 :: G1) /\ member (tm A') (tm n2 :: G'1))
+
+Subgoal 3 is:
+ (exists X R', E = dsub X R' /\ is_name/dim X /\ {G' |- dim R'} /\
+      member (dim X) G) \/
+   (exists A A', E = sub A A' /\ is_name/tm A /\ is_name/tm A' /\
+        member (tm A) G /\ member (tm A') G')
+
+xsubst_inv1 < case H5.
+Subgoal 1.2.1:
+
+Variables: G1 G'1 S1 X R'
+IH : forall S G' G E, xsubst S G' G * -> member E S ->
+       (exists X R', E = dsub X R' /\ is_name/dim X /\ {G' |- dim R'} /\
+            member (dim X) G) \/
+       (exists A A', E = sub A A' /\ is_name/tm A /\ is_name/tm A' /\
+            member (tm A) G /\ member (tm A') G')
+H3 : xsubst S1 G'1 G1 *
+H4 : member (dsub (X n2 n1) (R' n2 n1)) S1
+H6 : is_name/dim (X n2 n1)
+H7 : {G'1 |- dim (R' n2 n1)}
+H8 : member (dim (X n2 n1)) G1
+============================
+ (exists X1 R'1, dsub (X n2 n1) (R' n2 n1) = dsub X1 R'1 /\ is_name/dim X1 /\
+      {G'1, dim n2 |- dim R'1} /\ member (dim X1) (dim n1 :: G1)) \/
+   (exists A A', dsub (X n2 n1) (R' n2 n1) = sub A A' /\ is_name/tm A /\
+        is_name/tm A' /\ member (tm A) (dim n1 :: G1) /\
+        member (tm A') (dim n2 :: G'1))
+
+Subgoal 1.2.2 is:
+ (exists X R', sub (A n2 n1) (A' n2 n1) = dsub X R' /\ is_name/dim X /\
+      {G'1, dim n2 |- dim R'} /\ member (dim X) (dim n1 :: G1)) \/
+   (exists A1 A'1, sub (A n2 n1) (A' n2 n1) = sub A1 A'1 /\ is_name/tm A1 /\
+        is_name/tm A'1 /\ member (tm A1) (dim n1 :: G1) /\
+        member (tm A'1) (dim n2 :: G'1))
+
+Subgoal 2 is:
+ (exists X R', E n1 n2 = dsub X R' /\ is_name/dim X /\
+      {G'1, tm n2 |- dim R'} /\ member (dim X) (tm n1 :: G1)) \/
+   (exists A A', E n1 n2 = sub A A' /\ is_name/tm A /\ is_name/tm A' /\
+        member (tm A) (tm n1 :: G1) /\ member (tm A') (tm n2 :: G'1))
+
+Subgoal 3 is:
+ (exists X R', E = dsub X R' /\ is_name/dim X /\ {G' |- dim R'} /\
+      member (dim X) G) \/
+   (exists A A', E = sub A A' /\ is_name/tm A /\ is_name/tm A' /\
+        member (tm A) G /\ member (tm A') G')
+
+xsubst_inv1 < search.
+Subgoal 1.2.2:
+
+Variables: G1 G'1 S1 A A'
+IH : forall S G' G E, xsubst S G' G * -> member E S ->
+       (exists X R', E = dsub X R' /\ is_name/dim X /\ {G' |- dim R'} /\
+            member (dim X) G) \/
+       (exists A A', E = sub A A' /\ is_name/tm A /\ is_name/tm A' /\
+            member (tm A) G /\ member (tm A') G')
+H3 : xsubst S1 G'1 G1 *
+H4 : member (sub (A n2 n1) (A' n2 n1)) S1
+H6 : is_name/tm (A n2 n1)
+H7 : is_name/tm (A' n2 n1)
+H8 : member (tm (A n2 n1)) G1
+H9 : member (tm (A' n2 n1)) G'1
+============================
+ (exists X R', sub (A n2 n1) (A' n2 n1) = dsub X R' /\ is_name/dim X /\
+      {G'1, dim n2 |- dim R'} /\ member (dim X) (dim n1 :: G1)) \/
+   (exists A1 A'1, sub (A n2 n1) (A' n2 n1) = sub A1 A'1 /\ is_name/tm A1 /\
+        is_name/tm A'1 /\ member (tm A1) (dim n1 :: G1) /\
+        member (tm A'1) (dim n2 :: G'1))
+
+Subgoal 2 is:
+ (exists X R', E n1 n2 = dsub X R' /\ is_name/dim X /\
+      {G'1, tm n2 |- dim R'} /\ member (dim X) (tm n1 :: G1)) \/
+   (exists A A', E n1 n2 = sub A A' /\ is_name/tm A /\ is_name/tm A' /\
+        member (tm A) (tm n1 :: G1) /\ member (tm A') (tm n2 :: G'1))
+
+Subgoal 3 is:
+ (exists X R', E = dsub X R' /\ is_name/dim X /\ {G' |- dim R'} /\
+      member (dim X) G) \/
+   (exists A A', E = sub A A' /\ is_name/tm A /\ is_name/tm A' /\
+        member (tm A) G /\ member (tm A') G')
+
+xsubst_inv1 < search.
+Subgoal 2:
+
+Variables: E G1 G'1 S1
+IH : forall S G' G E, xsubst S G' G * -> member E S ->
+       (exists X R', E = dsub X R' /\ is_name/dim X /\ {G' |- dim R'} /\
+            member (dim X) G) \/
+       (exists A A', E = sub A A' /\ is_name/tm A /\ is_name/tm A' /\
+            member (tm A) G /\ member (tm A') G')
+H2 : member (E n1 n2) (sub n1 n2 :: S1)
+H3 : xsubst S1 G'1 G1 *
+============================
+ (exists X R', E n1 n2 = dsub X R' /\ is_name/dim X /\
+      {G'1, tm n2 |- dim R'} /\ member (dim X) (tm n1 :: G1)) \/
+   (exists A A', E n1 n2 = sub A A' /\ is_name/tm A /\ is_name/tm A' /\
+        member (tm A) (tm n1 :: G1) /\ member (tm A') (tm n2 :: G'1))
+
+Subgoal 3 is:
+ (exists X R', E = dsub X R' /\ is_name/dim X /\ {G' |- dim R'} /\
+      member (dim X) G) \/
+   (exists A A', E = sub A A' /\ is_name/tm A /\ is_name/tm A' /\
+        member (tm A) G /\ member (tm A') G')
+
+xsubst_inv1 < case H2.
+Subgoal 2.1:
+
+Variables: G1 G'1 S1
+IH : forall S G' G E, xsubst S G' G * -> member E S ->
+       (exists X R', E = dsub X R' /\ is_name/dim X /\ {G' |- dim R'} /\
+            member (dim X) G) \/
+       (exists A A', E = sub A A' /\ is_name/tm A /\ is_name/tm A' /\
+            member (tm A) G /\ member (tm A') G')
+H3 : xsubst S1 G'1 G1 *
+============================
+ (exists X R', sub n1 n2 = dsub X R' /\ is_name/dim X /\
+      {G'1, tm n2 |- dim R'} /\ member (dim X) (tm n1 :: G1)) \/
+   (exists A A', sub n1 n2 = sub A A' /\ is_name/tm A /\ is_name/tm A' /\
+        member (tm A) (tm n1 :: G1) /\ member (tm A') (tm n2 :: G'1))
+
+Subgoal 2.2 is:
+ (exists X R', E n1 n2 = dsub X R' /\ is_name/dim X /\
+      {G'1, tm n2 |- dim R'} /\ member (dim X) (tm n1 :: G1)) \/
+   (exists A A', E n1 n2 = sub A A' /\ is_name/tm A /\ is_name/tm A' /\
+        member (tm A) (tm n1 :: G1) /\ member (tm A') (tm n2 :: G'1))
+
+Subgoal 3 is:
+ (exists X R', E = dsub X R' /\ is_name/dim X /\ {G' |- dim R'} /\
+      member (dim X) G) \/
+   (exists A A', E = sub A A' /\ is_name/tm A /\ is_name/tm A' /\
+        member (tm A) G /\ member (tm A') G')
+
+xsubst_inv1 < search.
+Subgoal 2.2:
+
+Variables: E G1 G'1 S1
+IH : forall S G' G E, xsubst S G' G * -> member E S ->
+       (exists X R', E = dsub X R' /\ is_name/dim X /\ {G' |- dim R'} /\
+            member (dim X) G) \/
+       (exists A A', E = sub A A' /\ is_name/tm A /\ is_name/tm A' /\
+            member (tm A) G /\ member (tm A') G')
+H3 : xsubst S1 G'1 G1 *
+H4 : member (E n1 n2) S1
+============================
+ (exists X R', E n1 n2 = dsub X R' /\ is_name/dim X /\
+      {G'1, tm n2 |- dim R'} /\ member (dim X) (tm n1 :: G1)) \/
+   (exists A A', E n1 n2 = sub A A' /\ is_name/tm A /\ is_name/tm A' /\
+        member (tm A) (tm n1 :: G1) /\ member (tm A') (tm n2 :: G'1))
+
+Subgoal 3 is:
+ (exists X R', E = dsub X R' /\ is_name/dim X /\ {G' |- dim R'} /\
+      member (dim X) G) \/
+   (exists A A', E = sub A A' /\ is_name/tm A /\ is_name/tm A' /\
+        member (tm A) G /\ member (tm A') G')
+
+xsubst_inv1 < apply IH to H3 H4.
+Subgoal 2.2:
+
+Variables: E G1 G'1 S1
+IH : forall S G' G E, xsubst S G' G * -> member E S ->
+       (exists X R', E = dsub X R' /\ is_name/dim X /\ {G' |- dim R'} /\
+            member (dim X) G) \/
+       (exists A A', E = sub A A' /\ is_name/tm A /\ is_name/tm A' /\
+            member (tm A) G /\ member (tm A') G')
+H3 : xsubst S1 G'1 G1 *
+H4 : member (E n1 n2) S1
+H5 : (exists X R', E n1 n2 = dsub X R' /\ is_name/dim X /\ {G'1 |- dim R'} /\
+          member (dim X) G1) \/
+       (exists A A', E n1 n2 = sub A A' /\ is_name/tm A /\ is_name/tm A' /\
+            member (tm A) G1 /\ member (tm A') G'1)
+============================
+ (exists X R', E n1 n2 = dsub X R' /\ is_name/dim X /\
+      {G'1, tm n2 |- dim R'} /\ member (dim X) (tm n1 :: G1)) \/
+   (exists A A', E n1 n2 = sub A A' /\ is_name/tm A /\ is_name/tm A' /\
+        member (tm A) (tm n1 :: G1) /\ member (tm A') (tm n2 :: G'1))
+
+Subgoal 3 is:
+ (exists X R', E = dsub X R' /\ is_name/dim X /\ {G' |- dim R'} /\
+      member (dim X) G) \/
+   (exists A A', E = sub A A' /\ is_name/tm A /\ is_name/tm A' /\
+        member (tm A) G /\ member (tm A') G')
+
+xsubst_inv1 < case H5.
+Subgoal 2.2.1:
+
+Variables: G1 G'1 S1 X R'
+IH : forall S G' G E, xsubst S G' G * -> member E S ->
+       (exists X R', E = dsub X R' /\ is_name/dim X /\ {G' |- dim R'} /\
+            member (dim X) G) \/
+       (exists A A', E = sub A A' /\ is_name/tm A /\ is_name/tm A' /\
+            member (tm A) G /\ member (tm A') G')
+H3 : xsubst S1 G'1 G1 *
+H4 : member (dsub X R') S1
+H6 : is_name/dim X
+H7 : {G'1 |- dim R'}
+H8 : member (dim X) G1
+============================
+ (exists X1 R'1, dsub X R' = dsub X1 R'1 /\ is_name/dim X1 /\
+      {G'1, tm n2 |- dim R'1} /\ member (dim X1) (tm n1 :: G1)) \/
+   (exists A A', dsub X R' = sub A A' /\ is_name/tm A /\ is_name/tm A' /\
+        member (tm A) (tm n1 :: G1) /\ member (tm A') (tm n2 :: G'1))
+
+Subgoal 2.2.2 is:
+ (exists X R', sub (A n2 n1) (A' n2 n1) = dsub X R' /\ is_name/dim X /\
+      {G'1, tm n2 |- dim R'} /\ member (dim X) (tm n1 :: G1)) \/
+   (exists A1 A'1, sub (A n2 n1) (A' n2 n1) = sub A1 A'1 /\ is_name/tm A1 /\
+        is_name/tm A'1 /\ member (tm A1) (tm n1 :: G1) /\
+        member (tm A'1) (tm n2 :: G'1))
+
+Subgoal 3 is:
+ (exists X R', E = dsub X R' /\ is_name/dim X /\ {G' |- dim R'} /\
+      member (dim X) G) \/
+   (exists A A', E = sub A A' /\ is_name/tm A /\ is_name/tm A' /\
+        member (tm A) G /\ member (tm A') G')
+
+xsubst_inv1 < search.
+Subgoal 2.2.2:
+
+Variables: G1 G'1 S1 A A'
+IH : forall S G' G E, xsubst S G' G * -> member E S ->
+       (exists X R', E = dsub X R' /\ is_name/dim X /\ {G' |- dim R'} /\
+            member (dim X) G) \/
+       (exists A A', E = sub A A' /\ is_name/tm A /\ is_name/tm A' /\
+            member (tm A) G /\ member (tm A') G')
+H3 : xsubst S1 G'1 G1 *
+H4 : member (sub (A n2 n1) (A' n2 n1)) S1
+H6 : is_name/tm (A n2 n1)
+H7 : is_name/tm (A' n2 n1)
+H8 : member (tm (A n2 n1)) G1
+H9 : member (tm (A' n2 n1)) G'1
+============================
+ (exists X R', sub (A n2 n1) (A' n2 n1) = dsub X R' /\ is_name/dim X /\
+      {G'1, tm n2 |- dim R'} /\ member (dim X) (tm n1 :: G1)) \/
+   (exists A1 A'1, sub (A n2 n1) (A' n2 n1) = sub A1 A'1 /\ is_name/tm A1 /\
+        is_name/tm A'1 /\ member (tm A1) (tm n1 :: G1) /\
+        member (tm A'1) (tm n2 :: G'1))
+
+Subgoal 3 is:
+ (exists X R', E = dsub X R' /\ is_name/dim X /\ {G' |- dim R'} /\
+      member (dim X) G) \/
+   (exists A A', E = sub A A' /\ is_name/tm A /\ is_name/tm A' /\
+        member (tm A) G /\ member (tm A') G')
+
+xsubst_inv1 < search.
+Subgoal 3:
+
+Variables: S G' G E
+IH : forall S G' G E, xsubst S G' G * -> member E S ->
+       (exists X R', E = dsub X R' /\ is_name/dim X /\ {G' |- dim R'} /\
+            member (dim X) G) \/
+       (exists A A', E = sub A A' /\ is_name/tm A /\ is_name/tm A' /\
+            member (tm A) G /\ member (tm A') G')
+H2 : member E S
+H3 : subst S G' G
+============================
+ (exists X R', E = dsub X R' /\ is_name/dim X /\ {G' |- dim R'} /\
+      member (dim X) G) \/
+   (exists A A', E = sub A A' /\ is_name/tm A /\ is_name/tm A' /\
+        member (tm A) G /\ member (tm A') G')
+
+xsubst_inv1 < apply subst_inv1 to H3 H2.
+Subgoal 3:
+
+Variables: S G' G X R'
+IH : forall S G' G E, xsubst S G' G * -> member E S ->
+       (exists X R', E = dsub X R' /\ is_name/dim X /\ {G' |- dim R'} /\
+            member (dim X) G) \/
+       (exists A A', E = sub A A' /\ is_name/tm A /\ is_name/tm A' /\
+            member (tm A) G /\ member (tm A') G')
+H2 : member (dsub X R') S
+H3 : subst S G' G
+H4 : is_name/dim X
+H5 : member (dim X) G
+H6 : {G' |- dim R'}
+============================
+ (exists X1 R'1, dsub X R' = dsub X1 R'1 /\ is_name/dim X1 /\
+      {G' |- dim R'1} /\ member (dim X1) G) \/
+   (exists A A', dsub X R' = sub A A' /\ is_name/tm A /\ is_name/tm A' /\
+        member (tm A) G /\ member (tm A') G')
+
+xsubst_inv1 < search.
+Proof completed.
+Abella < Theorem xsubst_inv3 : 
+forall S G' G E, xsubst S G' G -> member E G ->
+  (exists X R', E = dim X /\ is_name/dim X /\ member (dsub X R') S /\
+       {G' |- dim R'}) \/
+  (exists A A', E = tm A /\ is_name/tm A /\ member (sub A A') S /\
+       is_name/tm A' /\ member (tm A') G').
+
+
+============================
+ forall S G' G E, xsubst S G' G -> member E G ->
+   (exists X R', E = dim X /\ is_name/dim X /\ member (dsub X R') S /\
+        {G' |- dim R'}) \/
+   (exists A A', E = tm A /\ is_name/tm A /\ member (sub A A') S /\
+        is_name/tm A' /\ member (tm A') G')
+
+xsubst_inv3 < induction on 1.
+
+IH : forall S G' G E, xsubst S G' G * -> member E G ->
+       (exists X R', E = dim X /\ is_name/dim X /\ member (dsub X R') S /\
+            {G' |- dim R'}) \/
+       (exists A A', E = tm A /\ is_name/tm A /\ member (sub A A') S /\
+            is_name/tm A' /\ member (tm A') G')
+============================
+ forall S G' G E, xsubst S G' G @ -> member E G ->
+   (exists X R', E = dim X /\ is_name/dim X /\ member (dsub X R') S /\
+        {G' |- dim R'}) \/
+   (exists A A', E = tm A /\ is_name/tm A /\ member (sub A A') S /\
+        is_name/tm A' /\ member (tm A') G')
+
+xsubst_inv3 < intros.
+
+Variables: S G' G E
+IH : forall S G' G E, xsubst S G' G * -> member E G ->
+       (exists X R', E = dim X /\ is_name/dim X /\ member (dsub X R') S /\
+            {G' |- dim R'}) \/
+       (exists A A', E = tm A /\ is_name/tm A /\ member (sub A A') S /\
+            is_name/tm A' /\ member (tm A') G')
+H1 : xsubst S G' G @
+H2 : member E G
+============================
+ (exists X R', E = dim X /\ is_name/dim X /\ member (dsub X R') S /\
+      {G' |- dim R'}) \/
+   (exists A A', E = tm A /\ is_name/tm A /\ member (sub A A') S /\
+        is_name/tm A' /\ member (tm A') G')
+
+xsubst_inv3 < case H1.
+Subgoal 1:
+
+Variables: E G1 G'1 S1
+IH : forall S G' G E, xsubst S G' G * -> member E G ->
+       (exists X R', E = dim X /\ is_name/dim X /\ member (dsub X R') S /\
+            {G' |- dim R'}) \/
+       (exists A A', E = tm A /\ is_name/tm A /\ member (sub A A') S /\
+            is_name/tm A' /\ member (tm A') G')
+H2 : member (E n1 n2) (dim n1 :: G1)
+H3 : xsubst S1 G'1 G1 *
+============================
+ (exists X R', E n1 n2 = dim X /\ is_name/dim X /\
+      member (dsub X R') (dsub n1 n2 :: S1) /\ {G'1, dim n2 |- dim R'}) \/
+   (exists A A', E n1 n2 = tm A /\ is_name/tm A /\
+        member (sub A A') (dsub n1 n2 :: S1) /\ is_name/tm A' /\
+        member (tm A') (dim n2 :: G'1))
+
+Subgoal 2 is:
+ (exists X R', E n1 n2 = dim X /\ is_name/dim X /\
+      member (dsub X R') (sub n1 n2 :: S1) /\ {G'1, tm n2 |- dim R'}) \/
+   (exists A A', E n1 n2 = tm A /\ is_name/tm A /\
+        member (sub A A') (sub n1 n2 :: S1) /\ is_name/tm A' /\
+        member (tm A') (tm n2 :: G'1))
+
+Subgoal 3 is:
+ (exists X R', E = dim X /\ is_name/dim X /\ member (dsub X R') S /\
+      {G' |- dim R'}) \/
+   (exists A A', E = tm A /\ is_name/tm A /\ member (sub A A') S /\
+        is_name/tm A' /\ member (tm A') G')
+
+xsubst_inv3 < case H2.
+Subgoal 1.1:
+
+Variables: G1 G'1 S1
+IH : forall S G' G E, xsubst S G' G * -> member E G ->
+       (exists X R', E = dim X /\ is_name/dim X /\ member (dsub X R') S /\
+            {G' |- dim R'}) \/
+       (exists A A', E = tm A /\ is_name/tm A /\ member (sub A A') S /\
+            is_name/tm A' /\ member (tm A') G')
+H3 : xsubst S1 G'1 G1 *
+============================
+ (exists X R', dim n1 = dim X /\ is_name/dim X /\
+      member (dsub X R') (dsub n1 n2 :: S1) /\ {G'1, dim n2 |- dim R'}) \/
+   (exists A A', dim n1 = tm A /\ is_name/tm A /\
+        member (sub A A') (dsub n1 n2 :: S1) /\ is_name/tm A' /\
+        member (tm A') (dim n2 :: G'1))
+
+Subgoal 1.2 is:
+ (exists X R', E n1 n2 = dim X /\ is_name/dim X /\
+      member (dsub X R') (dsub n1 n2 :: S1) /\ {G'1, dim n2 |- dim R'}) \/
+   (exists A A', E n1 n2 = tm A /\ is_name/tm A /\
+        member (sub A A') (dsub n1 n2 :: S1) /\ is_name/tm A' /\
+        member (tm A') (dim n2 :: G'1))
+
+Subgoal 2 is:
+ (exists X R', E n1 n2 = dim X /\ is_name/dim X /\
+      member (dsub X R') (sub n1 n2 :: S1) /\ {G'1, tm n2 |- dim R'}) \/
+   (exists A A', E n1 n2 = tm A /\ is_name/tm A /\
+        member (sub A A') (sub n1 n2 :: S1) /\ is_name/tm A' /\
+        member (tm A') (tm n2 :: G'1))
+
+Subgoal 3 is:
+ (exists X R', E = dim X /\ is_name/dim X /\ member (dsub X R') S /\
+      {G' |- dim R'}) \/
+   (exists A A', E = tm A /\ is_name/tm A /\ member (sub A A') S /\
+        is_name/tm A' /\ member (tm A') G')
+
+xsubst_inv3 < search.
+Subgoal 1.2:
+
+Variables: E G1 G'1 S1
+IH : forall S G' G E, xsubst S G' G * -> member E G ->
+       (exists X R', E = dim X /\ is_name/dim X /\ member (dsub X R') S /\
+            {G' |- dim R'}) \/
+       (exists A A', E = tm A /\ is_name/tm A /\ member (sub A A') S /\
+            is_name/tm A' /\ member (tm A') G')
+H3 : xsubst S1 G'1 G1 *
+H4 : member (E n1 n2) G1
+============================
+ (exists X R', E n1 n2 = dim X /\ is_name/dim X /\
+      member (dsub X R') (dsub n1 n2 :: S1) /\ {G'1, dim n2 |- dim R'}) \/
+   (exists A A', E n1 n2 = tm A /\ is_name/tm A /\
+        member (sub A A') (dsub n1 n2 :: S1) /\ is_name/tm A' /\
+        member (tm A') (dim n2 :: G'1))
+
+Subgoal 2 is:
+ (exists X R', E n1 n2 = dim X /\ is_name/dim X /\
+      member (dsub X R') (sub n1 n2 :: S1) /\ {G'1, tm n2 |- dim R'}) \/
+   (exists A A', E n1 n2 = tm A /\ is_name/tm A /\
+        member (sub A A') (sub n1 n2 :: S1) /\ is_name/tm A' /\
+        member (tm A') (tm n2 :: G'1))
+
+Subgoal 3 is:
+ (exists X R', E = dim X /\ is_name/dim X /\ member (dsub X R') S /\
+      {G' |- dim R'}) \/
+   (exists A A', E = tm A /\ is_name/tm A /\ member (sub A A') S /\
+        is_name/tm A' /\ member (tm A') G')
+
+xsubst_inv3 < apply IH to H3 H4.
+Subgoal 1.2:
+
+Variables: E G1 G'1 S1
+IH : forall S G' G E, xsubst S G' G * -> member E G ->
+       (exists X R', E = dim X /\ is_name/dim X /\ member (dsub X R') S /\
+            {G' |- dim R'}) \/
+       (exists A A', E = tm A /\ is_name/tm A /\ member (sub A A') S /\
+            is_name/tm A' /\ member (tm A') G')
+H3 : xsubst S1 G'1 G1 *
+H4 : member (E n1 n2) G1
+H5 : (exists X R', E n1 n2 = dim X /\ is_name/dim X /\
+          member (dsub X R') S1 /\ {G'1 |- dim R'}) \/
+       (exists A A', E n1 n2 = tm A /\ is_name/tm A /\
+            member (sub A A') S1 /\ is_name/tm A' /\ member (tm A') G'1)
+============================
+ (exists X R', E n1 n2 = dim X /\ is_name/dim X /\
+      member (dsub X R') (dsub n1 n2 :: S1) /\ {G'1, dim n2 |- dim R'}) \/
+   (exists A A', E n1 n2 = tm A /\ is_name/tm A /\
+        member (sub A A') (dsub n1 n2 :: S1) /\ is_name/tm A' /\
+        member (tm A') (dim n2 :: G'1))
+
+Subgoal 2 is:
+ (exists X R', E n1 n2 = dim X /\ is_name/dim X /\
+      member (dsub X R') (sub n1 n2 :: S1) /\ {G'1, tm n2 |- dim R'}) \/
+   (exists A A', E n1 n2 = tm A /\ is_name/tm A /\
+        member (sub A A') (sub n1 n2 :: S1) /\ is_name/tm A' /\
+        member (tm A') (tm n2 :: G'1))
+
+Subgoal 3 is:
+ (exists X R', E = dim X /\ is_name/dim X /\ member (dsub X R') S /\
+      {G' |- dim R'}) \/
+   (exists A A', E = tm A /\ is_name/tm A /\ member (sub A A') S /\
+        is_name/tm A' /\ member (tm A') G')
+
+xsubst_inv3 < case H5.
+Subgoal 1.2.1:
+
+Variables: G1 G'1 S1 X R'
+IH : forall S G' G E, xsubst S G' G * -> member E G ->
+       (exists X R', E = dim X /\ is_name/dim X /\ member (dsub X R') S /\
+            {G' |- dim R'}) \/
+       (exists A A', E = tm A /\ is_name/tm A /\ member (sub A A') S /\
+            is_name/tm A' /\ member (tm A') G')
+H3 : xsubst S1 G'1 G1 *
+H4 : member (dim (X n2 n1)) G1
+H6 : is_name/dim (X n2 n1)
+H7 : member (dsub (X n2 n1) (R' n2 n1)) S1
+H8 : {G'1 |- dim (R' n2 n1)}
+============================
+ (exists X1 R', dim (X n2 n1) = dim X1 /\ is_name/dim X1 /\
+      member (dsub X1 R') (dsub n1 n2 :: S1) /\ {G'1, dim n2 |- dim R'}) \/
+   (exists A A', dim (X n2 n1) = tm A /\ is_name/tm A /\
+        member (sub A A') (dsub n1 n2 :: S1) /\ is_name/tm A' /\
+        member (tm A') (dim n2 :: G'1))
+
+Subgoal 1.2.2 is:
+ (exists X R', tm (A n2 n1) = dim X /\ is_name/dim X /\
+      member (dsub X R') (dsub n1 n2 :: S1) /\ {G'1, dim n2 |- dim R'}) \/
+   (exists A1 A', tm (A n2 n1) = tm A1 /\ is_name/tm A1 /\
+        member (sub A1 A') (dsub n1 n2 :: S1) /\ is_name/tm A' /\
+        member (tm A') (dim n2 :: G'1))
+
+Subgoal 2 is:
+ (exists X R', E n1 n2 = dim X /\ is_name/dim X /\
+      member (dsub X R') (sub n1 n2 :: S1) /\ {G'1, tm n2 |- dim R'}) \/
+   (exists A A', E n1 n2 = tm A /\ is_name/tm A /\
+        member (sub A A') (sub n1 n2 :: S1) /\ is_name/tm A' /\
+        member (tm A') (tm n2 :: G'1))
+
+Subgoal 3 is:
+ (exists X R', E = dim X /\ is_name/dim X /\ member (dsub X R') S /\
+      {G' |- dim R'}) \/
+   (exists A A', E = tm A /\ is_name/tm A /\ member (sub A A') S /\
+        is_name/tm A' /\ member (tm A') G')
+
+xsubst_inv3 < search.
+Subgoal 1.2.2:
+
+Variables: G1 G'1 S1 A A'
+IH : forall S G' G E, xsubst S G' G * -> member E G ->
+       (exists X R', E = dim X /\ is_name/dim X /\ member (dsub X R') S /\
+            {G' |- dim R'}) \/
+       (exists A A', E = tm A /\ is_name/tm A /\ member (sub A A') S /\
+            is_name/tm A' /\ member (tm A') G')
+H3 : xsubst S1 G'1 G1 *
+H4 : member (tm (A n2 n1)) G1
+H6 : is_name/tm (A n2 n1)
+H7 : member (sub (A n2 n1) (A' n2 n1)) S1
+H8 : is_name/tm (A' n2 n1)
+H9 : member (tm (A' n2 n1)) G'1
+============================
+ (exists X R', tm (A n2 n1) = dim X /\ is_name/dim X /\
+      member (dsub X R') (dsub n1 n2 :: S1) /\ {G'1, dim n2 |- dim R'}) \/
+   (exists A1 A', tm (A n2 n1) = tm A1 /\ is_name/tm A1 /\
+        member (sub A1 A') (dsub n1 n2 :: S1) /\ is_name/tm A' /\
+        member (tm A') (dim n2 :: G'1))
+
+Subgoal 2 is:
+ (exists X R', E n1 n2 = dim X /\ is_name/dim X /\
+      member (dsub X R') (sub n1 n2 :: S1) /\ {G'1, tm n2 |- dim R'}) \/
+   (exists A A', E n1 n2 = tm A /\ is_name/tm A /\
+        member (sub A A') (sub n1 n2 :: S1) /\ is_name/tm A' /\
+        member (tm A') (tm n2 :: G'1))
+
+Subgoal 3 is:
+ (exists X R', E = dim X /\ is_name/dim X /\ member (dsub X R') S /\
+      {G' |- dim R'}) \/
+   (exists A A', E = tm A /\ is_name/tm A /\ member (sub A A') S /\
+        is_name/tm A' /\ member (tm A') G')
+
+xsubst_inv3 < search.
+Subgoal 2:
+
+Variables: E G1 G'1 S1
+IH : forall S G' G E, xsubst S G' G * -> member E G ->
+       (exists X R', E = dim X /\ is_name/dim X /\ member (dsub X R') S /\
+            {G' |- dim R'}) \/
+       (exists A A', E = tm A /\ is_name/tm A /\ member (sub A A') S /\
+            is_name/tm A' /\ member (tm A') G')
+H2 : member (E n1 n2) (tm n1 :: G1)
+H3 : xsubst S1 G'1 G1 *
+============================
+ (exists X R', E n1 n2 = dim X /\ is_name/dim X /\
+      member (dsub X R') (sub n1 n2 :: S1) /\ {G'1, tm n2 |- dim R'}) \/
+   (exists A A', E n1 n2 = tm A /\ is_name/tm A /\
+        member (sub A A') (sub n1 n2 :: S1) /\ is_name/tm A' /\
+        member (tm A') (tm n2 :: G'1))
+
+Subgoal 3 is:
+ (exists X R', E = dim X /\ is_name/dim X /\ member (dsub X R') S /\
+      {G' |- dim R'}) \/
+   (exists A A', E = tm A /\ is_name/tm A /\ member (sub A A') S /\
+        is_name/tm A' /\ member (tm A') G')
+
+xsubst_inv3 < case H2.
+Subgoal 2.1:
+
+Variables: G1 G'1 S1
+IH : forall S G' G E, xsubst S G' G * -> member E G ->
+       (exists X R', E = dim X /\ is_name/dim X /\ member (dsub X R') S /\
+            {G' |- dim R'}) \/
+       (exists A A', E = tm A /\ is_name/tm A /\ member (sub A A') S /\
+            is_name/tm A' /\ member (tm A') G')
+H3 : xsubst S1 G'1 G1 *
+============================
+ (exists X R', tm n1 = dim X /\ is_name/dim X /\
+      member (dsub X R') (sub n1 n2 :: S1) /\ {G'1, tm n2 |- dim R'}) \/
+   (exists A A', tm n1 = tm A /\ is_name/tm A /\
+        member (sub A A') (sub n1 n2 :: S1) /\ is_name/tm A' /\
+        member (tm A') (tm n2 :: G'1))
+
+Subgoal 2.2 is:
+ (exists X R', E n1 n2 = dim X /\ is_name/dim X /\
+      member (dsub X R') (sub n1 n2 :: S1) /\ {G'1, tm n2 |- dim R'}) \/
+   (exists A A', E n1 n2 = tm A /\ is_name/tm A /\
+        member (sub A A') (sub n1 n2 :: S1) /\ is_name/tm A' /\
+        member (tm A') (tm n2 :: G'1))
+
+Subgoal 3 is:
+ (exists X R', E = dim X /\ is_name/dim X /\ member (dsub X R') S /\
+      {G' |- dim R'}) \/
+   (exists A A', E = tm A /\ is_name/tm A /\ member (sub A A') S /\
+        is_name/tm A' /\ member (tm A') G')
+
+xsubst_inv3 < search.
+Subgoal 2.2:
+
+Variables: E G1 G'1 S1
+IH : forall S G' G E, xsubst S G' G * -> member E G ->
+       (exists X R', E = dim X /\ is_name/dim X /\ member (dsub X R') S /\
+            {G' |- dim R'}) \/
+       (exists A A', E = tm A /\ is_name/tm A /\ member (sub A A') S /\
+            is_name/tm A' /\ member (tm A') G')
+H3 : xsubst S1 G'1 G1 *
+H4 : member (E n1 n2) G1
+============================
+ (exists X R', E n1 n2 = dim X /\ is_name/dim X /\
+      member (dsub X R') (sub n1 n2 :: S1) /\ {G'1, tm n2 |- dim R'}) \/
+   (exists A A', E n1 n2 = tm A /\ is_name/tm A /\
+        member (sub A A') (sub n1 n2 :: S1) /\ is_name/tm A' /\
+        member (tm A') (tm n2 :: G'1))
+
+Subgoal 3 is:
+ (exists X R', E = dim X /\ is_name/dim X /\ member (dsub X R') S /\
+      {G' |- dim R'}) \/
+   (exists A A', E = tm A /\ is_name/tm A /\ member (sub A A') S /\
+        is_name/tm A' /\ member (tm A') G')
+
+xsubst_inv3 < apply IH to H3 H4.
+Subgoal 2.2:
+
+Variables: E G1 G'1 S1
+IH : forall S G' G E, xsubst S G' G * -> member E G ->
+       (exists X R', E = dim X /\ is_name/dim X /\ member (dsub X R') S /\
+            {G' |- dim R'}) \/
+       (exists A A', E = tm A /\ is_name/tm A /\ member (sub A A') S /\
+            is_name/tm A' /\ member (tm A') G')
+H3 : xsubst S1 G'1 G1 *
+H4 : member (E n1 n2) G1
+H5 : (exists X R', E n1 n2 = dim X /\ is_name/dim X /\
+          member (dsub X R') S1 /\ {G'1 |- dim R'}) \/
+       (exists A A', E n1 n2 = tm A /\ is_name/tm A /\
+            member (sub A A') S1 /\ is_name/tm A' /\ member (tm A') G'1)
+============================
+ (exists X R', E n1 n2 = dim X /\ is_name/dim X /\
+      member (dsub X R') (sub n1 n2 :: S1) /\ {G'1, tm n2 |- dim R'}) \/
+   (exists A A', E n1 n2 = tm A /\ is_name/tm A /\
+        member (sub A A') (sub n1 n2 :: S1) /\ is_name/tm A' /\
+        member (tm A') (tm n2 :: G'1))
+
+Subgoal 3 is:
+ (exists X R', E = dim X /\ is_name/dim X /\ member (dsub X R') S /\
+      {G' |- dim R'}) \/
+   (exists A A', E = tm A /\ is_name/tm A /\ member (sub A A') S /\
+        is_name/tm A' /\ member (tm A') G')
+
+xsubst_inv3 < case H5.
+Subgoal 2.2.1:
+
+Variables: G1 G'1 S1 X R'
+IH : forall S G' G E, xsubst S G' G * -> member E G ->
+       (exists X R', E = dim X /\ is_name/dim X /\ member (dsub X R') S /\
+            {G' |- dim R'}) \/
+       (exists A A', E = tm A /\ is_name/tm A /\ member (sub A A') S /\
+            is_name/tm A' /\ member (tm A') G')
+H3 : xsubst S1 G'1 G1 *
+H4 : member (dim X) G1
+H6 : is_name/dim X
+H7 : member (dsub X R') S1
+H8 : {G'1 |- dim R'}
+============================
+ (exists X1 R', dim X = dim X1 /\ is_name/dim X1 /\
+      member (dsub X1 R') (sub n1 n2 :: S1) /\ {G'1, tm n2 |- dim R'}) \/
+   (exists A A', dim X = tm A /\ is_name/tm A /\
+        member (sub A A') (sub n1 n2 :: S1) /\ is_name/tm A' /\
+        member (tm A') (tm n2 :: G'1))
+
+Subgoal 2.2.2 is:
+ (exists X R', tm (A n2 n1) = dim X /\ is_name/dim X /\
+      member (dsub X R') (sub n1 n2 :: S1) /\ {G'1, tm n2 |- dim R'}) \/
+   (exists A1 A', tm (A n2 n1) = tm A1 /\ is_name/tm A1 /\
+        member (sub A1 A') (sub n1 n2 :: S1) /\ is_name/tm A' /\
+        member (tm A') (tm n2 :: G'1))
+
+Subgoal 3 is:
+ (exists X R', E = dim X /\ is_name/dim X /\ member (dsub X R') S /\
+      {G' |- dim R'}) \/
+   (exists A A', E = tm A /\ is_name/tm A /\ member (sub A A') S /\
+        is_name/tm A' /\ member (tm A') G')
+
+xsubst_inv3 < search.
+Subgoal 2.2.2:
+
+Variables: G1 G'1 S1 A A'
+IH : forall S G' G E, xsubst S G' G * -> member E G ->
+       (exists X R', E = dim X /\ is_name/dim X /\ member (dsub X R') S /\
+            {G' |- dim R'}) \/
+       (exists A A', E = tm A /\ is_name/tm A /\ member (sub A A') S /\
+            is_name/tm A' /\ member (tm A') G')
+H3 : xsubst S1 G'1 G1 *
+H4 : member (tm (A n2 n1)) G1
+H6 : is_name/tm (A n2 n1)
+H7 : member (sub (A n2 n1) (A' n2 n1)) S1
+H8 : is_name/tm (A' n2 n1)
+H9 : member (tm (A' n2 n1)) G'1
+============================
+ (exists X R', tm (A n2 n1) = dim X /\ is_name/dim X /\
+      member (dsub X R') (sub n1 n2 :: S1) /\ {G'1, tm n2 |- dim R'}) \/
+   (exists A1 A', tm (A n2 n1) = tm A1 /\ is_name/tm A1 /\
+        member (sub A1 A') (sub n1 n2 :: S1) /\ is_name/tm A' /\
+        member (tm A') (tm n2 :: G'1))
+
+Subgoal 3 is:
+ (exists X R', E = dim X /\ is_name/dim X /\ member (dsub X R') S /\
+      {G' |- dim R'}) \/
+   (exists A A', E = tm A /\ is_name/tm A /\ member (sub A A') S /\
+        is_name/tm A' /\ member (tm A') G')
+
+xsubst_inv3 < search.
+Subgoal 3:
+
+Variables: S G' G E
+IH : forall S G' G E, xsubst S G' G * -> member E G ->
+       (exists X R', E = dim X /\ is_name/dim X /\ member (dsub X R') S /\
+            {G' |- dim R'}) \/
+       (exists A A', E = tm A /\ is_name/tm A /\ member (sub A A') S /\
+            is_name/tm A' /\ member (tm A') G')
+H2 : member E G
+H3 : subst S G' G
+============================
+ (exists X R', E = dim X /\ is_name/dim X /\ member (dsub X R') S /\
+      {G' |- dim R'}) \/
+   (exists A A', E = tm A /\ is_name/tm A /\ member (sub A A') S /\
+        is_name/tm A' /\ member (tm A') G')
+
+xsubst_inv3 < apply subst_inv3 to H3 H2.
+Subgoal 3:
+
+Variables: S G' G X R'
+IH : forall S G' G E, xsubst S G' G * -> member E G ->
+       (exists X R', E = dim X /\ is_name/dim X /\ member (dsub X R') S /\
+            {G' |- dim R'}) \/
+       (exists A A', E = tm A /\ is_name/tm A /\ member (sub A A') S /\
+            is_name/tm A' /\ member (tm A') G')
+H2 : member (dim X) G
+H3 : subst S G' G
+H4 : is_name/dim X
+H5 : member (dsub X R') S
+H6 : {G' |- dim R'}
+============================
+ (exists X1 R', dim X = dim X1 /\ is_name/dim X1 /\ member (dsub X1 R') S /\
+      {G' |- dim R'}) \/
+   (exists A A', dim X = tm A /\ is_name/tm A /\ member (sub A A') S /\
+        is_name/tm A' /\ member (tm A') G')
+
+xsubst_inv3 < search.
+Proof completed.
+Abella < Theorem xsubst_unique/dsub : 
+forall S G' G X R'1 R'2, xsubst S G' G -> member (dsub X R'1) S ->
+  member (dsub X R'2) S -> R'1 =
+R'2.
+
+
+============================
+ forall S G' G X R'1 R'2, xsubst S G' G -> member (dsub X R'1) S ->
+   member (dsub X R'2) S -> R'1 =
+ R'2
+
+xsubst_unique/dsub < induction on 1.
+
+IH : forall S G' G X R'1 R'2, xsubst S G' G * -> member (dsub X R'1) S ->
+       member (dsub X R'2) S -> R'1 =
+     R'2
+============================
+ forall S G' G X R'1 R'2, xsubst S G' G @ -> member (dsub X R'1) S ->
+   member (dsub X R'2) S -> R'1 =
+ R'2
+
+xsubst_unique/dsub < intros.
+
+Variables: S G' G X R'1 R'2
+IH : forall S G' G X R'1 R'2, xsubst S G' G * -> member (dsub X R'1) S ->
+       member (dsub X R'2) S -> R'1 =
+     R'2
+H1 : xsubst S G' G @
+H2 : member (dsub X R'1) S
+H3 : member (dsub X R'2) S
+============================
+ R'1 = R'2
+
+xsubst_unique/dsub < case H1.
+Subgoal 1:
+
+Variables: X R'1 R'2 G1 G'1 S1
+IH : forall S G' G X R'1 R'2, xsubst S G' G * -> member (dsub X R'1) S ->
+       member (dsub X R'2) S -> R'1 =
+     R'2
+H2 : member (dsub (X n1 n2) (R'1 n1 n2)) (dsub n1 n2 :: S1)
+H3 : member (dsub (X n1 n2) (R'2 n1 n2)) (dsub n1 n2 :: S1)
+H4 : xsubst S1 G'1 G1 *
+============================
+ R'1 n1 n2 = R'2 n1 n2
+
+Subgoal 2 is:
+ R'1 = R'2
+
+Subgoal 3 is:
+ R'1 = R'2
+
+xsubst_unique/dsub < case H2.
+Subgoal 1.1:
+
+Variables: R'2 G1 G'1 S1
+IH : forall S G' G X R'1 R'2, xsubst S G' G * -> member (dsub X R'1) S ->
+       member (dsub X R'2) S -> R'1 =
+     R'2
+H3 : member (dsub n1 (R'2 n1 n2)) (dsub n1 n2 :: S1)
+H4 : xsubst S1 G'1 G1 *
+============================
+ n2 = R'2 n1 n2
+
+Subgoal 1.2 is:
+ R'1 n1 n2 = R'2 n1 n2
+
+Subgoal 2 is:
+ R'1 = R'2
+
+Subgoal 3 is:
+ R'1 = R'2
+
+xsubst_unique/dsub < case H3.
+Subgoal 1.1.1:
+
+Variables: G1 G'1 S1
+IH : forall S G' G X R'1 R'2, xsubst S G' G * -> member (dsub X R'1) S ->
+       member (dsub X R'2) S -> R'1 =
+     R'2
+H4 : xsubst S1 G'1 G1 *
+============================
+ n2 = n2
+
+Subgoal 1.1.2 is:
+ n2 = R'2 n1 n2
+
+Subgoal 1.2 is:
+ R'1 n1 n2 = R'2 n1 n2
+
+Subgoal 2 is:
+ R'1 = R'2
+
+Subgoal 3 is:
+ R'1 = R'2
+
+xsubst_unique/dsub < search.
+Subgoal 1.1.2:
+
+Variables: R'2 G1 G'1 S1
+IH : forall S G' G X R'1 R'2, xsubst S G' G * -> member (dsub X R'1) S ->
+       member (dsub X R'2) S -> R'1 =
+     R'2
+H4 : xsubst S1 G'1 G1 *
+H5 : member (dsub n1 (R'2 n1 n2)) S1
+============================
+ n2 = R'2 n1 n2
+
+Subgoal 1.2 is:
+ R'1 n1 n2 = R'2 n1 n2
+
+Subgoal 2 is:
+ R'1 = R'2
+
+Subgoal 3 is:
+ R'1 = R'2
+
+xsubst_unique/dsub < apply prune_arg/dim to H5.
+Subgoal 1.2:
+
+Variables: X R'1 R'2 G1 G'1 S1
+IH : forall S G' G X R'1 R'2, xsubst S G' G * -> member (dsub X R'1) S ->
+       member (dsub X R'2) S -> R'1 =
+     R'2
+H3 : member (dsub (X n1 n2) (R'2 n1 n2)) (dsub n1 n2 :: S1)
+H4 : xsubst S1 G'1 G1 *
+H5 : member (dsub (X n1 n2) (R'1 n1 n2)) S1
+============================
+ R'1 n1 n2 = R'2 n1 n2
+
+Subgoal 2 is:
+ R'1 = R'2
+
+Subgoal 3 is:
+ R'1 = R'2
+
+xsubst_unique/dsub < case H3.
+Subgoal 1.2.1:
+
+Variables: R'1 G1 G'1 S1
+IH : forall S G' G X R'1 R'2, xsubst S G' G * -> member (dsub X R'1) S ->
+       member (dsub X R'2) S -> R'1 =
+     R'2
+H4 : xsubst S1 G'1 G1 *
+H5 : member (dsub n1 (R'1 n1 n2)) S1
+============================
+ R'1 n1 n2 = n2
+
+Subgoal 1.2.2 is:
+ R'1 n1 n2 = R'2 n1 n2
+
+Subgoal 2 is:
+ R'1 = R'2
+
+Subgoal 3 is:
+ R'1 = R'2
+
+xsubst_unique/dsub < apply prune_arg/dim to H5.
+Subgoal 1.2.2:
+
+Variables: X R'1 R'2 G1 G'1 S1
+IH : forall S G' G X R'1 R'2, xsubst S G' G * -> member (dsub X R'1) S ->
+       member (dsub X R'2) S -> R'1 =
+     R'2
+H4 : xsubst S1 G'1 G1 *
+H5 : member (dsub (X n1 n2) (R'1 n1 n2)) S1
+H6 : member (dsub (X n1 n2) (R'2 n1 n2)) S1
+============================
+ R'1 n1 n2 = R'2 n1 n2
+
+Subgoal 2 is:
+ R'1 = R'2
+
+Subgoal 3 is:
+ R'1 = R'2
+
+xsubst_unique/dsub < apply IH to H4 H5 H6.
+Subgoal 1.2.2:
+
+Variables: X R'2 G1 G'1 S1
+IH : forall S G' G X R'1 R'2, xsubst S G' G * -> member (dsub X R'1) S ->
+       member (dsub X R'2) S -> R'1 =
+     R'2
+H4 : xsubst S1 G'1 G1 *
+H5 : member (dsub (X n1 n2) (R'2 n1 n2)) S1
+H6 : member (dsub (X n1 n2) (R'2 n1 n2)) S1
+============================
+ R'2 n1 n2 = R'2 n1 n2
+
+Subgoal 2 is:
+ R'1 = R'2
+
+Subgoal 3 is:
+ R'1 = R'2
+
+xsubst_unique/dsub < search.
+Subgoal 2:
+
+Variables: X R'1 R'2 G1 G'1 S1
+IH : forall S G' G X R'1 R'2, xsubst S G' G * -> member (dsub X R'1) S ->
+       member (dsub X R'2) S -> R'1 =
+     R'2
+H2 : member (dsub X R'1) (sub n1 n2 :: S1)
+H3 : member (dsub X R'2) (sub n1 n2 :: S1)
+H4 : xsubst S1 G'1 G1 *
+============================
+ R'1 = R'2
+
+Subgoal 3 is:
+ R'1 = R'2
+
+xsubst_unique/dsub < case H2.
+Subgoal 2:
+
+Variables: X R'1 R'2 G1 G'1 S1
+IH : forall S G' G X R'1 R'2, xsubst S G' G * -> member (dsub X R'1) S ->
+       member (dsub X R'2) S -> R'1 =
+     R'2
+H3 : member (dsub X R'2) (sub n1 n2 :: S1)
+H4 : xsubst S1 G'1 G1 *
+H5 : member (dsub X R'1) S1
+============================
+ R'1 = R'2
+
+Subgoal 3 is:
+ R'1 = R'2
+
+xsubst_unique/dsub < case H3.
+Subgoal 2:
+
+Variables: X R'1 R'2 G1 G'1 S1
+IH : forall S G' G X R'1 R'2, xsubst S G' G * -> member (dsub X R'1) S ->
+       member (dsub X R'2) S -> R'1 =
+     R'2
+H4 : xsubst S1 G'1 G1 *
+H5 : member (dsub X R'1) S1
+H6 : member (dsub X R'2) S1
+============================
+ R'1 = R'2
+
+Subgoal 3 is:
+ R'1 = R'2
+
+xsubst_unique/dsub < apply IH to H4 H5 H6.
+Subgoal 2:
+
+Variables: X R'2 G1 G'1 S1
+IH : forall S G' G X R'1 R'2, xsubst S G' G * -> member (dsub X R'1) S ->
+       member (dsub X R'2) S -> R'1 =
+     R'2
+H4 : xsubst S1 G'1 G1 *
+H5 : member (dsub X R'2) S1
+H6 : member (dsub X R'2) S1
+============================
+ R'2 = R'2
+
+Subgoal 3 is:
+ R'1 = R'2
+
+xsubst_unique/dsub < search.
+Subgoal 3:
+
+Variables: S G' G X R'1 R'2
+IH : forall S G' G X R'1 R'2, xsubst S G' G * -> member (dsub X R'1) S ->
+       member (dsub X R'2) S -> R'1 =
+     R'2
+H2 : member (dsub X R'1) S
+H3 : member (dsub X R'2) S
+H4 : subst S G' G
+============================
+ R'1 = R'2
+
+xsubst_unique/dsub < apply subst_unique to H4 H2 H3.
+Subgoal 3:
+
+Variables: S G' G X R'2
+IH : forall S G' G X R'1 R'2, xsubst S G' G * -> member (dsub X R'1) S ->
+       member (dsub X R'2) S -> R'1 =
+     R'2
+H2 : member (dsub X R'2) S
+H3 : member (dsub X R'2) S
+H4 : subst S G' G
+============================
+ R'2 = R'2
+
+xsubst_unique/dsub < search.
+Proof completed.
+Abella < Theorem xsubst_unique/sub : 
+forall S G' G A A'1 A'2, xsubst S G' G -> member (sub A A'1) S ->
+  member (sub A A'2) S -> A'1 =
+A'2.
+
+
+============================
+ forall S G' G A A'1 A'2, xsubst S G' G -> member (sub A A'1) S ->
+   member (sub A A'2) S -> A'1 =
+ A'2
+
+xsubst_unique/sub < induction on 1.
+
+IH : forall S G' G A A'1 A'2, xsubst S G' G * -> member (sub A A'1) S ->
+       member (sub A A'2) S -> A'1 =
+     A'2
+============================
+ forall S G' G A A'1 A'2, xsubst S G' G @ -> member (sub A A'1) S ->
+   member (sub A A'2) S -> A'1 =
+ A'2
+
+xsubst_unique/sub < intros.
+
+Variables: S G' G A A'1 A'2
+IH : forall S G' G A A'1 A'2, xsubst S G' G * -> member (sub A A'1) S ->
+       member (sub A A'2) S -> A'1 =
+     A'2
+H1 : xsubst S G' G @
+H2 : member (sub A A'1) S
+H3 : member (sub A A'2) S
+============================
+ A'1 = A'2
+
+xsubst_unique/sub < case H1.
+Subgoal 1:
+
+Variables: A A'1 A'2 G1 G'1 S1
+IH : forall S G' G A A'1 A'2, xsubst S G' G * -> member (sub A A'1) S ->
+       member (sub A A'2) S -> A'1 =
+     A'2
+H2 : member (sub (A n1 n2) (A'1 n1 n2)) (dsub n1 n2 :: S1)
+H3 : member (sub (A n1 n2) (A'2 n1 n2)) (dsub n1 n2 :: S1)
+H4 : xsubst S1 G'1 G1 *
+============================
+ A'1 n1 n2 = A'2 n1 n2
+
+Subgoal 2 is:
+ A'1 n1 n2 = A'2 n1 n2
+
+Subgoal 3 is:
+ A'1 = A'2
+
+xsubst_unique/sub < case H2.
+Subgoal 1:
+
+Variables: A A'1 A'2 G1 G'1 S1
+IH : forall S G' G A A'1 A'2, xsubst S G' G * -> member (sub A A'1) S ->
+       member (sub A A'2) S -> A'1 =
+     A'2
+H3 : member (sub (A n1 n2) (A'2 n1 n2)) (dsub n1 n2 :: S1)
+H4 : xsubst S1 G'1 G1 *
+H5 : member (sub (A n1 n2) (A'1 n1 n2)) S1
+============================
+ A'1 n1 n2 = A'2 n1 n2
+
+Subgoal 2 is:
+ A'1 n1 n2 = A'2 n1 n2
+
+Subgoal 3 is:
+ A'1 = A'2
+
+xsubst_unique/sub < case H3.
+Subgoal 1:
+
+Variables: A A'1 A'2 G1 G'1 S1
+IH : forall S G' G A A'1 A'2, xsubst S G' G * -> member (sub A A'1) S ->
+       member (sub A A'2) S -> A'1 =
+     A'2
+H4 : xsubst S1 G'1 G1 *
+H5 : member (sub (A n1 n2) (A'1 n1 n2)) S1
+H6 : member (sub (A n1 n2) (A'2 n1 n2)) S1
+============================
+ A'1 n1 n2 = A'2 n1 n2
+
+Subgoal 2 is:
+ A'1 n1 n2 = A'2 n1 n2
+
+Subgoal 3 is:
+ A'1 = A'2
+
+xsubst_unique/sub < apply IH to H4 H5 H6.
+Subgoal 1:
+
+Variables: A A'2 G1 G'1 S1
+IH : forall S G' G A A'1 A'2, xsubst S G' G * -> member (sub A A'1) S ->
+       member (sub A A'2) S -> A'1 =
+     A'2
+H4 : xsubst S1 G'1 G1 *
+H5 : member (sub (A n1 n2) (A'2 n1 n2)) S1
+H6 : member (sub (A n1 n2) (A'2 n1 n2)) S1
+============================
+ A'2 n1 n2 = A'2 n1 n2
+
+Subgoal 2 is:
+ A'1 n1 n2 = A'2 n1 n2
+
+Subgoal 3 is:
+ A'1 = A'2
+
+xsubst_unique/sub < search.
+Subgoal 2:
+
+Variables: A A'1 A'2 G1 G'1 S1
+IH : forall S G' G A A'1 A'2, xsubst S G' G * -> member (sub A A'1) S ->
+       member (sub A A'2) S -> A'1 =
+     A'2
+H2 : member (sub (A n1 n2) (A'1 n1 n2)) (sub n1 n2 :: S1)
+H3 : member (sub (A n1 n2) (A'2 n1 n2)) (sub n1 n2 :: S1)
+H4 : xsubst S1 G'1 G1 *
+============================
+ A'1 n1 n2 = A'2 n1 n2
+
+Subgoal 3 is:
+ A'1 = A'2
+
+xsubst_unique/sub < case H2.
+Subgoal 2.1:
+
+Variables: A'2 G1 G'1 S1
+IH : forall S G' G A A'1 A'2, xsubst S G' G * -> member (sub A A'1) S ->
+       member (sub A A'2) S -> A'1 =
+     A'2
+H3 : member (sub n1 (A'2 n1 n2)) (sub n1 n2 :: S1)
+H4 : xsubst S1 G'1 G1 *
+============================
+ n2 = A'2 n1 n2
+
+Subgoal 2.2 is:
+ A'1 n1 n2 = A'2 n1 n2
+
+Subgoal 3 is:
+ A'1 = A'2
+
+xsubst_unique/sub < case H3.
+Subgoal 2.1.1:
+
+Variables: G1 G'1 S1
+IH : forall S G' G A A'1 A'2, xsubst S G' G * -> member (sub A A'1) S ->
+       member (sub A A'2) S -> A'1 =
+     A'2
+H4 : xsubst S1 G'1 G1 *
+============================
+ n2 = n2
+
+Subgoal 2.1.2 is:
+ n2 = A'2 n1 n2
+
+Subgoal 2.2 is:
+ A'1 n1 n2 = A'2 n1 n2
+
+Subgoal 3 is:
+ A'1 = A'2
+
+xsubst_unique/sub < search.
+Subgoal 2.1.2:
+
+Variables: A'2 G1 G'1 S1
+IH : forall S G' G A A'1 A'2, xsubst S G' G * -> member (sub A A'1) S ->
+       member (sub A A'2) S -> A'1 =
+     A'2
+H4 : xsubst S1 G'1 G1 *
+H5 : member (sub n1 (A'2 n1 n2)) S1
+============================
+ n2 = A'2 n1 n2
+
+Subgoal 2.2 is:
+ A'1 n1 n2 = A'2 n1 n2
+
+Subgoal 3 is:
+ A'1 = A'2
+
+xsubst_unique/sub < apply prune_arg/tm to H5.
+Subgoal 2.2:
+
+Variables: A A'1 A'2 G1 G'1 S1
+IH : forall S G' G A A'1 A'2, xsubst S G' G * -> member (sub A A'1) S ->
+       member (sub A A'2) S -> A'1 =
+     A'2
+H3 : member (sub (A n1 n2) (A'2 n1 n2)) (sub n1 n2 :: S1)
+H4 : xsubst S1 G'1 G1 *
+H5 : member (sub (A n1 n2) (A'1 n1 n2)) S1
+============================
+ A'1 n1 n2 = A'2 n1 n2
+
+Subgoal 3 is:
+ A'1 = A'2
+
+xsubst_unique/sub < case H3.
+Subgoal 2.2.1:
+
+Variables: A'1 G1 G'1 S1
+IH : forall S G' G A A'1 A'2, xsubst S G' G * -> member (sub A A'1) S ->
+       member (sub A A'2) S -> A'1 =
+     A'2
+H4 : xsubst S1 G'1 G1 *
+H5 : member (sub n1 (A'1 n1 n2)) S1
+============================
+ A'1 n1 n2 = n2
+
+Subgoal 2.2.2 is:
+ A'1 n1 n2 = A'2 n1 n2
+
+Subgoal 3 is:
+ A'1 = A'2
+
+xsubst_unique/sub < apply prune_arg/tm to H5.
+Subgoal 2.2.2:
+
+Variables: A A'1 A'2 G1 G'1 S1
+IH : forall S G' G A A'1 A'2, xsubst S G' G * -> member (sub A A'1) S ->
+       member (sub A A'2) S -> A'1 =
+     A'2
+H4 : xsubst S1 G'1 G1 *
+H5 : member (sub (A n1 n2) (A'1 n1 n2)) S1
+H6 : member (sub (A n1 n2) (A'2 n1 n2)) S1
+============================
+ A'1 n1 n2 = A'2 n1 n2
+
+Subgoal 3 is:
+ A'1 = A'2
+
+xsubst_unique/sub < apply IH to H4 H5 H6.
+Subgoal 2.2.2:
+
+Variables: A A'2 G1 G'1 S1
+IH : forall S G' G A A'1 A'2, xsubst S G' G * -> member (sub A A'1) S ->
+       member (sub A A'2) S -> A'1 =
+     A'2
+H4 : xsubst S1 G'1 G1 *
+H5 : member (sub (A n1 n2) (A'2 n1 n2)) S1
+H6 : member (sub (A n1 n2) (A'2 n1 n2)) S1
+============================
+ A'2 n1 n2 = A'2 n1 n2
+
+Subgoal 3 is:
+ A'1 = A'2
+
+xsubst_unique/sub < search.
+Subgoal 3:
+
+Variables: S G' G A A'1 A'2
+IH : forall S G' G A A'1 A'2, xsubst S G' G * -> member (sub A A'1) S ->
+       member (sub A A'2) S -> A'1 =
+     A'2
+H2 : member (sub A A'1) S
+H3 : member (sub A A'2) S
+H4 : subst S G' G
+============================
+ A'1 = A'2
+
+xsubst_unique/sub < apply subst_inv1 to H4 H2.
+Proof completed.
+Abella < 

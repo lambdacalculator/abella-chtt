@@ -1,56 +1,6 @@
 Specification "cubical".
 
-%%%% Names
-Define is_name/dim : dim -> prop by
-  nabla x, is_name/dim x.
-
-Define is_name/tm : tm -> prop by
-  nabla a, is_name/tm a.
-
-
-%%%% Dimension contexts
-
-Define dimctx : olist -> prop by
-  dimctx nil;
-  nabla x, dimctx (dim x :: P) := dimctx P.
-
-% Inversion lemma
-Theorem dimctx_inv : forall P E,
-  dimctx P -> member E P ->
-    exists x, E = dim x /\ is_name/dim x.
-induction on 1. intros. case H1.
-  case H2.
-  case H2.
-    search.
-    apply IH to H3 H4. search.
-
-
-%%%% Term contexts
-
-Define tmctx : olist -> prop by
-  tmctx nil;
-  nabla x, tmctx (dim x :: G) := tmctx G;
-  nabla a, tmctx (tm a :: G) := tmctx G.
-  
-% Inversion lemma
-Theorem tmctx_inv : forall G E,
-  tmctx G -> member E G ->
-    (exists x, E = dim x /\ is_name/dim x) \/
-    (exists a, E = tm a /\ is_name/tm a).
-induction on 1. intros. case H1.
-  case H2.
-  case H2.
-    search.
-    apply IH to H3 H4. search.
-  case H2.
-    search.
-    apply IH to H3 H4. search.
-    
-% Dimension contexts are term contexts
-Theorem dimctx_tmctx : forall P, dimctx P -> tmctx P.
-induction on 1. intros. case H1.
-  search.
-  apply IH to H2. search.
+Import "contexts".
 
 
 %%%% Operational semantics preserves well-formedness

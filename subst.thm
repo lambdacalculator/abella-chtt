@@ -1,0 +1,679 @@
+Specification "cubical".
+
+Import "contexts".
+
+
+%%%% Properties of simultaneous, total substitution %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Pruning (or output-freeness) lemmas wrt two-nomimal assumptions to the
+% substitution judgments. These are sometimes needed during inductions.
+
+Theorem dsub_prune : forall S G' G R R', nabla x x',
+  xsubst S G' G -> {S, dsub x x' |- dsub (R x) (R' x x')} ->
+    exists R0', R' = x\R0'.
+intros. case H2.
+  search.
+  search.
+  case H4.
+    case H3. search.
+    apply xsubst_inv1 to H1 H5. case H6.
+      case H3. apply prune_arg/dim to H5. search.
+      case H3.
+
+Theorem dlsub_prune : forall S G' G Rs Rs', nabla x x',
+  xsubst S G' G -> {S, dsub x x' |- dlsub (Rs x) (Rs' x x')} ->
+    exists Rs0', Rs' = x\Rs0'.
+induction on 2. intros. case H2.
+  search.
+  apply dsub_prune to H1 H3. apply IH to H1 H4. search.
+  case H4.
+    case H3.
+    apply xsubst_inv1 to H1 H5. case H6.
+      case H3.
+      case H3.
+
+Theorem sub+tsub_prune/dim :
+(forall S G' G M M', nabla x x',
+   xsubst S G' G -> {S, dsub x x' |- sub (M x) (M' x x')} ->
+     exists M0', M' = x\M0') /\
+(forall S G' G Ns Ns', nabla x x',     
+   xsubst S G' G -> {S, dsub x x' |- tsub (Ns x) (Ns' x x')} ->
+     exists Ns0', Ns' = x\Ns0').
+induction on 2 2. split.
+intros. case H2.
+  apply IH to H1 H3. apply IH to _ H4. search.
+  apply IH to H1 H3. apply IH to _ H4. search.
+  apply IH to _ H3. apply IH to H1 H4. apply IH to H1 H5. search.
+  search.
+  apply dsub_prune to H1 H3. search.
+  search.
+  apply IH to _ H3. search.
+  apply IH to H1 H3. apply IH to H1 H4. search.
+  apply IH to H1 H3. apply IH to H1 H4. search.
+  apply IH to H1 H3. search.
+  apply IH to H1 H3. search.
+  apply IH to _ H3. search.
+  apply IH to H1 H3. apply dsub_prune to H1 H4. search.
+  search.
+  search.
+  apply IH to _ H3. apply IH to H1 H4. apply IH to H1 H5. apply IH to H1 H6. %\
+     search.
+  apply dsub_prune to H1 H3. apply IH to H1 H4. search.
+  search.
+  apply dsub_prune to H1 H3. search.
+  apply IH to _ H3. apply IH to H1 H4. apply IH to H1 H5. apply IH to _ H6. %\
+     search.
+  apply IH to _ H3. apply dsub_prune to H1 H4. %\
+     apply dsub_prune to H1 H5. apply IH to H1 H6. search.
+  apply IH to H1 H3. apply dlsub_prune to H1 H4. %\
+     apply dsub_prune to H1 H5. apply dsub_prune to H1 H6. %\
+     apply IH to H1 H7. apply IH1 to _ H8. search.
+  case H4.
+    case H3.
+    apply xsubst_inv1 to H1 H5. case H6.
+      case H3.
+      case H3. apply prune_arg/dim to H10. search.
+intros. case H2.
+  search.
+  apply IH to H1 H3. apply IH to H1 H4. apply IH1 to H1 H5. search.
+  case H4.
+    case H3.
+    apply xsubst_inv1 to H1 H5. case H6.
+      case H3.
+      case H3.
+
+Split sub+tsub_prune/dim as sub_prune/dim, tsub_prune/dim.
+
+Theorem sub+tsub_prune/tm :
+(forall S G' G M M', nabla a a',
+   xsubst S G' G -> {S, sub a a' |- sub (M a) (M' a a')} ->
+     exists M0', M' = a\M0') /\
+(forall S G' G Ns Ns', nabla a a',     
+   xsubst S G' G -> {S, sub a a' |- tsub (Ns a) (Ns' a a')} ->
+     exists Ns0', Ns' = a\Ns0').
+induction on 2 2. split.
+intros. case H2.
+  apply IH to H1 H3. apply IH to _ H4. search.
+  apply IH to H1 H3. apply IH to _ H4. search.
+  apply IH to _ H3. apply IH to H1 H4. apply IH to H1 H5. search.
+  search.
+  search.
+  search.
+  apply IH to _ H3. search.
+  apply IH to H1 H3. apply IH to H1 H4. search.
+  apply IH to H1 H3. apply IH to H1 H4. search.
+  apply IH to H1 H3. search.
+  apply IH to H1 H3. search.
+  apply IH to _ H3. search.
+  apply IH to H1 H3. search.
+  search.
+  search.
+  apply IH to _ H3. apply IH to H1 H4. apply IH to H1 H5. apply IH to H1 H6. %\
+     search.
+  apply IH to H1 H4. search.
+  search.
+  search.
+  apply IH to _ H3. apply IH to H1 H4. apply IH to H1 H5. apply IH to _ H6. %\
+     search.
+  apply IH to _ H3. apply IH to H1 H6. search.
+  apply IH to H1 H3. apply IH to H1 H7. apply IH1 to _ H8. search.
+  case H4.
+    case H3. search.
+    apply xsubst_inv1 to H1 H5. case H6.
+      case H3.
+      case H3. apply prune_arg/tm to H10. search.
+intros. case H2.
+  search.
+  apply IH to H1 H3. apply IH to H1 H4. apply IH1 to H1 H5. search.
+  case H4.
+    case H3.
+    apply xsubst_inv1 to H1 H5. case H6.
+      case H3.
+      case H3.
+
+Split sub+tsub_prune/tm as sub_prune/tm, tsub_prune/tm.
+
+
+% Substitutions exist and preserve well-formedness
+
+Theorem subst_dsub : forall S G' G R,
+  xsubst S G' G -> {G |- dim R} ->
+    exists R', {S |- dsub R R'} /\ {G' |- dim R'}.
+intros. case H2.
+  search.
+  search.
+  apply xsubst_inv3 to H1 H4. case H5.
+    case H3. search.
+    case H3.
+
+Theorem subst_dlsub : forall S G' G Rs K,
+ xsubst S G' G -> {G |- dlist Rs K} ->
+    exists Rs', {S |- dlsub Rs Rs'} /\ {G' |- dlist Rs' K}.
+induction on 2. intros. case H2.
+  search.
+  apply subst_dsub to H1 H3. apply IH to H1 H4. search.
+  apply xsubst_inv3 to H1 H4. case H5.
+    case H3.
+    case H3.
+
+Theorem subst_sub+tsub :
+(forall S G' G M,
+  xsubst S G' G -> {G |- tm M} ->
+    exists M', {S |- sub M M'} /\ {G' |- tm M'}) /\
+(forall S G' G Ns K,
+  xsubst S G' G -> {G |- tlist Ns K} ->
+    exists Ns', {S |- tsub Ns Ns'} /\ {G' |- tlist Ns' K}).
+induction on 2 2. split.
+intros. case H2.
+  apply IH to H1 H3. apply IH to _ H4 with G' = tm n2 :: G'. %\
+     apply sub_prune/tm to _ H7. search.
+  apply IH to H1 H3. apply IH to _ H4 with G' = tm n2 :: G'. %\
+     apply sub_prune/tm to _ H7. search.
+  apply IH to _ H3 with G' = dim n2 :: G'. apply sub_prune/dim to _ H6. %\
+     apply IH to H1 H4. apply IH to H1 H5. search.
+  search.
+  apply subst_dsub to H1 H3. search.
+  search.
+  apply IH to _ H3 with G' = tm n2 :: G'. apply sub_prune/tm to _ H4. search.
+  apply IH to H1 H3. apply IH to H1 H4. search.
+  apply IH to H1 H3. apply IH to H1 H4. search.
+  apply IH to H1 H3. search.
+  apply IH to H1 H3. search.
+  apply IH to _ H3 with G' = dim n2 :: G'. apply sub_prune/dim to _ H4. search.
+  apply IH to H1 H3. apply subst_dsub to H1 H4. search.
+  search.
+  search.
+  apply IH to _ H3 with G' = tm n2 :: G'. apply sub_prune/tm to _ H7. %\
+     apply IH to H1 H4. apply IH to H1 H5. apply IH to H1 H6. search.
+  apply subst_dsub to H1 H3. apply IH to H1 H4. search.
+  search.
+  apply subst_dsub to H1 H3. search.
+  apply IH to _ H3 with G' = tm n2 :: G'. apply sub_prune/tm to _ H7. %\
+     apply IH to H1 H4. apply IH to H1 H5. %\
+     apply IH to _ H6 with G' = dim n2 :: G'. apply sub_prune/dim to _ H13. %\
+     search.
+  apply IH to _ H3 with G' = dim n2 :: G'. apply sub_prune/dim to _ H7. %\
+     apply subst_dsub to H1 H4. apply subst_dsub to H1 H5. %\
+     apply IH to H1 H6. search.
+  apply IH to H1 H3. apply subst_dlsub to H1 H4. %\
+     apply subst_dsub to H1 H5. apply subst_dsub to H1 H6. %\
+     apply IH to H1 H7. apply IH1 to _ H8 with G' = dim n2 :: G'. %\
+     apply tsub_prune/dim to _ H19. search.
+  apply xsubst_inv3 to H1 H4. case H5.
+    case H3.
+    case H3. search.
+intros. case H2.
+  search.
+  apply IH to H1 H3. apply IH to H1 H4. apply IH1 to H1 H5. search.
+  apply xsubst_inv3 to H1 H4. case H5.
+    case H3.
+    case H3.
+
+Split subst_sub+tsub as subst_sub, subst_tsub.
+
+
+% Uniqueness of substitutions
+
+Theorem dsub_unique : forall S G' G R R'1 R'2,
+  xsubst S G' G -> {S |- dsub R R'1} -> {S |- dsub R R'2} ->
+    R'1 = R'2.
+intros. case H2.
+  case H3.
+    search.
+    apply xsubst_inv1 to H1 H5. case H6. case H4.
+      case H7.
+      case H4.
+  case H3.
+    search.
+    apply xsubst_inv1 to H1 H5. case H6.
+      case H4. case H7.
+      case H4.
+  case H3.
+    apply xsubst_inv1 to H1 H5. case H6.
+      case H4. case H7.
+      case H4.
+    apply xsubst_inv1 to H1 H5. case H6.
+      case H4. case H7.
+      case H4.
+    apply xsubst_inv1 to H1 H5. case H8.
+      case H4. apply xsubst_inv1 to H1 H7. case H12.
+        case H6. apply xsubst_unique/dsub to H1 H5 H7. search.
+        case H6.
+      case H4.
+
+Theorem dlsub_unique : forall S G' G Rs Rs'1 Rs'2,
+  xsubst S G' G -> {S |- dlsub Rs Rs'1} -> {S |- dlsub Rs Rs'2} ->
+    Rs'1 = Rs'2.
+induction on 2. intros. case H2.
+  case H3.
+    search.
+    apply xsubst_inv1 to H1 H5. case H6. case H4. case H4.
+  case H3.
+    apply dsub_unique to H1 H4 H6. apply IH to H1 H5 H7. search.
+    apply xsubst_inv1 to H1 H7. case H8. case H6. case H6.
+  apply xsubst_inv1 to H1 H5. case H6. case H4. case H4.
+
+Theorem sub+tsub_unique :
+(forall S G' G M M'1 M'2,
+  xsubst S G' G -> {S |- sub M M'1} -> {S |- sub M M'2} ->
+    M'1 = M'2) /\
+(forall S G' G Ns Ns'1 Ns'2,
+  xsubst S G' G -> {S |- tsub Ns Ns'1} -> {S |- tsub Ns Ns'2} ->
+    Ns'1 = Ns'2).
+induction on 2 2. split.
+intros. case H2.
+  case H3.
+    apply IH to H1 H4 H6. apply IH to _ H5 H7. search.
+    apply xsubst_inv1 to H1 H7. case H8. case H6. case H6. case H9.
+  case H3.
+    apply IH to H1 H4 H6. apply IH to _ H5 H7. search.
+    apply xsubst_inv1 to H1 H7. case H8. case H6. case H6. case H9.
+  case H3.
+    apply IH to _ H4 H7. apply IH to H1 H5 H8. apply IH to H1 H6 H9. search.
+    apply xsubst_inv1 to H1 H8. case H9. case H7. case H7. case H10.
+  case H3.
+    search.
+    apply xsubst_inv1 to H1 H5. case H6. case H4. case H4. case H7.
+  case H3.
+    apply dsub_unique to H1 H4 H5. search.
+    apply xsubst_inv1 to H1 H6. case H7. case H5. case H5. case H8.
+  case H3.
+    search.
+    apply xsubst_inv1 to H1 H5. case H6. case H4. case H4. case H7.
+  case H3.
+    apply IH to _ H4 H5. search.
+    apply xsubst_inv1 to H1 H6. case H7. case H5. case H5. case H8.
+  case H3.
+    apply IH to H1 H4 H6. apply IH to H1 H5 H7. search.
+    apply xsubst_inv1 to H1 H7. case H8. case H6. case H6. case H9.
+  case H3.
+    apply IH to H1 H4 H6. apply IH to H1 H5 H7. search.
+    apply xsubst_inv1 to H1 H7. case H8. case H6. case H6. case H9.
+  case H3.
+    apply IH to H1 H4 H5. search.
+    apply xsubst_inv1 to H1 H6. case H7. case H5. case H5. case H8.
+  case H3.
+    apply IH to H1 H4 H5. search.
+    apply xsubst_inv1 to H1 H6. case H7. case H5. case H5. case H8.
+  case H3.
+    apply IH to _ H4 H5. search.
+    apply xsubst_inv1 to H1 H6. case H7. case H5. case H5. case H8.
+  case H3.
+    apply IH to H1 H4 H6. apply dsub_unique to H1 H5 H7. search.
+    apply xsubst_inv1 to H1 H7. case H8. case H6. case H6. case H9.
+  case H3.
+    search.
+    apply xsubst_inv1 to H1 H5. case H6. case H4. case H4. case H7.
+  case H3.
+    search.
+    apply xsubst_inv1 to H1 H5. case H6. case H4. case H4. case H7.
+  case H3.
+    apply IH to _ H4 H8. apply IH to H1 H5 H9. apply IH to H1 H6 H10. %\
+      apply IH to H1 H7 H11. search.
+    apply xsubst_inv1 to H1 H9. case H10. case H8. case H8. case H11.
+  case H3.
+    apply dsub_unique to H1 H4 H6. apply IH to H1 H5 H7. search.
+    apply xsubst_inv1 to H1 H7. case H8. case H6. case H6. case H9.
+  case H3.
+    search.
+    apply xsubst_inv1 to H1 H5. case H6. case H4. case H4. case H7.
+  case H3.
+    apply dsub_unique to H1 H4 H5. search.
+    apply xsubst_inv1 to H1 H6. case H7. case H5. case H5. case H8.
+  case H3.
+    apply IH to _ H4 H8. apply IH to H1 H5 H9. apply IH to H1 H6 H10. %\
+       apply IH to _ H7 H11. search.
+    apply xsubst_inv1 to H1 H9. case H10. case H8. case H8. case H11.
+  case H3.
+    apply IH to _ H4 H8. apply dsub_unique to H1 H5 H9. %\
+       apply dsub_unique to H1 H6 H10. apply IH to H1 H7 H11. search.
+    apply xsubst_inv1 to H1 H9. case H10. case H8. case H8. case H11.
+  case H3.
+    apply IH to H1 H4 H10. apply dlsub_unique to H1 H5 H11. %\
+       apply dsub_unique to H1 H6 H12. apply dsub_unique to H1 H7 H13. %\
+       apply IH to H1 H8 H14. apply IH1 to _ H9 H15. search.
+    apply xsubst_inv1 to H1 H11. case H12. case H10. case H10. case H13.
+  apply xsubst_inv1 to H1 H5. case H6.
+    case H4.
+    case H4. case H7. case H3. apply xsubst_inv1 to H1 H12. case H13.
+        case H11.
+        case H11. apply xsubst_unique/sub to H1 H5 H12. search. 
+intros. case H2.
+  case H3.
+    search.
+    apply xsubst_inv1 to H1 H5. case H6. case H4. case H4.
+  case H3.
+    apply IH to H1 H4 H7. apply IH to H1 H5 H8. apply IH1 to H1 H6 H9. search.
+    apply xsubst_inv1 to H1 H8. case H9. case H7. case H7.
+  apply xsubst_inv1 to H1 H5. case H6. case H4. case H4.
+
+Split sub+tsub_unique as sub_unique, tsub_unique.
+
+
+
+%%%% Substitution commutes with operational semantics %%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Theorem sub_eps : forall S G' G E R',
+  xsubst S G' G -> {is_eps E} -> {S |- dsub E R'} ->
+    {is_eps R'}.
+intros. case H2.
+  case H3. search. /**/ apply xsubst_inv1 to H1 H5. case H6. case H4. case H7.
+     case H4.
+  case H3. search. /**/ apply xsubst_inv1 to H1 H5. case H6. case H4. case H7.
+     case H4.
+    
+Theorem sub_findeps : forall S G' G Rs I E Rs',
+  xsubst S G' G -> {findeps Rs I E} -> {S |- dlsub Rs Rs'} ->
+    {findeps Rs' I E}.
+induction on 2. intros. case H2.
+  case H3. case H4.
+    case H5. search. /**/ apply xsubst_inv1 to H1 H8. case H9. case H7.
+       case H10. case H7.
+    case H5. search. /**/ apply xsubst_inv1 to H1 H8. case H9. case H7.
+       case H10. case H7. apply xsubst_inv1 to H1 H6. case H7. case H5. case H5.
+  case H3. apply IH to H1 H4 H6. search. /**/ apply xsubst_inv1 to H1 H6.
+     case H7. case H5. case H5.
+
+Theorem sub_dlsnoc : forall S G' G Rs R Rs+ Rs' R',
+  xsubst S G' G -> {dlsnoc Rs R Rs+} -> {S |- dlsub Rs Rs'} ->
+  {S |- dsub R R'} ->
+    exists Rs+', {S |- dlsub Rs+ Rs+'} /\ {dlsnoc Rs' R' Rs+'}.
+induction on 2. intros. case H2.
+  case H3. search. /**/ apply xsubst_inv1 to H1 H6. case H7. case H5. case H5.
+  case H3. apply IH to H1 H5 H7 H4. search. /**/ apply xsubst_inv1 to H1 H7.
+     case H8. case H6. case H6.
+
+Theorem sub_tubef : forall S G' G Ns I E N Ns',
+  xsubst S G' G -> {tubef Ns I E N} -> {S |- tsub Ns Ns'} ->
+    exists N', {S |- sub N N'} /\ {tubef Ns' I E N'}.
+induction on 2. intros. case H2.
+  case H3. search. /**/ apply xsubst_inv1 to H1 H5. case H6. case H4. case H4.
+  case H3. search. /**/ apply xsubst_inv1 to H1 H5. case H6. case H4. case H4.
+  case H3. apply IH to H1 H4 H7. search. /**/ apply xsubst_inv1 to H1 H6.
+     case H7. case H5. case H5.
+
+Theorem sub_tlsnoc : forall S G' G N0 N1 Ns Ns+ N0' N1' Ns',
+  xsubst S G' G -> {tlsnoc Ns N0 N1 Ns+} -> {S |- tsub Ns Ns'} -> 
+  {S |- sub N0 N0'} -> {S |- sub N1 N1'} ->
+    exists Ns+', {S |- tsub Ns+ Ns+'} /\ {tlsnoc Ns' N0' N1' Ns+'}.
+induction on 2. intros. case H2.
+  case H3. search. /**/ apply xsubst_inv1 to H1 H7. case H8. case H6. case H6.
+  case H3. apply IH to H1 H6 H9 H4 H5. search. /**/ apply xsubst_inv1 to H1 H8.
+     case H9. case H7. case H7.
+
+Theorem sub_map : forall S G' G F Ns FNs F' Ns', nabla a b,
+  xsubst S G' G -> {map F Ns FNs} -> {S, sub a b |- sub (F a) (F' b)} ->
+  {S |- tsub Ns Ns'} ->
+    exists FNs', {S |- tsub FNs FNs'} /\ {map F' Ns' FNs'}.
+induction on 2. intros. case H2.
+  case H4. search.  /**/ apply xsubst_inv1 to H1 H6. case H7. case H5. case H5.
+  case H4. inst H3 with n1 = N0, n2 = T0'. cut H9 with H6. 
+     inst H3 with n1 = N1, n2 = T1'. cut H11 with H7.
+     apply IH to H1 H5 H3 H8. search. /**/ apply xsubst_inv1 to H1 H7. case H8.
+     case H6. case H6.
+
+
+% Main theorem
+
+Theorem red_subst : forall M M' S G' G MS,
+  xsubst S G' G -> {red M M'} -> {S |- sub M MS} ->
+    exists MS', {S |- sub M' MS'} /\ {red MS MS'}.
+induction on 2. intros. case H2.
+
+  % nott E -> bool
+  case H3. apply sub_eps to H1 H4 H5. search. /**/ apply xsubst_inv1 to H1 H6.
+     case H7. case H5. case H5. case H8.
+
+  % coe A -> coe A'
+  case H3. apply IH to _ H4 H5. apply sub_prune/dim to H1 H9. search.
+     /**/ apply xsubst_inv1 to H1 H6. case H7. case H5. case H5. case H8.
+     
+  % hcom A -> hcom A'
+  case H3. apply IH to H1 H4 H5. search. /**/ apply xsubst_inv1 to H1 H6.
+     case H7. case H5. case H5. case H8.
+     
+  % app M N -> app M' N
+  case H3. apply IH to H1 H4 H5. search. /**/ apply xsubst_inv1 to H1 H6.
+     case H7. case H5. case H5. case H8.
+     
+  % app (lam M) N -> M N
+  case H3. case H4. inst H6 with n1 = N, n2 = N'. cut H7 with H5. search.
+     /**/ apply xsubst_inv1 to H1 H7. case H8. case H6. case H6. case H9.
+     apply xsubst_inv1 to H1 H5. case H6. case H4. case H4. case H7.
+     
+  % coe_pit -> lam
+  case H3. case H4. inst H9 with n3 = coe A R' n1 n5, n4 = coe A'2 R1' n2 n6.
+     assert {S, dsub n1 n2, sub n5 n6 |- %\
+     sub (coe A R' n1 n5) (coe A'2 R1' n2 n6)}. cut H10 with H11. search. %long
+     /**/ case H9. case H8. apply xsubst_inv1 to H1 H10. case H11. case H8.
+     case H8. case H12. apply xsubst_inv1 to H1 H5. case H6. case H4. case H4.
+     case H7.
+
+  % hcom_pit -> lam
+  case H3. case H5. permute (n2 n1 n3) H4.
+     apply sub_map to _ H4 _ H10 with S = sub n3 n4 :: dsub n1 n2 :: S,
+     G' = tm n4 :: dim n2 :: G', F' = t\app t n4.
+     apply tsub_prune/dim to _ H13. apply tsub_prune/tm to _ H13. search.
+     /**/ apply xsubst_inv1 to H1 H12. case H13. case H11. case H11. case H14.
+     apply xsubst_inv1 to H1 H6. case H7. case H5. case H5. case H8.
+     
+  % fst M -> fst M'
+  case H3. apply IH to H1 H4 H5. search. /**/ apply xsubst_inv1 to H1 H6.
+     case H7. case H5. case H5. case H8.
+
+  % snd M -> snd M'
+  case H3. apply IH to H1 H4 H5. search. /**/ apply xsubst_inv1 to H1 H6.
+     case H7. case H5. case H5. case H8.
+
+  % fst (pair M N) -> M
+  case H3. case H4. search. /**/ apply xsubst_inv1 to H1 H6.
+     case H7. case H5. case H5. case H8. apply xsubst_inv1 to H1 H5. case H6.
+     case H4. case H4. case H7.
+
+  % snd (pair M N) -> N
+  case H3. case H4. search. /**/ apply xsubst_inv1 to H1 H6.
+     case H7. case H5. case H5. case H8. apply xsubst_inv1 to H1 H5. case H6.
+     case H4. case H4. case H7.
+     
+  % coe_sigt -> pair
+  case H3. case H4. case H5. assert {S, dsub n1 n2 |-  %\
+     sub (coe A R n1 (fst M1)) (coe A'2 R0' n2 (fst M'1))}.
+     inst H10 with n3 = coe A R n1 (fst M1), n4 = coe A'2 R0' n2 (fst M'1).
+     cut H12 with H11. search. /**/ case H10. case H9.
+     apply xsubst_inv1 to H1 H11. case H12. case H9. case H9. case H13.
+     apply xsubst_inv1 to H1 H6. case H7. case H5. case H5. case H8.
+
+  % hcom_sigt -> pair
+  case H3. case H5. case H7.  apply sub_map to _ H4 _ H12.
+     apply tsub_prune/dim to H1 H15. permute (n1 n3 n2 n4) H14.
+     assert {S, dsub n1 n2 |-  %\
+     sub (hcom A Rs R n1 (fst M1) Ns1) (hcom A'1 Rs' R0' n2 (fst M'1) Ns0')}.
+     inst H17 with n1 = R', n2 = R1'. cut H18 with H10.
+     inst H14 with n3 = hcom A Rs R R' (fst M1) Ns1, %\
+                   n4 = hcom A'1 Rs' R0' R1' (fst M'1) Ns0'. cut H20 with H19.
+     inst H14 with n3 = hcom A Rs R n1 (fst M1) Ns1, %\
+                   n4 = hcom A'1 Rs' R0' n2 (fst M'1) Ns0'. cut H22 with H17.
+     apply sub_map to _ H6 _ H12. apply tsub_prune/dim to H1 H24. search.
+     /**/ apply xsubst_inv1 to H1 H14. case H15. case H13. case H13. case H16.
+     apply xsubst_inv1 to H1 H8. case H9. case H7. case H7. case H10.
+
+  % dapp M R -> dapp M' R
+  case H3. apply IH to H1 H4 H5. search. /**/ apply xsubst_inv1 to H1 H6.
+     case H7. case H5. case H5. case H8.
+
+  % dapp (dabs M) R -> M R
+  case H3. case H4. inst H6 with n1 = R, n2 = R'. cut H7 with H5. search.
+     /**/ apply xsubst_inv1 to H1 H7. case H8. case H6. case H6. case H9.
+     apply xsubst_inv1 to H1 H5. case H6. case H4. case H4. case H7.
+
+  % coe_idt -> dabs
+  case H3. case H4. inst H8 with n1 = R', n2 = R1'. cut *H11 with H6. 
+     witness dabs (x\hcom (A'2 R1' x) (d+ x d$) R0' R1' (coe (y\A'2 y x) %\
+     R0' R1' (dapp M'1 x)) (y\t+ (coe (y1\A'2 y1 x) y R1' (A'3 y)) %\
+     (coe (y1\A'2 y1 x) y R1' (A'4 y)) t$)). search. /**/ case H9. case H8.
+     apply xsubst_inv1 to H1 H10. case H11. case H8. case H8. case H12.
+     apply xsubst_inv1 to H1 H5. case H6. case H4. case H4. case H7.
+
+  % hcom_idt -> dabs
+  case H3. case H7. apply sub_dlsnoc to _ H4 H8 _ with S = dsub n1 n2 :: S.
+     apply dlsub_prune to H1 H16. permute (n2 n3) H5.
+     apply sub_map to _ H5 _ H12 with S = dsub n3 n4 :: dsub n1 n2 :: S.
+     apply tsub_prune/dim to _ H18.
+     apply tsub_prune/dim to _ H18 with x = n3, x' = n4. permute (n2 n3) H6.
+     apply sub_tlsnoc to _ H6 H18 H14 H15. apply tsub_prune/dim to _ H20.
+     apply tsub_prune/dim to _ H20 with x = n3, x' = n4. search.
+     /**/ apply xsubst_inv1 to H1 H14. case H15. case H13. case H13. case H16.
+     apply xsubst_inv1 to H1 H8. case H9. case H7. case H7. case H10.
+
+  % if M -> if M'
+  case H3. apply IH to H1 H4 H6. search. /**/ apply xsubst_inv1 to H1 H6.
+     case H7. case H5. case H5. case H8.
+
+  % if tt T F -> T
+  case H3. case H5. search. /**/ apply xsubst_inv1 to H1 H9. case H10. case H8.
+     case H8. case H11. apply xsubst_inv1 to H1 H5. case H6. case H4. case H4.
+     case H7.
+
+  % if ff T F -> F
+  case H3. case H5. search. /**/ apply xsubst_inv1 to H1 H9. case H10. case H8.
+     case H8. case H11. apply xsubst_inv1 to H1 H5. case H6. case H4. case H4.
+     case H7.
+
+  % if hcom -> hcom
+  case H3. case H4. case H7. case H10. permute (n1 n3 n2 n4) H6.
+     assert {S, dsub n1 n2 |-  sub (hcom boolt Rs R n1 M1 Ns) %\
+     (hcom boolt Rs' R0' n2 M'2 Ns'1)}.
+     inst H16 with n1 = R', n2 = R1'. cut H17 with H13.
+     inst H6 with n3 = hcom boolt Rs R R' M1 Ns, %\
+                  n4 = hcom boolt Rs' R0' R1' M'2 Ns'1. cut H19 with H18.
+     inst H6 with n3 = hcom boolt Rs R n1 M1 Ns,
+                  n4 = hcom boolt Rs' R0' n2 M'2 Ns'1. cut H21 with H16.
+     apply sub_map to _ H5 _ H15. apply tsub_prune/dim to H1 H23. search.
+     /**/ apply xsubst_inv1 to H1 H17. case H18. case H16. case H16. case H19.
+     apply xsubst_inv1 to H1 H11. case H12. case H10. case H10. case H13.
+     apply xsubst_inv1 to H1 H7. case H8. case H6. case H6. case H9.
+
+  % coe_bool M -> M
+  case H3. case H4. search. /**/ case H9. case H8. apply xsubst_inv1 to H1 H10.
+     case H11. case H8. case H8. case H12. apply xsubst_inv1 to H1 H5. case H6.
+     case H4. case H4. case H7.
+
+  % hcom_bool/r_i=e -> Nie
+  case H3. case H6. apply sub_findeps to H1 H4 H7. apply sub_tubef to _ H5 H11.
+     apply sub_prune/dim to H1 H13. inst H13 with n1 = R', n2 = R1'.
+     cut H15 with H9. search. /**/ apply xsubst_inv1 to H1 H13. case H14.
+     case H12. case H12. case H15. apply xsubst_inv1 to H1 H7. case H8. case H6.
+     case H6. case H9.
+  
+  % hcom_bool/r=r' -> M
+  case H3. case H4. apply dsub_unique to H1 H6 H7. search.
+     /**/ apply xsubst_inv1 to H1 H11. case H12. case H10. case H10. case H13.
+     apply xsubst_inv1 to H1 H5. case H6. case H4. case H4. case H7.
+  
+  % loop E -> base
+  case H3. apply sub_eps to H1 H4 H5. search. /**/ apply xsubst_inv1 to H1 H6.
+     case H7. case H5. case H5. case H8.
+  
+  % s1-elim M -> s1-elim M'
+  case H3. apply IH to H1 H4 H6. search. /**/ apply xsubst_inv1 to H1 H6.
+     case H7. case H5. case H5. case H8. 
+  
+  % s1-elim base P L -> P
+  case H3. case H5. search. /**/ apply xsubst_inv1 to H1 H9. case H10. case H8.
+     case H8. case H11. apply xsubst_inv1 to H1 H5. case H6. case H4. case H4.
+     case H7.
+  
+  % s1-elim (loop R) P L -> L R
+  case H3. case H5. inst H7 with n1 = R, n2 = R'. cut H9 with H8. search.
+     /**/ apply xsubst_inv1 to H1 H9. case H10. case H8. case H8. case H11.
+     apply xsubst_inv1 to H1 H5. case H6. case H4. case H4. case H7.
+
+  % s1-elim hcom_s1t -> hcom
+  case H3. case H4. case H7. case H10. permute (n1 n3 n2 n4) H6.
+     assert {S, dsub n1 n2 |-  sub (hcom s1t Rs R n1 M1 Ns) %\
+     (hcom s1t Rs' R0' n2 M'2 Ns'1)}.
+     inst H16 with n1 = R', n2 = R1'. cut H17 with H13.
+     inst H6 with n3 = hcom s1t Rs R R' M1 Ns, %\
+                  n4 = hcom s1t Rs' R0' R1' M'2 Ns'1. cut H19 with H18.
+     inst H6 with n3 = hcom s1t Rs R n1 M1 Ns,
+                  n4 = hcom s1t Rs' R0' n2 M'2 Ns'1. cut H21 with H16.
+     apply sub_map to _ H5 _ H15. apply tsub_prune/dim to H1 H23. search.
+     /**/ apply xsubst_inv1 to H1 H17. case H18. case H16. case H16. case H19.
+     apply xsubst_inv1 to H1 H11. case H12. case H10. case H10. case H13.
+     apply xsubst_inv1 to H1 H7. case H8. case H6. case H6. case H9.
+
+  % coe_s1 M -> M
+  case H3. case H4. search. /**/ case H9. case H8. apply xsubst_inv1 to H1 H10.
+     case H11. case H8. case H8. case H12. apply xsubst_inv1 to H1 H5. case H6.
+     case H4. case H4. case H7.
+  
+  % hcom_s1/r_i=e -> Nie
+  case H3. case H6. apply sub_findeps to H1 H4 H7. apply sub_tubef to _ H5 H11.
+     apply sub_prune/dim to H1 H13. inst H13 with n1 = R', n2 = R1'.
+     cut H15 with H9. search. /**/ apply xsubst_inv1 to H1 H13. case H14.
+     case H12. case H12. case H15. apply xsubst_inv1 to H1 H7. case H8. case H6.
+     case H6. case H9.
+  
+  % hcom_s1/r=r' -> M
+  case H3. case H4. apply dsub_unique to H1 H6 H7. search.
+     /**/ apply xsubst_inv1 to H1 H11. case H12. case H10. case H10. case H13.
+     apply xsubst_inv1 to H1 H5. case H6. case H4. case H4. case H7.
+  
+  % notel 0 M -> not M
+  case H3. case H4. case H5. search. /**/ apply xsubst_inv1 to H1 H8. case H9.
+     case H7. case H10. case H7. apply xsubst_inv1 to H1 H6. case H7. case H5.
+     case H5. case H8.
+  
+  % notel 1 M -> M
+  case H3. case H4. search. /**/ apply xsubst_inv1 to H1 H7. case H8. case H6.
+     case H9. case H6. apply xsubst_inv1 to H1 H5. case H6. case H4. case H4.
+     case H7.
+  
+  % coe_not M -> coe_not M'
+  case H3. case H5. case H9. case H11. case H10. apply IH to H1 H4 H8. search.
+     /**/ apply xsubst_inv1 to H1 H12. case H13. case H10.
+     apply prune_arg/dim to H16. case H10. case H10. case H9.
+     apply xsubst_inv1 to H1 H11. case H12. case H9. case H9. case H13.
+     apply xsubst_inv1 to H1 H6. case H7. case H5. case H5. case H8.
+  
+  % coe_not d0 R' M -> notel R' (not M)
+  case H3. case H4. case H5. case H6. case H9. case H11. case H10. search.
+     /**/ apply xsubst_inv1 to H1 H12. case H13. case H10.
+     apply prune_arg/dim to H12. case H10. apply xsubst_inv1 to H1 H11.
+     case H12. case H10. case H13. case H10. case H10. case H9.
+     apply xsubst_inv1 to H1 H11. case H12. case H9. case H9. case H13.
+     apply xsubst_inv1 to H1 H6. case H7. case H5. case H5. case H8.
+  
+  % coe_not d1 R' M -> notel R' M
+  case H3. case H4. case H5. case H8. case H10. case H9. search.
+     /**/ apply xsubst_inv1 to H1 H11. case H12. case H9.
+     apply prune_arg/dim to H11. case H9. apply xsubst_inv1 to H1 H10.
+     case H11. case H9. case H12. case H9. case H9. case H8.
+     apply xsubst_inv1 to H1 H10. case H11. case H8. case H8. case H12.
+     apply xsubst_inv1 to H1 H5. case H6. case H4. case H4. case H7.
+  
+  % coe_not R R' (notel R M) -> notel R' M
+  case H3. case H4. case H7. case H8. case H12. case H11.
+     apply dsub_unique to H1 H5 H9. search. /**/ apply xsubst_inv1 to H1 H13.
+     case H14. case H11. apply prune_arg/dim to H13. case H11.
+     apply xsubst_inv1 to H1 H10. case H11. case H9. case H9. case H12. case H9.
+     case H8. apply xsubst_inv1 to H1 H10. case H11. case H8. case H8. case H12.
+     apply xsubst_inv1 to H1 H5. case H6. case H4. case H4. case H7.
+  
+  % coe_{y\not x} M -> M
+  case H3. case H4. case H8.
+    search.
+    search.
+    case H10.
+      case H9.
+      apply xsubst_inv1 to H1 H11. case H12.
+        case H9. apply prune_arg/dim to H11. search.
+        case H9. /**/ case H9. case H8. apply xsubst_inv1 to H1 H10. case H11.
+           case H8. case H8. case H12. apply xsubst_inv1 to H1 H5. case H6.
+           case H4. case H4. case H7.
+  
+  % hcom_not -> notel
+  case H3. case H5. apply sub_map to _ H4 _ H10. apply tsub_prune/dim to H1 H12.
+     search. /**/ apply xsubst_inv1 to H1 H12. case H13. case H11. case H11.
+     case H14. apply xsubst_inv1 to H1 H6. case H7. case H5. case H5. case H8.
+

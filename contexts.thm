@@ -1,0 +1,213 @@
+Specification "cubical".
+
+Close nat, dim, dlist, tm, tlist.
+
+
+%%%% Names:  x, a %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Define is_name/dim : dim -> prop by
+  nabla x, is_name/dim x.
+
+Define is_name/tm : tm -> prop by
+  nabla a, is_name/tm a.
+
+
+Theorem prune_arg/dim : forall E L, nabla (x : dim),
+  member (E x) L ->
+    exists E0, E = x\ E0.
+induction on 1. intros. case H1.
+  search.
+  apply IH to H2. search.
+
+
+Theorem prune_arg/tm : forall E L, nabla (a : tm),
+  member (E a) L ->
+    exists E0, E = a\ E0.
+induction on 1. intros. case H1.
+  search.
+  apply IH to H2. search.
+
+
+
+%%%% Dimension contexts:  P %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Define dimctx : olist -> prop by
+  dimctx nil;
+  nabla x, dimctx (dim x :: P) := dimctx P.
+
+
+% Inversion lemma
+
+Theorem dimctx_inv : forall P E,
+  dimctx P -> member E P ->
+    exists x, E = dim x /\ is_name/dim x.
+induction on 1. intros. case H1.
+  case H2.
+  case H2.
+    search.
+    apply IH to H3 H4. search.
+
+
+
+%%%% Term contexts:  G %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Define tmctx : olist -> prop by
+  tmctx nil;
+  nabla x, tmctx (dim x :: G) := tmctx G;
+  nabla a, tmctx (tm a :: G) := tmctx G.
+
+
+% Inversion lemma
+
+Theorem tmctx_inv : forall G E,
+  tmctx G -> member E G ->
+    (exists x, E = dim x /\ is_name/dim x) \/
+    (exists a, E = tm a /\ is_name/tm a).
+induction on 1. intros. case H1.
+  case H2.
+  case H2.
+    search.
+    apply IH to H3 H4. search.
+  case H2.
+    search.
+    apply IH to H3 H4. search.
+
+
+% Dimension contexts are term contexts
+
+Theorem dimctx_tmctx : forall P, dimctx P -> tmctx P.
+induction on 1. intros. case H1.
+  search.
+  apply IH to H2. search.
+
+
+
+%%%% Simultaneous, total substitutions:  S : P' -> P %%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Define subst : olist -> olist -> olist -> prop by
+  subst nil P' nil;
+  nabla x, subst (dsub x (R x) :: S x) (P' x) (dim x :: P) :=
+    nabla x, {P' x |- dim (R x)} /\ subst (S x) (P' x) P.
+
+
+% Inversion lemmas
+
+Theorem subst_inv1 : forall S P' P E,
+  subst S P' P -> member E S ->
+    exists X R', E = dsub X R' /\ is_name/dim X /\ member (dim X) P /\
+                 {P' |- dim R'}.
+induction on 1. intros. case H1.
+  case H2.
+  case H2.
+    search.
+    apply IH to H4 H5. search.
+
+
+Theorem subst_inv3 : forall S P' P E,
+  subst S P' P -> member E P ->
+    exists X R', E = dim X /\ is_name/dim X /\ member (dsub X R') S /\
+                 {P' |- dim R'}.
+induction on 1. intros. case H1.
+  case H2.
+  case H2.
+    search.
+    apply IH to H4 H5. search.
+
+
+% Uniqueness lemma
+
+Theorem subst_unique : forall S P' P X R'1 R'2,
+  subst S P' P -> member (dsub X R'1) S -> member (dsub X R'2) S ->
+    R'1 = R'2.
+induction on 1. intros. case H1.
+  case H2.
+  case H2.
+    case H3.
+      search.
+      apply subst_inv1 to H5 H6. apply prune_arg/dim to H8.
+    case H3.
+      apply subst_inv1 to H5 H6. apply prune_arg/dim to H8.
+      apply IH to H5 H6 H7. search.
+      
+
+
+%%%% Extended simultaneous, total substitutions:  S : G' -> G %%%%%%%%%%%%%%%%%%
+
+Define xsubst : olist -> olist -> olist -> prop by
+  nabla x x', xsubst (dsub x x' :: S) (dim x' :: G') (dim x :: G) :=
+    xsubst S G' G;
+  nabla a a', xsubst (sub a a' :: S) (tm a' :: G') (tm a :: G) :=
+    xsubst S G' G;
+  xsubst S P' P := subst S P' P.
+
+
+% Inversion lemmas
+
+Theorem xsubst_inv1 : forall S G' G E,
+  xsubst S G' G -> member E S ->
+    (exists X R', E = dsub X R' /\ is_name/dim X /\ {G' |- dim R'} /\
+                  member (dim X) G) \/
+    (exists A A', E = sub A A' /\ is_name/tm A /\ is_name/tm A' /\
+                  member (tm A) G /\ member (tm A') G').
+induction on 1. intros. case H1.
+  case H2.
+    search.
+    apply IH to H3 H4. case H5.
+      search.
+      search.
+  case H2.
+    search.
+    apply IH to H3 H4. case H5.
+      search.
+      search.
+  apply subst_inv1 to H3 H2. search.
+
+Theorem xsubst_inv3 : forall S G' G E,
+  xsubst S G' G -> member E G ->
+    (exists X R', E = dim X /\ is_name/dim X /\ member (dsub X R') S /\
+                  {G' |- dim R'}) \/
+    (exists A A', E = tm A /\ is_name/tm A /\ member (sub A A') S /\
+                  is_name/tm A' /\ member (tm A') G').
+induction on 1. intros. case H1.
+  case H2.
+    search.
+    apply IH to H3 H4. case H5.
+      search.
+      search.
+  case H2.
+    search.
+    apply IH to H3 H4. case H5.
+      search.
+      search.
+  apply subst_inv3 to H3 H2. search.
+
+
+% Uniqueness lemmas
+
+Theorem xsubst_unique/dsub : forall S G' G X R'1 R'2,
+  xsubst S G' G -> member (dsub X R'1) S -> member (dsub X R'2) S ->
+    R'1 = R'2.
+induction on 1. intros. case H1.
+  case H2.
+    case H3.
+      search.
+      apply prune_arg/dim to H5.
+    case H3.
+      apply prune_arg/dim to H5.
+      apply IH to H4 H5 H6. search.
+  case H2. case H3. apply IH to H4 H5 H6. search.
+  apply subst_unique to H4 H2 H3. search.
+
+Theorem xsubst_unique/sub : forall S G' G A A'1 A'2,
+  xsubst S G' G -> member (sub A A'1) S -> member (sub A A'2) S ->
+    A'1 = A'2.
+induction on 1. intros. case H1.
+  case H2. case H3. apply IH to H4 H5 H6. search.
+  case H2.
+    case H3.
+      search.
+      apply prune_arg/tm to H5.
+    case H3.
+      apply prune_arg/tm to H5.
+      apply IH to H4 H5 H6. search.
+  apply subst_inv1 to H4 H2.

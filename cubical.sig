@@ -81,3 +81,10 @@ type notdef  (tm -> tm) -> o.                     % |- Not := x\ not(x)      (-)
 
 %%%% Operational semantics %%%%%%%%%%%%%%
 type red     tm -> tm -> o.                       % |- M |-> M'
+
+
+%%%% Simultaneous dimension substitutuions %%%%%%%
+type dsub    dim -> dim -> o.                     % <x\R>  or  S |- R > R'  
+type dlsub   dlist -> dlist -> o.                 % S |- Rs > Rs'
+type sub     tm -> tm -> o.                       % S |- M > M'  
+type tsub    tlist -> tlist -> o.                 % S |- Ns > Ns'
